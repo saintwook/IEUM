@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이음 (IEUM) — 프로토타입</title>
+<style>
+:root{
+  --navy:#16263b; --green:#157a63; --greenL:#e3f0eb; --coral:#f5623c; --coralL:#fff0ea;
+  --sand:#f4f1ec; --ink:#20272e; --muted:#7a848d; --line:#e6e9ec; --bg:#f7f8f9; --card:#fff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+button{font-family:inherit;cursor:pointer;border:none}
+.pico{display:block;width:46px;height:46px;opacity:.5;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233d4d5f' stroke-width='1.3'><path d='M3 7l9-4 9 4v10l-9 4-9-4V7z'/><path d='M3 7l9 4 9-4M12 11v10'/></svg>") center/contain no-repeat}
+.svgico{width:20px;height:20px;stroke:#44505c;fill:none;stroke-width:1.6}
+
+/* 프로토타입 상단 스위처 */
+.protobar{position:sticky;top:0;z-index:50;background:var(--navy);color:#fff;display:flex;align-items:center;gap:8px;padding:9px 16px;flex-wrap:wrap}
+.protobar .lbl{font-size:12px;color:#9fb4c8;margin-right:4px}
+.protobar button{background:#24384f;color:#cdd8e2;border-radius:20px;padding:6px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.protobar button.on{background:var(--coral);color:#fff}
+.protobar .brand{display:flex;align-items:center;gap:0;font-weight:800;font-size:16px;margin-right:14px}
+.ring{display:inline-block;width:16px;height:16px;border-radius:50%;border:3px solid var(--green)}
+.ring2{width:16px;height:16px;border:3px solid var(--coral);margin-left:-7px;margin-right:7px}
+.rdot{width:8px;height:8px;border-radius:50%;background:var(--coral);display:inline-block}
+.on .rdot{background:#fff}
+
+.view{display:none}
+.view.on{display:block}
+.wrap{max-width:1080px;margin:0 auto;padding:18px}
+
+/* ===== 통합몰 ===== */
+.shop-head{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:44px;z-index:20}
+.shop-head .in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:16px;padding:12px 18px}
+.logo{display:flex;align-items:center;font-size:22px;font-weight:800;color:var(--navy)}
+.nav{display:flex;gap:18px;font-size:14px;color:#44505c;font-weight:600}
+.nav a{color:inherit;text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;cursor:pointer}
+.nav a.act{color:var(--green);border-color:var(--green)}
+.search{flex:1;background:var(--bg);border:1px solid var(--line);border-radius:22px;padding:9px 16px;color:var(--muted);font-size:13px}
+.icobtn{background:var(--bg);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center}
+
+.hero{background:linear-gradient(120deg,#0f5c4a,#157a63 55%,#1f8f74);color:#fff;border-radius:18px;padding:34px 32px;position:relative;overflow:hidden}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.16);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:12px}
+.hero h1{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.25}
+.hero p{margin-top:8px;color:#d5ede5;font-size:14px}
+.hero .cta{margin-top:18px;background:var(--coral);color:#fff;padding:11px 22px;border-radius:24px;font-weight:700;font-size:14px}
+.hero .rings{position:absolute;right:-30px;top:-20px;opacity:.16}
+.hero .rings span{position:absolute;border-radius:50%;border:18px solid #fff}
+
+.live-strip{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:16px}
+.live-thumb{width:72px;height:72px;border-radius:12px;background:linear-gradient(135deg,#2a3542,#3d4d5f);position:relative;flex:none}
+.live-badge{position:absolute;top:6px;left:6px;background:var(--coral);color:#fff;font-size:10px;font-weight:800;padding:2px 7px;border-radius:10px;display:flex;align-items:center;gap:4px}
+.live-badge .rdot{width:6px;height:6px;background:#fff}
+.live-strip .go{margin-left:auto;background:var(--navy);color:#fff;padding:9px 16px;border-radius:20px;font-size:13px;font-weight:700}
+
+.sec-t{font-size:18px;font-weight:800;color:var(--navy);margin:26px 0 12px;display:flex;align-items:center;gap:8px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{background:#fff;border:1px solid var(--line);border-radius:20px;padding:7px 15px;font-size:13px;color:#44505c;font-weight:600}
+.chip.on{background:var(--greenL);border-color:#bfe0d4;color:var(--green)}
+.brands{display:flex;gap:18px;flex-wrap:wrap;margin-top:4px}
+.brandit{text-align:center;font-size:12px;color:#44505c;width:74px}
+.brandit .av{width:64px;height:64px;border-radius:50%;margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--green);background:var(--greenL);border:1px solid #cfe6dc}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.prod{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:.15s}
+.prod:hover{box-shadow:0 8px 20px rgba(20,40,60,.10);transform:translateY(-2px)}
+.prod .ph{height:130px;display:flex;align-items:center;justify-content:center}
+.prod .bd{padding:11px 12px 13px}
+.prod .co{font-size:11px;color:var(--muted)}
+.prod .nm{font-size:13.5px;font-weight:600;margin:3px 0 6px;line-height:1.35;height:37px;overflow:hidden}
+.prod .pr{font-size:16px;font-weight:800;color:var(--ink)}
+.prod .pr .dc{color:var(--coral);margin-right:5px}
+.prod .old{font-size:11px;color:#adb4bb;text-decoration:line-through;margin-left:4px}
+.prod .buy{width:100%;margin-top:9px;background:var(--coralL);color:var(--coral);font-weight:700;padding:8px;border-radius:8px;font-size:13px}
+
+.foot{margin-top:36px;border-top:1px solid var(--line);padding:22px 0;color:var(--muted);font-size:12px;text-align:center}
+
+/* ===== 폰 프레임 ===== */
+.phones{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;padding:22px}
+.phone{width:330px;background:#fff;border:9px solid #1c2734;border-radius:38px;overflow:hidden;box-shadow:0 16px 40px rgba(20,40,60,.18)}
+.phone .scr{height:640px;overflow-y:auto;background:#fff}
+.phone .notch{height:22px;background:#1c2734}
+.ptitle{text-align:center;font-weight:700;color:var(--navy);margin:2px 0 10px}
+
+/* 라이브 */
+.lv-video{height:290px;background:linear-gradient(160deg,#243441,#3b4d5c);position:relative;color:#fff;display:flex;align-items:flex-end}
+.lv-video .lb{position:absolute;top:12px;left:12px;background:var(--coral);color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:12px;display:flex;align-items:center;gap:5px}
+.lv-video .lb .rdot{background:#fff;width:6px;height:6px}
+.lv-video .vc{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.35);font-size:11px;padding:4px 10px;border-radius:12px}
+.lv-video .cap{padding:12px;font-size:12px;color:#c7d3dd}
+.lv-prod{display:flex;gap:11px;padding:12px;border-bottom:1px solid var(--line)}
+.lv-prod .ph{width:60px;height:60px;border-radius:10px;background:var(--greenL);display:flex;align-items:center;justify-content:center;flex:none}
+.lv-prod .co{font-size:11px;color:var(--muted)}
+.lv-prod .nm{font-size:14px;font-weight:700;margin:2px 0}
+.lv-prod .pr{font-size:16px;font-weight:800;color:var(--coral)}
+.lv-buy{margin:12px;background:var(--coral);color:#fff;font-weight:800;padding:13px;border-radius:12px;font-size:15px;width:calc(100% - 24px);display:block}
+.lv-chat{padding:0 12px 12px}
+.lv-chat .m{background:var(--bg);border-radius:14px;padding:8px 12px;font-size:12px;margin-top:7px;color:#44505c}
+.lv-chat .m b{color:var(--navy)}
+
+/* 복지몰 */
+.wk-top{background:var(--navy);color:#fff;padding:16px 14px;display:flex;align-items:center;gap:10px}
+.wk-top .t{font-weight:800;font-size:15px}
+.wk-top .s{font-size:11px;color:#9fb4c8;margin-top:2px}
+.wk-top .cert{margin-left:auto;background:var(--green);color:#fff;font-size:11px;font-weight:700;padding:8px 12px;border-radius:8px;text-align:center;line-height:1.3}
+.wk-note{background:var(--coralL);border:1px solid #f3c7ba;margin:12px;border-radius:12px;padding:11px 13px}
+.wk-note b{color:var(--coral);font-size:13px}
+.wk-note p{font-size:11px;color:#a86a4e;margin-top:2px}
+.wk-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:0 12px}
+.wk-pay{margin:14px 12px;background:var(--green);color:#fff;font-weight:800;padding:13px;border-radius:12px;font-size:14px;width:calc(100% - 24px);display:block}
+
+/* ===== 관리자 ===== */
+.admin{display:flex;min-height:calc(100vh - 44px);background:#eef1f4}
+.side{width:210px;background:var(--navy);color:#cdd8e2;padding:16px 0;flex:none}
+.side .lg{display:flex;align-items:center;color:#fff;font-weight:800;font-size:17px;padding:0 18px 16px}
+.side a{display:block;padding:11px 20px;font-size:13.5px;color:#aebccb;text-decoration:none}
+.side a.on{background:#22384f;color:#fff;border-left:3px solid var(--coral)}
+.main{flex:1;padding:22px 26px}
+.main h2{font-size:20px;color:var(--navy);margin-bottom:4px}
+.crumb{font-size:12px;color:var(--muted);margin-bottom:16px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:12px;padding:15px}
+.kpi .l{font-size:12px;color:var(--muted)}
+.kpi .v{font-size:23px;font-weight:800;color:var(--navy);margin-top:6px}
+.kpi.warn{background:var(--coralL);border-color:#f3c7ba}
+.kpi.warn .l,.kpi.warn .v{color:var(--coral)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:16px}
+.panel h3{font-size:14px;color:var(--navy);margin-bottom:12px}
+.bars{display:flex;align-items:flex-end;gap:14px;height:120px;padding-top:8px}
+.bars .b{flex:1;background:linear-gradient(var(--green),#3fae90);border-radius:6px 6px 0 0;position:relative}
+.bars .b span{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
+table.stl{width:100%;border-collapse:collapse;font-size:13px}
+table.stl th{background:#f1f4f7;color:var(--navy);text-align:left;padding:9px 10px;font-size:12.5px}
+table.stl td{border-bottom:1px solid var(--line);padding:9px 10px}
+table.stl td.r{text-align:right}
+.st{font-size:11px;font-weight:700;padding:3px 9px;border-radius:11px}
+.st.ok{background:var(--greenL);color:var(--green)}
+.rowbtn{background:var(--navy);color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:7px}
+.sumbar{display:flex;align-items:center;gap:16px;margin-top:14px;background:#f7f9fa;border:1px solid var(--line);border-radius:10px;padding:12px 14px;flex-wrap:wrap}
+.sumbar .big{font-size:16px;font-weight:800;color:var(--navy)}
+.sumbar .issue{margin-left:auto;background:var(--coral);color:#fff;font-weight:800;padding:11px 18px;border-radius:9px;font-size:13px}
+.filters{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.filters .f{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 13px;font-size:12.5px;color:#44505c}
+
+/* 토스트 */
+#toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}.kpis{grid-template-columns:repeat(2,1fr)}.nav{display:none}.admin{flex-direction:column}.side{width:100%}}
+</style>
+</head>
+<body>
+
+<div class="protobar">
+  <span class="brand"><span class="ring"></span><span class="ring2"></span>이음</span>
+  <span class="lbl">화면 미리보기</span>
+  <button class="on" data-v="shop" onclick="sw('shop',this)">통합몰</button>
+  <button data-v="live" onclick="sw('live',this)"><span class="rdot"></span>라이브</button>
+  <button data-v="work" onclick="sw('work',this)">복지몰</button>
+  <button data-v="admin" onclick="sw('admin',this)">관리자</button>
+</div>
+
+<!-- ============ 통합몰 ============ -->
+<section id="shop" class="view on">
+  <div class="shop-head"><div class="in">
+    <div class="logo"><span class="ring"></span><span class="ring2"></span>이음</div>
+    <div class="search">성남이 만든 우수 제품을 검색하세요</div>
+    <button class="icobtn"><svg class="svgico" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
+    <button class="icobtn"><svg class="svgico" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg></button>
+  </div>
+  <div class="in" style="padding-top:0">
+    <nav class="nav"><a class="act">홈</a><a onclick="sw('live',document.querySelector('[data-v=live]'))">라이브</a><a>카테고리</a><a>기업 브랜드관</a><a>기획전</a><a>마이</a></nav>
+  </div></div>
+
+  <div class="wrap">
+    <div class="hero">
+      <div class="rings"><span style="width:200px;height:200px;right:20px;top:10px"></span><span style="width:120px;height:120px;right:120px;top:80px"></span></div>
+      <span class="tag">SEONGNAM MADE · 산단 직거래</span>
+      <h1>성남이 만든 진짜,<br>바로 만나다.</h1>
+      <p>3,658개 산단 기업의 우수 완제품을 중간유통 없이 — 이음</p>
+      <button class="cta" onclick="toast('이번주 라이브 기획전으로 이동합니다')">이번주 기획전 보기 →</button>
+    </div>
+
+    <div class="live-strip">
+      <div class="live-thumb"><span class="live-badge"><span class="rdot"></span>LIVE</span></div>
+      <div>
+        <div style="font-size:12px;color:var(--coral);font-weight:700">지금 방송 중</div>
+        <div style="font-size:15px;font-weight:700;color:var(--navy);margin-top:2px">위생기업사 · 친환경 생활용품 특가전</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:2px">시청 1,240명 · 좋아요 3.2k</div>
+      </div>
+      <button class="go" onclick="sw('live',document.querySelector('[data-v=live]'))">방송 보기</button>
+    </div>
+
+    <div class="sec-t">카테고리</div>
+    <div class="chips">
+      <span class="chip on">전체</span><span class="chip">식품</span><span class="chip">생활·위생</span><span class="chip">화장품·바이오</span><span class="chip">전자·부품</span><span class="chip">패션·잡화</span><span class="chip">사무·MRO</span>
+    </div>
+
+    <div class="sec-t">기업 브랜드관 <span style="font-size:12px;font-weight:500;color:var(--muted)">— 산단 제조기업이 직접 운영</span></div>
+    <div class="brands">
+      <div class="brandit"><div class="av">위생</div>위생기업사</div>
+      <div class="brandit"><div class="av">크린</div>크린텍</div>
+      <div class="brandit"><div class="av">한솔</div>한솔생명</div>
+      <div class="brandit"><div class="av">명품</div>그린명품제약</div>
+      <div class="brandit"><div class="av">ORI</div>오리엔트</div>
+      <div class="brandit"><div class="av">뉴다</div>뉴다이나믹</div>
+    </div>
+
+    <div class="sec-t">오늘의 추천 상품</div>
+    <div class="grid">
+      <div class="prod"><div class="ph" style="background:var(--greenL)"><i class="pico"></i></div><div class="bd"><div class="co">위생기업사</div><div class="nm">친환경 주방세제 리필 2L</div><div class="pr"><span class="dc">28%</span>9,900원<span class="old">13,900</span></div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+      <div class="prod"><div class="ph" style="background:#eef4ff"><i class="pico"></i></div><div class="bd"><div class="co">크린텍</div><div class="nm">3겹 프리미엄 화장지 30롤</div><div class="pr"><span class="dc">15%</span>14,000원<span class="old">16,500</span></div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+      <div class="prod"><div class="ph" style="background:#f0fbf4"><i class="pico"></i></div><div class="bd"><div class="co">한솔생명과학</div><div class="nm">유산균 이너케어 30포</div><div class="pr">24,900원</div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+      <div class="prod"><div class="ph" style="background:#fff6ea"><i class="pico"></i></div><div class="bd"><div class="co">그린명품제약</div><div class="nm">홍삼 스틱 프리미엄 60포</div><div class="pr"><span class="dc">20%</span>39,000원<span class="old">49,000</span></div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+      <div class="prod"><div class="ph" style="background:#eef1f4"><i class="pico"></i></div><div class="bd"><div class="co">오리엔트</div><div class="nm">멀티탭 안전 4구 3m</div><div class="pr">8,900원</div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+      <div class="prod"><div class="ph" style="background:#fbeef0"><i class="pico"></i></div><div class="bd"><div class="co">위생기업사</div><div class="nm">천연 비누 선물세트 6입</div><div class="pr">18,000원</div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+      <div class="prod"><div class="ph" style="background:#eef4ff"><i class="pico"></i></div><div class="bd"><div class="co">크린텍</div><div class="nm">니트릴 안전장갑 100매</div><div class="pr"><span class="dc">10%</span>11,700원<span class="old">13,000</span></div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+      <div class="prod"><div class="ph" style="background:#f0fbf4"><i class="pico"></i></div><div class="bd"><div class="co">한솔생명과학</div><div class="nm">종합비타민 이뮨 90정</div><div class="pr">21,000원</div><button class="buy" onclick="toast('장바구니에 담았습니다')">담기</button></div></div>
+    </div>
+
+    <div class="foot">이음 (IEUM) · 성남상생협동조합 운영 · 사람과 기업을 잇다 &nbsp;|&nbsp; 프로토타입 화면입니다</div>
+  </div>
+</section>
+
+<!-- ============ 라이브 ============ -->
+<section id="live" class="view">
+  <div class="ptitle" style="margin-top:16px">이음 LIVE — 실시간 판매</div>
+  <div class="phones">
+    <div class="phone"><div class="notch"></div><div class="scr">
+      <div class="lv-video">
+        <span class="lb"><span class="rdot"></span>LIVE</span><span class="vc">시청 1,240</span>
+        <div class="cap">위생기업사 · 친환경 생활용품 특가 방송<br><span style="color:#8fa0b0">네이버 쇼핑라이브 연동 화면</span></div>
+      </div>
+      <div class="lv-prod">
+        <div class="ph"><i class="pico"></i></div>
+        <div style="flex:1"><div class="co">위생기업사</div><div class="nm">친환경 주방세제 2L</div><div class="pr">9,900원 <span style="font-size:11px;color:var(--muted);text-decoration:line-through">13,900</span></div></div>
+      </div>
+      <button class="lv-buy" onclick="toast('주문 완료 — 정산 코어에 매출이 집계됩니다')">바로 구매 · 방송특가</button>
+      <div class="lv-chat">
+        <div class="m"><b>소비자1</b> 저번에 사고 재구매해요!</div>
+        <div class="m"><b>소비자2</b> 배송 얼마나 걸리나요?</div>
+        <div class="m"><b>이음</b> 오늘 주문 시 내일 출고됩니다</div>
+      </div>
+    </div></div>
+
+    <div style="max-width:320px">
+      <div class="panel" style="margin-top:0">
+        <h3>이 화면의 작동 원리</h3>
+        <ul style="font-size:13px;color:#44505c;line-height:1.7;padding-left:18px">
+          <li><b>영상</b>은 네이버쇼핑라이브·그립을 <b>임베드</b> (자체 개발 X)</li>
+          <li><b>‘바로 구매’ 주문</b>은 이음 <b>정산 코어</b>로 수집</li>
+          <li>재고 자동 차감 · <b>방송별 매출·정산</b> 자동 집계</li>
+          <li>방송 종료 시 → 관리자 화면에 기업별 정산 반영</li>
+        </ul>
+        <button class="rowbtn" style="background:var(--coral);padding:9px 14px;font-size:13px" onclick="sw('admin',document.querySelector('[data-v=admin]'))">관리자 정산 화면 보기</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 복지몰 ============ -->
+<section id="work" class="view">
+  <div class="ptitle" style="margin-top:16px">이음 워크 — 근로자 복지몰</div>
+  <div class="phones">
+    <div class="phone"><div class="notch"></div><div class="scr">
+      <div class="wk-top">
+        <div><div class="t">이음 워크</div><div class="s">홍길동님 · ㈜위생기업사</div></div>
+        <div class="cert">근로자<br>인증완료</div>
+      </div>
+      <div class="wk-note"><b>성남사랑상품권 결제 가능</b><p>복지포인트 사용은 추후 오픈 예정 (법률검토 후)</p></div>
+      <div style="font-size:14px;font-weight:800;color:var(--navy);padding:2px 14px 8px">근로자 전용가</div>
+      <div class="wk-grid">
+        <div class="prod"><div class="ph" style="background:var(--greenL);height:96px"><i class="pico"></i></div><div class="bd"><div class="co">위생기업사</div><div class="nm" style="height:auto">주방세제 2L</div><div class="pr" style="color:var(--green)">9,900원 <span class="old">12,900</span></div></div></div>
+        <div class="prod"><div class="ph" style="background:#f0fbf4;height:96px"><i class="pico"></i></div><div class="bd"><div class="co">한솔생명</div><div class="nm" style="height:auto">유산균 30포</div><div class="pr" style="color:var(--green)">16,000원 <span class="old">24,900</span></div></div></div>
+        <div class="prod"><div class="ph" style="background:#fff6ea;height:96px"><i class="pico"></i></div><div class="bd"><div class="co">그린명품제약</div><div class="nm" style="height:auto">홍삼스틱 60포</div><div class="pr" style="color:var(--green)">29,000원 <span class="old">39,000</span></div></div></div>
+        <div class="prod"><div class="ph" style="background:#eef4ff;height:96px"><i class="pico"></i></div><div class="bd"><div class="co">크린텍</div><div class="nm" style="height:auto">화장지 30롤</div><div class="pr" style="color:var(--green)">11,900원 <span class="old">16,500</span></div></div></div>
+      </div>
+      <button class="wk-pay" onclick="toast('성남사랑상품권으로 결제되었습니다')">성남사랑상품권으로 결제</button>
+    </div></div>
+
+    <div style="max-width:320px">
+      <div class="panel" style="margin-top:0">
+        <h3>복지몰 설계 포인트</h3>
+        <ul style="font-size:13px;color:#44505c;line-height:1.7;padding-left:18px">
+          <li>산단 <b>근로자 4.2만명</b> 대상 전용관</li>
+          <li><b>근로자 인증(디지털 카드)</b> 후 전용가 노출</li>
+          <li>2단계 = <b>성남사랑상품권 결제</b>(안전)</li>
+          <li>3단계 = <b>복지포인트</b> (전자금융 법률검토 후)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 관리자 ============ -->
+<section id="admin" class="view">
+  <div class="admin">
+    <div class="side">
+      <div class="lg"><span class="ring"></span><span class="ring2"></span>이음 ADMIN</div>
+      <a>대시보드</a><a>입점기업 관리</a><a>상품·SKU</a><a>주문·재고</a><a class="on">정산·세금계산서</a><a>라이브 편성</a><a>데이터 리포트</a>
+    </div>
+    <div class="main">
+      <h2>정산 · 세금계산서</h2>
+      <div class="crumb">홈 / 정산 · 세금계산서 / 2026년 07월</div>
+
+      <div class="kpis">
+        <div class="kpi"><div class="l">이달 거래액</div><div class="v">₩ 2.1억</div></div>
+        <div class="kpi"><div class="l">신규 주문</div><div class="v">312건</div></div>
+        <div class="kpi warn"><div class="l">정산 대기</div><div class="v">18건</div></div>
+        <div class="kpi"><div class="l">입점기업</div><div class="v">42개사</div></div>
+      </div>
+
+      <div class="panel">
+        <h3>채널별 매출 추이 (최근 6개월)</h3>
+        <div class="bars">
+          <div class="b" style="height:45%"><span>2월</span></div><div class="b" style="height:58%"><span>3월</span></div>
+          <div class="b" style="height:52%"><span>4월</span></div><div class="b" style="height:70%"><span>5월</span></div>
+          <div class="b" style="height:82%"><span>6월</span></div><div class="b" style="height:96%"><span>7월</span></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>기업별 월 정산 <span style="font-weight:400;color:var(--muted);font-size:12px">— 자동 계산</span></h3>
+        <div class="filters"><span class="f">기간 2026.07 ▾</span><span class="f">채널 전체 ▾</span><span class="f">기업 전체 ▾</span></div>
+        <table class="stl">
+          <thead><tr><th>입점기업</th><th class="r">매출액</th><th class="r">수수료</th><th class="r">환불차감</th><th class="r">정산액</th><th>세금계산서</th></tr></thead>
+          <tbody>
+            <tr><td>위생기업사</td><td class="r">5,000,000</td><td class="r">500,000</td><td class="r">80,000</td><td class="r"><b>4,420,000</b></td><td><span class="st ok">발행완료</span></td></tr>
+            <tr><td>크린텍</td><td class="r">3,200,000</td><td class="r">320,000</td><td class="r">0</td><td class="r"><b>2,880,000</b></td><td><button class="rowbtn" onclick="issue(this)">발행</button></td></tr>
+            <tr><td>한솔생명과학</td><td class="r">2,800,000</td><td class="r">280,000</td><td class="r">40,000</td><td class="r"><b>2,480,000</b></td><td><button class="rowbtn" onclick="issue(this)">발행</button></td></tr>
+            <tr><td>그린명품제약</td><td class="r">1,900,000</td><td class="r">190,000</td><td class="r">0</td><td class="r"><b>1,710,000</b></td><td><button class="rowbtn" onclick="issue(this)">발행</button></td></tr>
+          </tbody>
+        </table>
+        <div class="sumbar">
+          <div>합계 정산액 <span class="big">₩ 11,490,000</span></div>
+          <div style="font-size:12px;color:var(--muted)">수수료 1,290,000 · 환불차감 120,000</div>
+          <button class="issue" onclick="issueAll()">세금계산서 일괄 발행</button>
+        </div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:10px">국세청 전자세금계산서 연동 → 발행대장 자동 기록 · 기업별 정산서 PDF 자동 생성</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="toast"></div>
+
+<script>
+function sw(v,btn){
+  document.querySelectorAll('.view').forEach(s=>s.classList.remove('on'));
+  document.getElementById(v).classList.add('on');
+  document.querySelectorAll('.protobar button').forEach(b=>b.classList.remove('on'));
+  var target = (btn && btn.dataset && btn.dataset.v) ? btn : document.querySelector('[data-v="'+v+'"]');
+  if(target) target.classList.add('on');
+  window.scrollTo(0,0);
+}
+var t;
+function toast(m){var e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(t);t=setTimeout(function(){e.classList.remove('show')},2200);}
+function issue(b){b.outerHTML='<span class="st ok">발행완료</span>';toast('세금계산서 발행 완료');}
+function issueAll(){document.querySelectorAll('.rowbtn').forEach(function(b){if(b.textContent==='발행')b.outerHTML='<span class="st ok">발행완료</span>';});toast('세금계산서 일괄 발행 완료 (국세청 연동)');}
+</script>
+</body>
+</html>
