@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F4F6F3">
+</head>
+<body>
+<meta charset="utf-8">
+<title>택배사업 정산 시뮬레이터</title>
+<style>
+  :root{
+    --ground:#F4F6F3; --surface:#FFFFFF; --surface-2:#EDF0EB;
+    --ink:#17211C; --ink-soft:#4A574F; --ink-faint:#7C877F; --line:#DDE3DA;
+    --accent:#2F6F5E; --accent-soft:#E4EFE9;
+    --money:#9C6B1F; --money-soft:#F6EBD6;
+    --good:#2F7D57; --cost:#B0503B; --cost-soft:#F4E2DC;
+    --radius:14px; --shadow:0 1px 2px rgba(20,30,25,.04),0 10px 28px rgba(20,30,25,.07);
+  }
+  @media (prefers-color-scheme:dark) and (min-width:99999px){
+    :root{
+      --ground:#0F1411; --surface:#161D19; --surface-2:#1D2621;
+      --ink:#E7ECE7; --ink-soft:#A6B0A8; --ink-faint:#6E786F; --line:#28322C;
+      --accent:#5FB89E; --accent-soft:#1B2A25;
+      --money:#D6A65A; --money-soft:#2A2114;
+      --good:#5FB88A; --cost:#D77A63; --cost-soft:#2C1C17;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.38);
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#F4F6F3; --surface:#FFFFFF; --surface-2:#EDF0EB;
+    --ink:#17211C; --ink-soft:#4A574F; --ink-faint:#7C877F; --line:#DDE3DA;
+    --accent:#2F6F5E; --accent-soft:#E4EFE9; --money:#9C6B1F; --money-soft:#F6EBD6;
+    --good:#2F7D57; --cost:#B0503B; --cost-soft:#F4E2DC;
+    --shadow:0 1px 2px rgba(20,30,25,.04),0 10px 28px rgba(20,30,25,.07);
+  }
+  :root[data-theme="darkx"]{
+    --ground:#0F1411; --surface:#161D19; --surface-2:#1D2621;
+    --ink:#E7ECE7; --ink-soft:#A6B0A8; --ink-faint:#6E786F; --line:#28322C;
+    --accent:#5FB89E; --accent-soft:#1B2A25; --money:#D6A65A; --money-soft:#2A2114;
+    --good:#5FB88A; --cost:#D77A63; --cost-soft:#2C1C17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.38);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ground);color-scheme:light}
+  .wrap{
+    font-family:'Apple SD Gothic Neo','Pretendard',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:var(--ground); color:var(--ink); -webkit-font-smoothing:antialiased;
+    padding:clamp(18px,3.5vw,44px); line-height:1.55;
+  }
+  .inner{max-width:1000px;margin:0 auto}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:clamp(23px,3.6vw,32px);font-weight:800;letter-spacing:-.02em;margin:.3em 0 .15em}
+  .lede{color:var(--ink-soft);font-size:15px;max-width:60ch;margin:0 0 24px}
+  .grid{display:grid;grid-template-columns:340px 1fr;gap:20px;align-items:start}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+  .panel h2{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-faint);margin:0 0 16px}
+  .field{margin-bottom:16px}
+  .field:last-child{margin-bottom:0}
+  .field .top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+  .field label{font-size:13.5px;font-weight:600}
+  .field .hint{font-size:11px;color:var(--ink-faint)}
+  .field .val{font-size:14px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:5px;background:var(--surface-2);outline:none;margin:6px 0 0}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--surface);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+  input[type=range]::-moz-range-thumb{width:15px;height:15px;border-radius:50%;background:var(--accent);cursor:pointer;border:3px solid var(--surface)}
+  input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--money);outline-offset:2px}
+  .divlabel{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cost);margin:20px 0 10px;padding-top:16px;border-top:1px solid var(--line)}
+  /* results */
+  .results{display:flex;flex-direction:column;gap:16px}
+  .headline{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:520px){.headline{grid-template-columns:1fr}}
+  .big{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+  .big.profit{background:var(--accent);border-color:transparent}
+  .big.profit .k,.big.profit .v,.big.profit .u{color:#fff}
+  @media(prefers-color-scheme:dark) and (min-width:99999px){.big.profit .k,.big.profit .v,.big.profit .u{color:#08110D}}
+  :root[data-theme="darkx"] .big.profit .k,:root[data-theme="darkx"] .big.profit .v,:root[data-theme="darkx"] .big.profit .u{color:#08110D}
+  .big .k{font-size:12.5px;font-weight:600;opacity:.9;letter-spacing:.02em}
+  .big .v{font-size:34px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1;margin-top:4px}
+  .big .u{font-size:13px;font-weight:600;opacity:.75;margin-left:3px}
+  .big .sub{font-size:12px;margin-top:6px;opacity:.8}
+  .split2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .who{background:var(--money-soft);border:1px solid transparent;border-radius:var(--radius);padding:16px 18px;text-align:center}
+  .who .lbl{font-size:13px;font-weight:600;color:var(--ink-soft)}
+  .who .amt{font-size:24px;font-weight:800;color:var(--money);font-variant-numeric:tabular-nums;margin-top:2px}
+  .who .per{font-size:11.5px;color:var(--ink-faint);margin-top:2px}
+  /* breakdown table */
+  .bd{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:6px 4px}
+  .bd .r{display:flex;justify-content:space-between;align-items:center;padding:11px 16px;font-size:14px;border-bottom:1px solid var(--line)}
+  .bd .r:last-child{border-bottom:none}
+  .bd .r .lab{color:var(--ink-soft)} .bd .r .lab b{color:var(--ink);font-weight:600}
+  .bd .r .amt{font-weight:700;font-variant-numeric:tabular-nums}
+  .bd .r.neg .amt{color:var(--cost)} .bd .r.pos .amt{color:var(--good)}
+  .bd .r.tot{background:var(--surface-2)} .bd .r.tot .lab{color:var(--ink);font-weight:700} .bd .r.tot .amt{font-size:15px}
+  .bep{display:flex;gap:10px;align-items:center;padding:13px 16px;border-radius:12px;font-size:13.5px;font-weight:600}
+  .bep.ok{background:var(--accent-soft);color:var(--accent)}
+  .bep.no{background:var(--cost-soft);color:var(--cost)}
+  .dot{width:9px;height:9px;border-radius:50%;background:currentColor;flex:0 0 auto}
+  .note{font-size:12px;color:var(--ink-faint);line-height:1.7;margin-top:4px}
+  .presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .preset{font-size:12.5px;font-weight:600;padding:7px 13px;border-radius:20px;border:1px solid var(--line);background:var(--surface);color:var(--ink-soft);cursor:pointer;transition:.15s}
+  .preset:hover{border-color:var(--accent);color:var(--accent)}
+  .preset.on{background:var(--accent);color:#fff;border-color:transparent}
+  @media(prefers-color-scheme:dark) and (min-width:99999px){.preset.on{color:#08110D}}
+</style>
+
+<div class="wrap"><div class="inner">
+  <div class="eyebrow">택배 통합발송 · 정산 계산기</div>
+  <h1>순이익 &amp; 50:50 배분 시뮬레이터</h1>
+  <p class="lede">슬라이더를 움직이면 월 매출·순이익·손익분기, 그리고 신대표·성대표 각자의 몫이 실시간으로 바뀝니다. 개인정보 없이 <b>건수·단가·비용</b>만으로 계산합니다.</p>
+
+  <div class="presets">
+    <button class="preset on" data-preset="now">지금 (일 30건)</button>
+    <button class="preset" data-preset="bep">손익분기 (일 900건)</button>
+    <button class="preset" data-preset="scale">규모화 (일 3,000건)</button>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>입력값</h2>
+      <div class="field">
+        <div class="top"><label for="shops">업체 수</label><span class="val" id="shops-v">30곳</span></div>
+        <input type="range" id="shops" min="5" max="150" step="1" value="30">
+      </div>
+      <div class="field">
+        <div class="top"><label for="perday">업체당 하루 건수</label><span class="val" id="perday-v">20건</span></div>
+        <input type="range" id="perday" min="3" max="60" step="1" value="20">
+      </div>
+      <div class="field">
+        <div class="top"><label for="price">업체 청구가 <span class="hint">건당</span></label><span class="val" id="price-v">2,400원</span></div>
+        <input type="range" id="price" min="2000" max="4000" step="50" value="2400">
+      </div>
+
+      <div class="divlabel">공동비용 (건당) — 순이익 전 차감</div>
+      <div class="field">
+        <div class="top"><label for="code">코드 원가 <span class="hint">우체국/시크폭스</span></label><span class="val" id="code-v">1,900원</span></div>
+        <input type="range" id="code" min="1700" max="2400" step="10" value="1900">
+      </div>
+      <div class="field">
+        <div class="top"><label for="pickup">픽업·집하 인력</label><span class="val" id="pickup-v">120원</span></div>
+        <input type="range" id="pickup" min="0" max="400" step="10" value="120">
+      </div>
+      <div class="field">
+        <div class="top"><label for="manager">관리자 용돈</label><span class="val" id="manager-v">80원</span></div>
+        <input type="range" id="manager" min="0" max="300" step="10" value="80">
+      </div>
+      <div class="field">
+        <div class="top"><label for="sys">소모품·기계·시스템</label><span class="val" id="sys-v">40원</span></div>
+        <input type="range" id="sys" min="0" max="200" step="10" value="40">
+      </div>
+    </div>
+
+    <div class="results">
+      <div class="headline">
+        <div class="big profit">
+          <div class="k">월 순이익</div>
+          <div><span class="v" id="net">4,056,000</span><span class="u">원</span></div>
+          <div class="sub" id="net-day">일 600건 · 월 15,600건 기준</div>
+        </div>
+        <div class="big">
+          <div class="k">월 매출</div>
+          <div><span class="v" id="rev">37,440,000</span><span class="u">원</span></div>
+          <div class="sub" id="margin-rate">순이익률 10.8%</div>
+        </div>
+      </div>
+
+      <div class="split2">
+        <div class="who"><div class="lbl">신대표 50%</div><div class="amt" id="shin">2,028,000원</div><div class="per" id="shin-day">일 30건 환산 · —</div></div>
+        <div class="who"><div class="lbl">성대표 50%</div><div class="amt" id="seong">2,028,000원</div><div class="per">＋ 시스템 소유·SaaS 로열티 별도</div></div>
+      </div>
+
+      <div class="bep" id="bep"><span class="dot"></span><span id="bep-txt">—</span></div>
+
+      <div class="bd" id="breakdown">
+        <div class="r"><span class="lab"><b>건당 업체 청구가</b></span><span class="amt" id="b-price">2,400원</span></div>
+        <div class="r neg"><span class="lab">− 코드 원가</span><span class="amt" id="b-code">−1,900원</span></div>
+        <div class="r neg"><span class="lab">− 픽업·집하 인력</span><span class="amt" id="b-pickup">−120원</span></div>
+        <div class="r neg"><span class="lab">− 관리자 용돈</span><span class="amt" id="b-manager">−80원</span></div>
+        <div class="r neg"><span class="lab">− 소모품·기계·시스템</span><span class="amt" id="b-sys">−40원</span></div>
+        <div class="r neg" style="opacity:.7"><span class="lab">− 지입택배 인건비</span><span class="amt">0원</span></div>
+        <div class="r pos tot"><span class="lab">= 건당 순이익</span><span class="amt" id="b-net">260원</span></div>
+      </div>
+
+      <p class="note" id="warn"></p>
+    </div>
+  </div>
+</div></div>
+
+<script>
+(function(){
+  var ids=['shops','perday','price','code','pickup','manager','sys'];
+  var el={}; ids.forEach(function(i){el[i]=document.getElementById(i)});
+  var presets={
+    now:{shops:8,perday:4,price:2600,code:1900,pickup:150,manager:80,sys:60},
+    bep:{shops:38,perday:24,price:2450,code:1900,pickup:120,manager:80,sys:40},
+    scale:{shops:120,perday:25,price:2300,code:1900,pickup:90,manager:70,sys:25}
+  };
+  function won(n){return Math.round(n).toLocaleString('ko-KR')}
+  function g(i){return parseFloat(el[i].value)}
+  function set(id,t){document.getElementById(id).textContent=t}
+
+  function render(){
+    var shops=g('shops'), perday=g('perday'), price=g('price'),
+        code=g('code'), pickup=g('pickup'), manager=g('manager'), sys=g('sys');
+    // slider labels
+    set('shops-v',shops+'곳'); set('perday-v',perday+'건');
+    set('price-v',won(price)+'원'); set('code-v',won(code)+'원');
+    set('pickup-v',won(pickup)+'원'); set('manager-v',won(manager)+'원'); set('sys-v',won(sys)+'원');
+
+    var costPer=code+pickup+manager+sys;
+    var netPer=price-costPer;
+    var dayQty=shops*perday;
+    var monthQty=dayQty*26;
+    var rev=monthQty*price;
+    var net=monthQty*netPer;
+    var half=net/2;
+    var rate=rev>0?(net/rev*100):0;
+
+    // breakdown
+    set('b-price',won(price)+'원');
+    set('b-code','−'+won(code)+'원');
+    set('b-pickup','−'+won(pickup)+'원');
+    set('b-manager','−'+won(manager)+'원');
+    set('b-sys','−'+won(sys)+'원');
+    set('b-net',(netPer<0?'−':'')+won(Math.abs(netPer))+'원');
+
+    // headline
+    set('net',won(net)); set('rev',won(rev));
+    set('net-day','일 '+won(dayQty)+'건 · 월 '+won(monthQty)+'건 기준');
+    set('margin-rate','순이익률 '+rate.toFixed(1)+'%');
+    set('shin',won(half)+'원'); set('seong',won(half)+'원');
+    set('shin-day','건당 순이익 '+(netPer<0?'−':'')+won(Math.abs(netPer))+'원의 절반');
+
+    // BEP: fixed-ish floor assumption — treat as profitability of the run
+    var bep=document.getElementById('bep');
+    var bepTxt=document.getElementById('bep-txt');
+    if(netPer<=0){
+      bep.className='bep no';
+      bepTxt.textContent='건당 순이익이 0 이하입니다 — 청구가를 올리거나 비용을 줄여야 합니다.';
+    } else if(net<7000000*0){ // placeholder never
+      bep.className='bep no';
+    } else {
+      bep.className='bep ok';
+      var needDay=Math.ceil(7000000/netPer/26); // 월 고정비 700만 가정 손익분기
+      if(net>=7000000){
+        bepTxt.textContent='흑자 구간 · 월 고정비 700만원 가정 시 손익분기(약 일 '+won(needDay)+'건)를 넘었습니다.';
+      } else {
+        bepTxt.textContent='아직 손익분기 전 · 월 고정비 700만원 가정 시 일 '+won(needDay)+'건 필요 (현재 일 '+won(dayQty)+'건).';
+        bep.className='bep no';
+      }
+    }
+
+    var warn=document.getElementById('warn');
+    if(price-code<400 && netPer>0){
+      warn.textContent='⚠ 코드원가 대비 차액이 얇습니다. 소량업체는 원래 비싸게 내던 곳이라 청구가 여유가 있습니다 — 차액 500원 이상을 권장.';
+    } else if(netPer<=0){
+      warn.textContent='';
+    } else {
+      warn.textContent='※ 손익분기는 월 고정비 700만원(창고 소규모+픽업 기본+시스템)을 가정한 추정입니다. 실제 고정비에 맞춰 해석하세요. 지입기사 인건비는 0원(기사가 배송으로 수익).';
+    }
+  }
+
+  function applyPreset(name){
+    var p=presets[name]; if(!p) return;
+    ids.forEach(function(i){el[i].value=p[i]});
+    render();
+  }
+  ids.forEach(function(i){el[i].addEventListener('input',function(){
+    document.querySelectorAll('.preset').forEach(function(p){p.classList.remove('on')});
+    render();
+  })});
+  document.querySelectorAll('.preset').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.preset').forEach(function(x){x.classList.remove('on')});
+      btn.classList.add('on');
+      applyPreset(btn.getAttribute('data-preset'));
+    });
+  });
+  // init: apply the preset marked active so numbers match the label
+  applyPreset('now');
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#F4F6F3">
+</head>
+<body>
+<meta charset="utf-8">
+<title>택배 통합발송 사업 로드맵</title>
+<style>
+  :root{
+    --ground:#F4F6F3; --surface:#FFFFFF; --surface-2:#EDF0EB;
+    --ink:#17211C; --ink-soft:#4A574F; --ink-faint:#7C877F; --line:#DDE3DA;
+    --accent:#2F6F5E; --accent-soft:#E4EFE9;
+    --money:#9C6B1F; --money-soft:#F6EBD6;
+    --good:#2F7D57; --cost:#B0503B; --cost-soft:#F4E2DC;
+    --radius:14px; --shadow:0 1px 2px rgba(20,30,25,.04),0 10px 28px rgba(20,30,25,.07);
+  }
+  @media (prefers-color-scheme:dark) and (min-width:99999px){
+    :root{
+      --ground:#0F1411; --surface:#161D19; --surface-2:#1D2621;
+      --ink:#E7ECE7; --ink-soft:#A6B0A8; --ink-faint:#6E786F; --line:#28322C;
+      --accent:#5FB89E; --accent-soft:#1B2A25;
+      --money:#D6A65A; --money-soft:#2A2114;
+      --good:#5FB88A; --cost:#D77A63; --cost-soft:#2C1C17;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.38);
+    }
+  }
+  :root[data-theme="light"]{
+    --ground:#F4F6F3; --surface:#FFFFFF; --surface-2:#EDF0EB;
+    --ink:#17211C; --ink-soft:#4A574F; --ink-faint:#7C877F; --line:#DDE3DA;
+    --accent:#2F6F5E; --accent-soft:#E4EFE9;
+    --money:#9C6B1F; --money-soft:#F6EBD6;
+    --good:#2F7D57; --cost:#B0503B; --cost-soft:#F4E2DC;
+    --shadow:0 1px 2px rgba(20,30,25,.04),0 10px 28px rgba(20,30,25,.07);
+  }
+  :root[data-theme="darkx"]{
+    --ground:#0F1411; --surface:#161D19; --surface-2:#1D2621;
+    --ink:#E7ECE7; --ink-soft:#A6B0A8; --ink-faint:#6E786F; --line:#28322C;
+    --accent:#5FB89E; --accent-soft:#1B2A25;
+    --money:#D6A65A; --money-soft:#2A2114;
+    --good:#5FB88A; --cost:#D77A63; --cost-soft:#2C1C17;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 12px 32px rgba(0,0,0,.38);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--ground);color-scheme:light}
+  .wrap{
+    font-family:'Apple SD Gothic Neo','Pretendard',system-ui,-apple-system,'Segoe UI',sans-serif;
+    background:var(--ground); color:var(--ink);
+    -webkit-font-smoothing:antialiased; line-height:1.6;
+    padding:clamp(20px,4vw,56px);
+  }
+  .inner{max-width:960px;margin:0 auto;display:flex;flex-direction:column;gap:clamp(28px,4vw,44px)}
+  .eyebrow{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:clamp(26px,4.6vw,40px);line-height:1.15;margin:.35em 0 .2em;font-weight:800;letter-spacing:-.02em;text-wrap:balance}
+  h2{font-size:clamp(19px,2.6vw,24px);font-weight:750;margin:0 0 2px;letter-spacing:-.01em}
+  .lede{color:var(--ink-soft);font-size:clamp(15px,1.8vw,17px);max-width:60ch}
+  .tag{display:inline-block;font-size:12.5px;color:var(--ink-faint)}
+  section{display:flex;flex-direction:column;gap:16px}
+  .sec-head{display:flex;flex-direction:column;gap:2px}
+  .sec-head .k{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)}
+  .cards{display:grid;gap:14px}
+  .stats{grid-template-columns:repeat(3,1fr)}
+  @media(max-width:640px){.stats{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow)}
+  .stat .n{font-size:30px;font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+  .stat .l{font-size:13px;color:var(--ink-soft);margin-top:4px}
+  .stat .s{font-size:12px;color:var(--ink-faint);margin-top:2px}
+  .accent-n{color:var(--accent)} .money-n{color:var(--money)}
+  /* waterfall */
+  .flow{display:flex;flex-direction:column;gap:8px}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;border-radius:11px;background:var(--surface);border:1px solid var(--line)}
+  .row .lab{font-size:14.5px;font-weight:600}
+  .row .sub{font-size:12px;color:var(--ink-faint);font-weight:400;margin-left:2px}
+  .row .amt{font-size:15px;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .row.minus{background:var(--cost-soft);border-color:transparent}
+  .row.minus .amt{color:var(--cost)}
+  .row.zero{opacity:.75}
+  .row.sum{background:var(--accent);border-color:transparent}
+  .row.sum .lab,.row.sum .amt{color:#fff}
+  :root[data-theme="darkx"] .row.sum .lab,:root[data-theme="darkx"] .row.sum .amt{color:#08110D}
+  @media (prefers-color-scheme:dark) and (min-width:99999px){.row.sum .lab,.row.sum .amt{color:#08110D}}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px}
+  .split .card{text-align:center;background:var(--money-soft);border-color:transparent}
+  .split .card .who{font-size:13px;color:var(--ink-soft);font-weight:600}
+  .split .card .v{font-size:22px;font-weight:800;color:var(--money);font-variant-numeric:tabular-nums;margin-top:2px}
+  /* timeline */
+  .stages{display:flex;flex-direction:column;gap:12px}
+  .stage{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .stage::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+  .stage .hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+  .stage .st{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--accent);text-transform:uppercase}
+  .stage .ti{font-size:17px;font-weight:750}
+  .stage .when{font-size:12px;color:var(--ink-faint);margin-left:auto}
+  .goal{font-size:14px;color:var(--ink);background:var(--surface-2);border-radius:9px;padding:9px 12px;margin-bottom:10px}
+  .goal b{color:var(--accent)}
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:600px){.duo{grid-template-columns:1fr}}
+  .who-col .h{font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:5px}
+  .who-col ul{margin:0;padding-left:16px;font-size:13.5px;color:var(--ink-soft);display:flex;flex-direction:column;gap:3px}
+  .split-pill{font-size:12px;font-weight:700;padding:2px 9px;border-radius:20px;background:var(--money-soft);color:var(--money)}
+  /* roles */
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:600px){.roles{grid-template-columns:1fr}}
+  .role h3{margin:0 0 3px;font-size:16px;font-weight:750}
+  .role .rsub{font-size:12.5px;color:var(--ink-faint);margin-bottom:10px}
+  .role ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px;font-size:13.5px;color:var(--ink-soft)}
+  .role.sys{border-color:var(--accent)}
+  /* protections */
+  .guard{display:flex;gap:13px;align-items:flex-start;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+  .guard .num{flex:0 0 auto;width:26px;height:26px;border-radius:8px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:800;font-size:14px}
+  :root[data-theme="darkx"] .guard .num{color:#08110D}
+  @media(prefers-color-scheme:dark) and (min-width:99999px){.guard .num{color:#08110D}}
+  .guard .gt{font-weight:700;font-size:14.5px} .guard .gd{font-size:13px;color:var(--ink-soft);margin-top:2px}
+  .guards{display:flex;flex-direction:column;gap:9px}
+  .foot{font-size:12.5px;color:var(--ink-faint);border-top:1px solid var(--line);padding-top:16px;line-height:1.7}
+  .foot b{color:var(--ink-soft)}
+  hr.div{border:none;border-top:1px solid var(--line);margin:0}
+</style>
+
+<div class="wrap"><div class="inner">
+
+  <header>
+    <div class="eyebrow">성남 지식산업센터 · 택배 통합발송 사업</div>
+    <h1>남의 코드에 우리 물량을 얹어,<br>차액을 나눠 갖는 사업</h1>
+    <p class="lede">시크폭스의 우체국 대량계약 코드에 우리가 영업한 소량업체 물량을 얹어 1,900원 단가를 쓰고, 그 차액을 신대표·성대표가 <b>반반(50:50)</b>으로 나눕니다. 이익은 반반, 시스템 소유권은 성대표 단독.</p>
+    <span class="tag">작성 2026.07.13 · 성대표 검토용 · v1</span>
+  </header>
+
+  <section>
+    <div class="cards stats">
+      <div class="card stat"><div class="n">일 30건</div><div class="l">현재 물량 (10곳 미만)</div><div class="s">작은 곳만 영업 가능 · 마진 두껍고 손 많이 감</div></div>
+      <div class="card stat"><div class="n accent-n">일 900건</div><div class="l">손익분기 (본전) 지점</div><div class="s">업체 30~50곳 확보 시 도달</div></div>
+      <div class="card stat"><div class="n money-n">50 : 50</div><div class="l">순이익 배분 (신대표 제안)</div><div class="s">공동비용 제외 후 반반</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="k">수익 구조</span><h2>“반반”은 매출이 아니라 순이익을 나눕니다</h2></div>
+    <p class="lede" style="margin-top:-4px">아래는 <b>1건 기준</b> 예시입니다. 공동비용을 먼저 빼고 남은 순이익을 절반씩. 지입기사 인건비는 기사가 배송으로 벌기 때문에 우리 돈이 안 나갑니다.</p>
+    <div class="flow">
+      <div class="row"><span class="lab">업체가 낸 택배비 <span class="sub">(기존 3,000원 → 절감가 제시)</span></span><span class="amt">2,400원</span></div>
+      <div class="row minus"><span class="lab">− 우체국/시크폭스 코드 원가</span><span class="amt">−1,900원</span></div>
+      <div class="row minus"><span class="lab">− 픽업·집하 인력비 <span class="sub">(모으는 사람)</span></span><span class="amt">−120원</span></div>
+      <div class="row minus"><span class="lab">− 지식센터 관리자 용돈 <span class="sub">(현장 운영 대가)</span></span><span class="amt">−80원</span></div>
+      <div class="row minus"><span class="lab">− 소모품·기계·시스템 운영</span><span class="amt">−40원</span></div>
+      <div class="row zero"><span class="lab">− 지입택배 인건비 <span class="sub">(기사가 배송으로 버니 0원)</span></span><span class="amt">0원</span></div>
+      <div class="row sum"><span class="lab">= 순이익</span><span class="amt">260원 / 건</span></div>
+    </div>
+    <div class="split">
+      <div class="card"><div class="who">신대표 50%</div><div class="v">130원</div></div>
+      <div class="card"><div class="who">성대표 50%</div><div class="v">130원</div></div>
+    </div>
+    <p class="tag">※ 일 600건 기준이면 월 순이익 약 <b>405만원</b> → 각 <b>약 202만원</b>. 실제 숫자는 정산 시뮬레이터에서 조정해 보세요.</p>
+  </section>
+
+  <hr class="div">
+
+  <section>
+    <div class="sec-head"><span class="k">성장 전략</span><h2>자동화를 먼저 만들고, 그 다음 업체를 늘린다</h2></div>
+    <p class="lede" style="margin-top:-4px">작은 업체는 손으로 늘리면 일에 깔립니다. 늘리기 전에 영업·정산 자동화부터.</p>
+    <div class="stages">
+
+      <div class="stage">
+        <div class="hd"><span class="st">Stage 0</span><span class="ti">검증</span><span class="when">지금 ~ 1개월</span></div>
+        <div class="goal">목표 · <b>시크폭스 그릇이 합법·안정적인지 확정</b> + 최소 정산·계약 시스템 만들기</div>
+        <div class="duo">
+          <div class="who-col"><div class="h">신대표</div><ul><li>시크폭스 “통합집하 허용” 우체국 <b>서면 확인</b></li><li>시크폭스 지속 인센티브 합의</li></ul></div>
+          <div class="who-col"><div class="h">성대표</div><ul><li>개인정보 없는 정산(건수×단가) MVP</li><li>전자계약 · 미케닉스 OS 모듈 재활용</li></ul></div>
+        </div>
+        <div style="margin-top:10px"><span class="split-pill">배분 · 파이 없음 → 안전장치 계약 먼저</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="hd"><span class="st">Stage 1</span><span class="ti">시스템화 &amp; 손익분기</span><span class="when">0 ~ 6개월</span></div>
+        <div class="goal">목표 · 업체 20~50곳 / <b>일 300~900건 → 손익분기 돌파</b></div>
+        <div class="duo">
+          <div class="who-col"><div class="h">신대표</div><ul><li>지산 내 소량업체 대면 영업 확산</li><li>관리자 용돈 공식 확정 · 픽업 인력 세팅</li></ul></div>
+          <div class="who-col"><div class="h">성대표</div><ul><li><b>영업 자동화</b>(셀프가입·AI영업·절감액 계산기)</li><li>정산 대시보드 = 공동 장부</li></ul></div>
+        </div>
+        <div style="margin-top:10px"><span class="split-pill">배분 · 순이익 50 : 50</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="hd"><span class="st">Stage 2</span><span class="ti">규모화 &amp; 그릇 이중화</span><span class="when">6 ~ 18개월</span></div>
+        <div class="goal">목표 · 업체 50~150곳 / 일 1,500~3,000건 → <b>월 순익 1,500만원+</b></div>
+        <div class="duo">
+          <div class="who-col"><div class="h">신대표</div><ul><li>백업 그릇 확보(마담엘레강스/자체 계약)</li><li>현장 운영·관리자 관계 유지</li></ul></div>
+          <div class="who-col"><div class="h">성대표</div><ul><li>자동화 고도화 · AI 업체 문의 응대(챗봇)</li><li>“많은 소량업체=많은 노동” 문제 흡수</li></ul></div>
+        </div>
+        <div style="margin-top:10px"><span class="split-pill">배분 · 자동화가 노동 대체할수록 성대표 비중 유지·강화</span></div>
+      </div>
+
+      <div class="stage">
+        <div class="hd"><span class="st">Stage 3</span><span class="ti">복제 &amp; 구독 소프트웨어(SaaS)</span><span class="when">18개월 +</span></div>
+        <div class="goal">목표 · 판교·안양·구로 등 <b>다른 지식산업센터로 복제</b> + 시스템 구독 판매</div>
+        <div class="duo">
+          <div class="who-col"><div class="h">신대표</div><ul><li>지역별 “방장(총판)” 발굴·연결</li><li>집하 마진은 지역별 배분</li></ul></div>
+          <div class="who-col"><div class="h">성대표</div><ul><li>시스템을 구독형으로 공급</li><li>물류 안 뛰고 <b>소프트웨어 로열티</b>로 이동</li></ul></div>
+        </div>
+        <div style="margin-top:10px"><span class="split-pill">배분 · 집하마진 지역배분 + SaaS 로열티는 성대표 단독</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <hr class="div">
+
+  <section>
+    <div class="sec-head"><span class="k">역할 분담</span><h2>현장·관계는 신대표, 전산·자동화는 성대표</h2></div>
+    <div class="roles">
+      <div class="card role">
+        <h3>신대표</h3>
+        <div class="rsub">현장 · 관계 · 대면 영업</div>
+        <ul>
+          <li>시크폭스 그릇 관계 유지 + 우체국 서면 확인</li>
+          <li>지식센터 관리자 용돈·수익 관리(현장 정치)</li>
+          <li>픽업·집하 인력 관리</li>
+          <li>대표모임 활용한 대면 영업</li>
+          <li>지입 기사 배차 관계</li>
+        </ul>
+      </div>
+      <div class="card role sys">
+        <h3>성대표 <span class="split-pill">시스템 소유</span></h3>
+        <div class="rsub">전산화 · 자동화 · AI(온라인 클로드)</div>
+        <ul>
+          <li><b>영업 자동화</b> — 셀프가입·AI영업·절감액 계산기 <span style="color:var(--accent)">(1순위)</span></li>
+          <li>정산 — 건수 집계→청구→마진 (개인정보 없이)</li>
+          <li>전자계약</li>
+          <li>AI 활용 — 영업 메시지·사업자등록증 자동입력·문의 응대</li>
+          <li>코드·데이터·서버 소유·운영</li>
+        </ul>
+      </div>
+    </div>
+    <p class="tag">회색지대 · <b>영업 채널 중복</b>(대면+자동)은 공동 pot이라 실적 다툼 불필요 · <b>비용 집행</b>은 신대표가 하되 금액은 사전 합의 공식 + 성대표 시스템에 기록 · <b>이익은 50:50, 시스템 소유는 성대표 단독</b>으로 분리.</p>
+  </section>
+
+  <hr class="div">
+
+  <section>
+    <div class="sec-head"><span class="k">성대표 안전장치</span><h2>“공정한 반반”이 되려면 이 셋은 필수</h2></div>
+    <div class="guards">
+      <div class="guard"><div class="num">1</div><div><div class="gt">시스템 소유권은 성대표 단독</div><div class="gd">코드·데이터·서버는 성대표(또는 별도 법인) 소유, 회사엔 라이선스만 빌려줌. 50:50은 ‘이익’을 나누는 것이지 ‘자산’을 나누는 게 아님.</div></div></div>
+      <div class="guard"><div class="num">2</div><div><div class="gt">비용 항목·금액 사전 합의 → 문서화</div><div class="gd">관리자 용돈·픽업 인력비의 공식을 미리 정함. 정산 시스템을 성대표가 만드니 그게 곧 공동 장부라 투명성 자동 확보.</div></div></div>
+      <div class="guard"><div class="num">3</div><div><div class="gt">초기 적자기 현금 부담 룰</div><div class="gd">성대표는 시스템(현물 출자)로 기여. 픽업·용돈 등 현금 손실을 성대표가 떠안지 않도록 명시. 흑자 전까지 급여 없이 최소비용.</div></div></div>
+    </div>
+    <p class="tag">＋ 확장 수익(다른 지산 복제 SaaS)은 50:50 밖. 성대표 시스템 자산이므로 성대표 우위로 별도 배분.</p>
+  </section>
+
+  <div class="foot">
+    <b>다음 액션</b> · ① 신대표가 시크폭스 우체국 서면확인 확보 → ② 역할·수익분배 합의서 서명 → ③ 정산 시스템 MVP 착수(영업 자동화 우선).<br>
+    이 문서는 계획 초안입니다. 실제 착수는 시크폭스 그릇의 합법성 확인이 전제입니다.
+  </div>
+
+</div></div>
+
+</body>
+</html>
