@@ -2,8 +2,17 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>이음 (IEUM) — 프로토타입</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>이음 (IEUM)</title>
+<meta name="description" content="성남산단 상생 커머스 플랫폼 이음 — 사람과 기업을 잇다">
+<meta name="theme-color" content="#16263b">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="이음">
 <style>
 :root{
   --navy:#16263b; --green:#157a63; --greenL:#e3f0eb; --coral:#f5623c; --coralL:#fff0ea;
@@ -190,7 +199,55 @@ table.stl td.r{text-align:right}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-@media(max-width:720px){.grid{grid-template-columns:repeat(2,1fr)}.kpis{grid-template-columns:repeat(2,1fr)}.nav{display:none}.admin{flex-direction:column}.side{width:100%}.detail{grid-template-columns:1fr}.detail .img{height:240px}}
+/* ===== 앱 모드 / 잘림 방지 ===== */
+html{overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom)}
+img,svg{max-width:100%;height:auto}
+.protobar{padding-top:calc(9px + env(safe-area-inset-top));padding-left:calc(16px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right))}
+.shop-head{top:calc(44px + env(safe-area-inset-top))}
+.wrap,.main{padding-left:max(18px,env(safe-area-inset-left));padding-right:max(18px,env(safe-area-inset-right))}
+.panel{overflow-x:auto}           /* 표가 길어도 화면 밖으로 안 나감 */
+table.stl{min-width:520px}
+
+@media(max-width:720px){
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .nav{display:none}
+  .admin{flex-direction:column;min-height:0}
+  .side{width:100%;padding:10px 0}
+  .side .lg{padding:0 16px 10px}
+  .side a{display:inline-block;padding:8px 14px;font-size:12.5px}
+  .side a.on{border-left:0;border-bottom:2px solid var(--coral)}
+  .main{padding:16px}
+  .detail{grid-template-columns:1fr;gap:18px}
+  .detail .img{height:230px}
+  .detail h1{font-size:21px}
+  .detail .price{font-size:23px}
+  /* 상단 탭: 줄바꿈 대신 가로 스크롤 */
+  .protobar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;gap:6px}
+  .protobar::-webkit-scrollbar{display:none}
+  .protobar button{flex:none;padding:6px 13px;font-size:12.5px}
+  .protobar .lbl{display:none}
+  .protobar .brand{white-space:nowrap;flex:none;margin-right:8px}
+  .search{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  /* 폰 목업 제거 → 실제 앱처럼 꽉 차게 */
+  .phones{padding:0;gap:0;display:block}
+  .phone{width:100%;border:0;border-radius:0;box-shadow:none}
+  .phone .notch{display:none}
+  .phone .scr{height:auto;overflow:visible}
+  .phones>div[style]{max-width:none!important;padding:14px}
+  .ptitle{margin:12px 0 6px;font-size:15px}
+  .hero{padding:26px 20px;border-radius:14px}
+  .hero h1{font-size:24px}
+  .shop-head .in{gap:10px;padding:10px 14px}
+  .search{font-size:12px;padding:8px 13px}
+  .sec-t{font-size:16px;margin:20px 0 10px}
+  .live-strip{flex-wrap:wrap}
+  .live-strip .go{margin-left:0;width:100%;text-align:center}
+  .cartbox{max-width:none}
+  .done{margin:20px 14px;padding:30px 20px}
+}
+@media(max-width:380px){ .grid{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
