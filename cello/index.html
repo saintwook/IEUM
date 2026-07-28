@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CELLO · HIDDEN KOREA — 통합 운영 플랫폼 (데모)</title>
+<style>
+:root{
+  --ink:#12202e; --sub:#64748b; --line:#e2e8f0; --bg:#f6f8fb; --card:#fff;
+  --cj:#22406e; --cj2:#3a5f96; --hd:#6b3f2a; --hd2:#9a5c3d;
+  --brand:#22406e; --brand2:#3a5f96;
+  --red:#c0392b; --amber:#b7791f; --green:#2f7d5b;
+  --r:10px; --sh:0 1px 2px rgba(16,32,52,.06),0 4px 14px rgba(16,32,52,.05);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo",Pretendard,"Malgun Gothic",sans-serif;
+     background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+input,select,textarea{font:inherit}
+a{color:inherit;text-decoration:none}
+.num{font-variant-numeric:tabular-nums}
+
+/* ===== 상단바 ===== */
+header{position:sticky;top:0;z-index:50;background:var(--brand);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.12);transition:background .25s}
+.hd-in{max-width:1280px;margin:0 auto;padding:0 16px;display:flex;align-items:center;gap:14px;height:54px}
+.logo{font-weight:800;letter-spacing:.06em;font-size:15px;white-space:nowrap}
+.logo small{display:block;font-size:9px;opacity:.7;letter-spacing:.18em;font-weight:600}
+.bswitch{display:flex;background:rgba(255,255,255,.14);border-radius:8px;padding:3px;gap:2px}
+.bswitch button{background:none;border:0;color:rgba(255,255,255,.75);padding:5px 11px;border-radius:6px;font-size:12.5px;font-weight:700}
+.bswitch button.on{background:#fff;color:var(--brand)}
+.hd-sp{margin-left:auto}
+.sel{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);color:#fff;padding:6px 8px;border-radius:7px;font-size:12.5px}
+.sel option{color:#12202e}
+nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:54px;z-index:49}
+.nav-in{max-width:1280px;margin:0 auto;padding:0 16px;display:flex;gap:2px;overflow-x:auto}
+.nav-in button{background:none;border:0;padding:12px 14px;font-size:13.5px;font-weight:600;color:var(--sub);border-bottom:2.5px solid transparent;white-space:nowrap}
+.nav-in button.on{color:var(--brand);border-color:var(--brand)}
+main{max-width:1280px;margin:0 auto;padding:18px 16px 60px}
+
+/* ===== 공통 ===== */
+.ptitle{display:flex;align-items:center;gap:10px;margin:2px 0 14px;flex-wrap:wrap}
+.ptitle h1{font-size:20px;margin:0;letter-spacing:-.02em}
+.ptitle .sp{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;box-shadow:var(--sh)}
+.card h3{margin:0 0 10px;font-size:14px;letter-spacing:-.01em}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(4,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g23{grid-template-columns:1.6fr 1fr}
+.btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:7px 12px;font-size:13px;font-weight:600;color:var(--ink)}
+.btn:hover{border-color:var(--brand2)}
+.btn.pri{background:var(--brand);border-color:var(--brand);color:#fff}
+.btn.dan{border-color:var(--red);color:var(--red)}
+.btn.sm{padding:4px 9px;font-size:12px;border-radius:6px}
+.kpi{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;box-shadow:var(--sh)}
+.kpi .l{font-size:11.5px;color:var(--sub);font-weight:600}
+.kpi .v{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.25}
+.kpi .s{font-size:11.5px;color:var(--sub)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11.5px;color:var(--sub);font-weight:700;padding:8px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 8px;border-bottom:1px solid #f1f5f9;vertical-align:middle}
+tr.click:hover td{background:#f8fafc;cursor:pointer}
+.tag{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;border:1px solid}
+.t-cj{color:var(--cj);border-color:#c5d4e8;background:#eef3fa}
+.t-hd{color:var(--hd);border-color:#e3cdbe;background:#faf2ed}
+.t-gray{color:var(--sub);border-color:var(--line);background:#f8fafc}
+.t-red{color:var(--red);border-color:#f0c6c0;background:#fdf2f0}
+.t-amb{color:var(--amber);border-color:#ecdcb9;background:#fdf8ee}
+.t-grn{color:var(--green);border-color:#bde0ce;background:#eefaf4}
+.muted{color:var(--sub)}
+.small{font-size:12px}
+.thumb{width:100%;aspect-ratio:3/4;border-radius:8px;background:linear-gradient(140deg,#eef2f7,#dfe7f0);
+       display:flex;align-items:center;justify-content:center;color:#93a3b5;font-size:11px;border:1px solid var(--line);overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.alert{border-left:4px solid var(--red);background:#fdf2f0;border-radius:8px;padding:11px 13px;margin-bottom:12px}
+.alert.a{border-color:var(--amber);background:#fdf8ee}
+.alert.g{border-color:var(--green);background:#eefaf4}
+.alert b{color:var(--ink)}
+.bar{height:9px;border-radius:20px;background:#e8edf3;overflow:hidden}
+.bar > i{display:block;height:100%;background:var(--brand2)}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:20px;padding:5px 11px;font-size:12.5px;font-weight:600;color:var(--sub)}
+.chip.on{border-color:var(--brand);color:var(--brand);background:#f2f6fc}
+.drop{border:2px dashed #c7d3e0;border-radius:10px;padding:26px;text-align:center;color:var(--sub);background:#fbfdff}
+.drop.hot{border-color:var(--brand2);background:#f2f7fd}
+label.f{display:block;font-size:11.5px;font-weight:700;color:var(--sub);margin:9px 0 4px}
+input.f,select.f,textarea.f{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#fff}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-weight:700;letter-spacing:.01em}
+.kan{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.kcol{background:#fff;border:1px solid var(--line);border-radius:10px;padding:8px;min-height:120px}
+.kcol h4{margin:0 0 8px;font-size:12px;text-align:center;color:var(--brand);letter-spacing:.02em}
+.kcard{border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:7px;font-size:12px;background:#fff}
+.kcard.late{border-color:#f0c6c0;background:#fdf7f6}
+.kcard .c{font-weight:800;font-size:11.5px}
+.stepper{display:flex;gap:4px;flex-wrap:wrap;margin:6px 0}
+.step{flex:1;text-align:center;font-size:11px;padding:5px 2px;border-radius:6px;background:#f1f5f9;color:var(--sub);font-weight:700;min-width:52px}
+.step.done{background:#eefaf4;color:var(--green)}
+.step.now{background:var(--brand);color:#fff}
+.modal{position:fixed;inset:0;background:rgba(12,22,36,.5);display:none;align-items:flex-start;justify-content:center;z-index:100;padding:24px 12px;overflow:auto}
+.modal.on{display:flex}
+.mbox{background:#fff;border-radius:14px;max-width:940px;width:100%;box-shadow:0 24px 60px rgba(0,0,0,.3)}
+.mhd{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;border-radius:14px 14px 0 0;flex-wrap:wrap}
+.mbd{padding:16px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin-bottom:12px;overflow-x:auto}
+.tabs button{background:none;border:0;padding:9px 12px;font-size:13px;font-weight:700;color:var(--sub);border-bottom:2.5px solid transparent;white-space:nowrap}
+.tabs button.on{color:var(--brand);border-color:var(--brand)}
+.kv{display:grid;grid-template-columns:88px 1fr;gap:6px 10px;font-size:13px}
+.kv .k{color:var(--sub);font-weight:600;font-size:12px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:26px;background:#12202e;color:#fff;padding:11px 18px;border-radius:10px;
+       font-size:13.5px;font-weight:600;z-index:200;opacity:0;transition:.25s;pointer-events:none;box-shadow:0 10px 30px rgba(0,0,0,.25)}
+.toast.on{opacity:1;bottom:34px}
+.hqbar{background:#0f2036;color:#fff;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:13px}
+.hqbar b{color:#8fc0f5}
+.demo-note{background:#fff;border:1px dashed #c7d3e0;border-radius:10px;padding:10px 12px;font-size:12.5px;color:var(--sub);margin-bottom:12px}
+.demo-note b{color:var(--brand)}
+@media(max-width:900px){
+  .g4{grid-template-columns:repeat(2,1fr)} .g3,.g2,.g23{grid-template-columns:1fr}
+  .kan{grid-template-columns:1fr;gap:6px}
+  .kcol{min-height:auto}
+  .hd-in{gap:8px} .logo small{display:none}
+  .scrollx{overflow-x:auto}
+  table{min-width:640px}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="hd-in">
+    <div class="logo" id="logo">CELLO · HIDDEN KOREA<small>INTERNAL OPERATIONS</small></div>
+    <div class="bswitch" id="bsw">
+      <button data-b="ALL" class="on">통합</button>
+      <button data-b="CJ">첼로진</button>
+      <button data-b="HD">히든진</button>
+    </div>
+    <div class="hd-sp"></div>
+    <select class="sel" id="role">
+      <option value="manager">지사장 (전체 권한)</option>
+      <option value="designer">디자이너 (원가 비공개)</option>
+      <option value="hq">US HQ (영문·읽기전용)</option>
+    </select>
+  </div>
+</header>
+
+<nav><div class="nav-in" id="nav"></div></nav>
+<main id="app"></main>
+
+<div class="modal" id="modal"><div class="mbox"><div class="mhd" id="mhd"></div><div class="mbd" id="mbd"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ 데이터 ============ */
+const BRANDS = {
+  CJ:{code:'CJ',ko:'첼로진',en:'Cello Jeans',c:'#22406e',c2:'#3a5f96',desc:'여성·주니어 데님 · 미국 도매',band:[21.5,32]},
+  HD:{code:'HD',ko:'히든진',en:'Hidden Jeans',c:'#6b3f2a',c2:'#9a5c3d',desc:'컨템포러리 데님 · 프리미엄',band:[38,72]}
+};
+const FITS={SK:'스키니',ST:'스트레이트',BR:'배럴',WD:'와이드',FL:'플레어',BG:'배기',MM:'맘',DD:'대드',BF:'보이프렌드'};
+const WASH={LW:'라이트 워시',MW:'미디엄 빈티지',DW:'다크 워시',BL:'블랙',RW:'로우(생지)'};
+const STAGES=['1차','2차','핏(Fit)','PP','TOP'];
+const STATUS=['기획','디자인확정','샘플진행','본사리뷰','채택','드롭'];
+
+const SEED={
+ fabrics:[
+  {id:'VN-DNM-12oz',name:'Vietnam Rigid 12oz',sup:'VN · Tanh',mix:'C98 SP2',oz:12,w:58,st:'2%',price:3.10,lead:35,brand:'CJ'},
+  {id:'CN-DNM-11oz',name:'China Stretch 11oz',sup:'CN · Weifang',mix:'C92 P6 SP2',oz:11,w:60,st:'18%',price:2.75,lead:28,brand:'CJ'},
+  {id:'VN-DNM-10oz',name:'Vietnam Soft 10oz',sup:'VN · Tanh',mix:'C95 SP5',oz:10,w:58,st:'12%',price:2.60,lead:32,brand:'CJ'},
+  {id:'JP-SEL-14oz',name:'Japan Selvedge 14oz',sup:'JP · Okayama',mix:'C100',oz:14,w:33,st:'0%',price:11.80,lead:60,brand:'HD'},
+  {id:'IT-BLK-12oz',name:'Italy Black Stretch 12oz',sup:'IT · Candiani',mix:'C94 P4 SP2',oz:12,w:59,st:'14%',price:7.40,lead:45,brand:'HD'}
+ ],
+ rolls:[
+  {roll:'R-2607-001',f:'VN-DNM-12oz',lot:'L-A7',in:'2026-07-02',yd:500,left:500,loc:'A-3',st:'가용'},
+  {roll:'R-2607-002',f:'VN-DNM-12oz',lot:'L-A7',in:'2026-07-02',yd:500,left:420,loc:'A-3',st:'사용중'},
+  {roll:'R-2605-014',f:'VN-DNM-12oz',lot:'L-B2',in:'2026-05-18',yd:500,left:320,loc:'B-1',st:'장기'},
+  {roll:'R-2606-021',f:'CN-DNM-11oz',lot:'L-C1',in:'2026-06-11',yd:400,left:380,loc:'A-1',st:'가용'},
+  {roll:'R-2607-030',f:'VN-DNM-10oz',lot:'L-D4',in:'2026-07-10',yd:600,left:600,loc:'B-2',st:'가용'},
+  {roll:'R-2606-101',f:'JP-SEL-14oz',lot:'L-J1',in:'2026-06-20',yd:300,left:240,loc:'C-1',st:'사용중'},
+  {roll:'R-2607-110',f:'IT-BLK-12oz',lot:'L-I3',in:'2026-07-05',yd:450,left:450,loc:'C-2',st:'가용'}
+ ],
+ washes:[
+  {id:'MW',name:'미디엄 빈티지',steps:'데시징20분60℃ → 스톤40분50℃ → 블리치15분40℃ → 소프너15분',fac:'DK워시(VN)',cost:1.15,days:3},
+  {id:'LW',name:'라이트 워시',steps:'데시징20분 → 스톤25분 → 소프너15분',fac:'DK워시(VN)',cost:0.95,days:2},
+  {id:'DW',name:'다크 워시',steps:'데시징15분 → 린스20분 → 소프너10분',fac:'DK워시(VN)',cost:0.80,days:2},
+  {id:'BL',name:'블랙 코팅',steps:'린스 → 블랙코팅 → 큐어링',fac:'SM워시(CN)',cost:1.60,days:4},
+  {id:'RW',name:'로우(생지)',steps:'무가공',fac:'—',cost:0,days:0}
+ ],
+ styles:[
+  {id:'CJ-26FW-BR-001',b:'CJ',ssn:'26FW',fit:'BR',wash:'MW',name:'Nina Barrel',des:'김디자이너',f:'VN-DNM-12oz',yld:1.5,qty:600,st:'샘플진행',stage:1,due:'2026-07-25',price:27.0,trim:1.85,sew:4.90,logi:1.65},
+  {id:'CJ-26FW-ST-002',b:'CJ',ssn:'26FW',fit:'ST',wash:'DW',name:'Core Straight',des:'이디자이너',f:'CN-DNM-11oz',yld:1.4,qty:800,st:'본사리뷰',stage:3,due:'2026-08-02',price:29.0,trim:1.70,sew:4.60,logi:1.60},
+  {id:'CJ-26FW-SK-003',b:'CJ',ssn:'26FW',fit:'SK',wash:'LW',name:'Slim Skinny',des:'김디자이너',f:'CN-DNM-11oz',yld:1.3,qty:500,st:'샘플진행',stage:2,due:'2026-08-06',price:25.5,trim:1.60,sew:4.40,logi:1.55},
+  {id:'CJ-26FW-WD-004',b:'CJ',ssn:'26FW',fit:'WD',wash:'LW',name:'Ann Wide',des:'박디자이너',f:'VN-DNM-10oz',yld:1.8,qty:450,st:'기획',stage:0,due:'2026-08-12',price:28.0,trim:1.90,sew:5.10,logi:1.70},
+  {id:'CJ-26FW-BR-005',b:'CJ',ssn:'26FW',fit:'BR',wash:'DW',name:'Nina Barrel Dark',des:'김디자이너',f:'VN-DNM-12oz',yld:1.5,qty:460,st:'디자인확정',stage:0,due:'2026-08-09',price:27.5,trim:1.85,sew:4.90,logi:1.65},
+  {id:'CJ-26FW-MM-007',b:'CJ',ssn:'26FW',fit:'MM',wash:'MW',name:'Daily Mom',des:'박디자이너',f:'VN-DNM-10oz',yld:1.6,qty:520,st:'샘플진행',stage:0,due:'2026-08-05',price:26.0,trim:1.75,sew:4.70,logi:1.60},
+  {id:'HD-26FW-ST-001',b:'HD',ssn:'26FW',fit:'ST',wash:'RW',name:'Selvedge Straight',des:'최디자이너',f:'JP-SEL-14oz',yld:1.9,qty:180,st:'샘플진행',stage:2,due:'2026-07-27',price:68.0,trim:5.20,sew:12.50,logi:3.40},
+  {id:'HD-26FW-SK-002',b:'HD',ssn:'26FW',fit:'SK',wash:'BL',name:'Noir Skinny',des:'최디자이너',f:'IT-BLK-12oz',yld:1.5,qty:240,st:'본사리뷰',stage:3,due:'2026-08-01',price:58.0,trim:4.60,sew:11.00,logi:3.10},
+  {id:'HD-26FW-BF-003',b:'HD',ssn:'26FW',fit:'BF',wash:'MW',name:'Easy Boyfriend',des:'정디자이너',f:'IT-BLK-12oz',yld:1.7,qty:160,st:'디자인확정',stage:0,due:'2026-08-14',price:62.0,trim:4.80,sew:11.60,logi:3.20},
+  {id:'HD-26FW-DD-004',b:'HD',ssn:'26FW',fit:'DD',wash:'RW',name:'Raw Dad',des:'최디자이너',f:'JP-SEL-14oz',yld:2.0,qty:120,st:'기획',stage:0,due:'2026-08-20',price:72.0,trim:5.40,sew:13.00,logi:3.50}
+ ],
+ orders:[
+  {wo:'WO-0031',sid:'CJ-26FW-BR-001',qty:600,rolls:['R-2607-001','R-2607-002'],due:'2026-08-14',proc:1,pct:62},
+  {wo:'WO-0032',sid:'HD-26FW-ST-001',qty:180,rolls:['R-2606-101'],due:'2026-08-20',proc:0,pct:30}
+ ],
+ logs:[
+  {t:'10:22',w:'이패턴',m:'CJ-26FW-SK-003 사이즈 스펙 v2 저장'},
+  {t:'09:41',w:'US HQ',m:'CJ-26FW-ST-002 리뷰 요청 접수'},
+  {t:'09:10',w:'최디자이너',m:'HD-26FW-ST-001 2차 샘플 코멘트 등록'}
+ ]
+};
+const PROC=['재단','봉제','워싱','검단','포장','출고'];
+
+/* ============ 상태 ============ */
+let S = load();
+function load(){
+  try{const r=localStorage.getItem('cellodemo_v1'); if(r) return JSON.parse(r);}catch(e){}
+  return JSON.parse(JSON.stringify(SEED));
+}
+function save(){ try{localStorage.setItem('cellodemo_v1',JSON.stringify(S));}catch(e){} }
+function reset(){ localStorage.removeItem('cellodemo_v1'); S=JSON.parse(JSON.stringify(SEED)); render(); toast('데모 데이터를 초기화했습니다'); }
+
+let V = { brand:'ALL', role:'manager', tab:'dash' };
+const isHQ=()=>V.role==='hq';
+const canCost=()=>V.role==='manager';
+const TODAY=new Date('2026-07-28');
+
+/* ============ 유틸 ============ */
+const $=s=>document.querySelector(s);
+const el=(h)=>{const d=document.createElement('div');d.innerHTML=h.trim();return d.firstElementChild;};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._x);t._x=setTimeout(()=>t.classList.remove('on'),2200);}
+function bTag(b){return `<span class="tag ${b==='CJ'?'t-cj':'t-hd'}">${BRANDS[b].ko}</span>`;}
+function stTag(s){const m={'기획':'t-gray','디자인확정':'t-gray','샘플진행':'t-amb','본사리뷰':'t-cj','채택':'t-grn','드롭':'t-red'};return `<span class="tag ${m[s]||'t-gray'}">${s}</span>`;}
+function styles(){return S.styles.filter(s=>V.brand==='ALL'||s.b===V.brand);}
+function fabrics(){return S.fabrics.filter(f=>V.brand==='ALL'||f.brand===V.brand);}
+function fabOf(id){return S.fabrics.find(f=>f.id===id);}
+function rollsOf(fid){return S.rolls.filter(r=>r.f===fid);}
+function avail(fid){return rollsOf(fid).reduce((a,r)=>a+r.left,0);}
+function need(fid){return S.styles.filter(s=>s.f===fid&&s.st!=='드롭').reduce((a,s)=>a+s.qty*s.yld,0);}
+function shortages(){return fabrics().map(f=>({f,need:need(f.id),have:avail(f.id)})).filter(x=>x.need>x.have);}
+function daysLate(d){return Math.floor((TODAY-new Date(d))/86400000);}
+function lateSamples(){return styles().filter(s=>s.st==='샘플진행'&&daysLate(s.due)>0);}
+function pending(){return styles().filter(s=>s.st==='본사리뷰');}
+function cost(s){const f=fabOf(s.f);const w=S.washes.find(w=>w.id===s.wash);
+  const fc=f?f.price*s.yld:0, wc=w?w.cost:0;
+  return {fab:fc,trim:s.trim,sew:s.sew,wash:wc,logi:s.logi,total:fc+s.trim+s.sew+wc+s.logi};}
+function money(n){return '$'+n.toFixed(2);}
+function pct(a,b){return b?Math.round(a/b*100):0;}
+
+/* ============ 테마 ============ */
+function theme(){
+  const c=V.brand==='ALL'?'#22406e':BRANDS[V.brand].c;
+  const c2=V.brand==='ALL'?'#3a5f96':BRANDS[V.brand].c2;
+  document.documentElement.style.setProperty('--brand',c);
+  document.documentElement.style.setProperty('--brand2',c2);
+  $('#logo').innerHTML = (V.brand==='ALL'?'CELLO · HIDDEN KOREA':(V.brand==='CJ'?'CELLO JEANS KOREA':'HIDDEN JEANS KOREA'))
+    +'<small>INTERNAL OPERATIONS</small>';
+}
+
+/* ============ 네비 ============ */
+const TABS=[
+ {k:'dash',ko:'대시보드',en:'Dashboard'},
+ {k:'styles',ko:'스타일',en:'Styles'},
+ {k:'upload',ko:'디자인 업로드',en:null},
+ {k:'fabric',ko:'원단 · 재고',en:null},
+ {k:'sample',ko:'샘플',en:'Samples'},
+ {k:'prod',ko:'생산',en:null},
+ {k:'line',ko:'컬렉션 · 라인시트',en:null},
+ {k:'hq',ko:'본사 뷰 (EN)',en:'Approvals'}
+];
+function renderNav(){
+  const n=$('#nav');n.innerHTML='';
+  TABS.forEach(t=>{
+    if(isHQ()&&!t.en)return;
+    const b=document.createElement('button');
+    b.textContent=isHQ()?t.en:t.ko;
+    b.className=V.tab===t.k?'on':'';
+    b.onclick=()=>{V.tab=t.k;render();window.scrollTo(0,0)};
+    n.appendChild(b);
+  });
+}
+
+/* ============ 화면들 ============ */
+function viewDash(){
+  const ss=styles(), lt=lateSamples(), sh=shortages(), pd=pending();
+  const done=ss.filter(s=>s.st==='채택').length;
+  const blocked=pd.length+lt.length+sh.length;
+  return `
+  <div class="ptitle"><h1>대시보드</h1>
+    <span class="muted small">2026-07-28 (화) · ${V.brand==='ALL'?'첼로진 + 히든진 통합':BRANDS[V.brand].ko}</span>
+    <span class="sp"><button class="btn sm" onclick="reset()">데모 초기화</button></span></div>
+
+  ${blocked?`<div class="alert"><b style="color:var(--red)">지금 막힌 것 ${blocked}건</b>
+    <div class="small" style="margin-top:6px;line-height:1.9">
+    ${pd.length?`· 본사 승인 대기 <b>${pd.length}건</b> — ${pd.map(s=>s.id).join(', ')} <button class="btn sm" onclick="go('hq')">보기</button><br>`:''}
+    ${lt.length?`· 샘플 도착 지연 <b>${lt.length}건</b> — ${lt.map(s=>s.id+' ('+daysLate(s.due)+'일)').join(', ')} <button class="btn sm" onclick="go('sample')">보기</button><br>`:''}
+    ${sh.length?`· 원단 부족 <b>${sh.length}건</b> — ${sh.map(x=>x.f.id+' '+Math.ceil(x.need-x.have)+'yd 부족').join(', ')} <button class="btn sm" onclick="go('fabric')">보기</button>`:''}
+    </div></div>`:`<div class="alert g"><b>막힌 것 없음</b> — 모든 승인·샘플·원단이 정상입니다.</div>`}
+
+  <div class="grid g4" style="margin-bottom:12px">
+    <div class="kpi"><div class="l">진행 스타일</div><div class="v num">${ss.length}</div><div class="s">채택 ${done} · 목표 60</div></div>
+    <div class="kpi"><div class="l">샘플 진행중</div><div class="v num">${ss.filter(s=>s.st==='샘플진행').length}</div><div class="s">지연 ${lt.length}건</div></div>
+    <div class="kpi"><div class="l">본사 승인 대기</div><div class="v num" style="color:${pd.length?'var(--red)':'inherit'}">${pd.length}</div><div class="s">최장 ${pd.length?6:0}일 경과</div></div>
+    <div class="kpi"><div class="l">원단 경고</div><div class="v num" style="color:${sh.length?'var(--red)':'inherit'}">${sh.length}</div><div class="s">부족 · 로트 색차</div></div>
+  </div>
+
+  <div class="grid g23">
+    <div class="card"><h3>브랜드별 진행 현황</h3>
+      ${['CJ','HD'].filter(b=>V.brand==='ALL'||V.brand===b).map(b=>{
+        const arr=S.styles.filter(s=>s.b===b);
+        const bar=STATUS.slice(0,5).map(st=>arr.filter(s=>s.st===st).length);
+        return `<div style="margin-bottom:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            ${bTag(b)} <b>${BRANDS[b].en}</b>
+            <span class="muted small">${BRANDS[b].desc}</span>
+            <span class="sp" style="margin-left:auto"><b class="num">${arr.length}</b><span class="muted small"> 스타일</span></span>
+          </div>
+          <div class="bar"><i style="width:${pct(arr.length,30)}%;background:${BRANDS[b].c2}"></i></div>
+          <div class="small muted" style="margin-top:5px">기획 ${bar[0]} · 디자인확정 ${bar[1]} · 샘플 ${bar[2]} · 본사리뷰 ${bar[3]} · 채택 ${bar[4]}
+            &nbsp;|&nbsp; 도매가 밴드 $${BRANDS[b].band[0]}~$${BRANDS[b].band[1]}</div>
+        </div>`;}).join('')}
+      <div class="demo-note" style="margin:8px 0 0"><b>시연 포인트</b> — 상단 「통합 / 첼로진 / 히든진」을 누르면 색상·데이터·가격밴드가 브랜드별로 전부 바뀝니다.</div>
+    </div>
+    <div class="card"><h3>최근 활동</h3>
+      <table>${S.logs.map(l=>`<tr><td class="muted small" style="width:52px">${l.t}</td><td class="small"><b>${l.w}</b><br>${l.m}</td></tr>`).join('')}</table>
+    </div>
+  </div>`;
+}
+
+function viewStyles(){
+  const ss=styles();
+  return `
+  <div class="ptitle"><h1>스타일</h1><span class="muted small">${ss.length}건</span>
+    <span class="sp"><button class="btn" onclick="go('upload')">＋ 새 디자인 업로드</button>
+    <button class="btn sm" onclick="toast('엑셀 파일이 내려받아집니다 (데모)')">엑셀 내려받기</button></span></div>
+  <div class="chips">
+    ${['전체',...Object.keys(FITS).map(k=>FITS[k])].slice(0,7).map((f,i)=>`<span class="chip ${i===0?'on':''}">${f}</span>`).join('')}
+    <span class="chip">시즌 26FW</span><span class="chip">상태 전체</span>
+  </div>
+  <div class="card scrollx"><table>
+    <tr><th>브랜드</th><th>도식화</th><th>품번</th><th>스타일명</th><th>핏</th><th>워싱</th><th>원단</th><th>요척</th><th>계획</th><th>담당</th><th>상태</th><th>샘플</th></tr>
+    ${ss.map(s=>`<tr class="click" onclick="openStyle('${s.id}')">
+      <td>${bTag(s.b)}</td>
+      <td><div class="thumb" style="width:34px;aspect-ratio:3/4;font-size:9px">${s.img?`<img src="${s.img}">`:'도식화'}</div></td>
+      <td class="code small">${s.id}</td><td>${s.name}</td><td>${FITS[s.fit]}</td><td>${s.wash}</td>
+      <td class="small">${s.f||'—'}</td><td class="num small">${s.yld?s.yld+'yd':'—'}</td><td class="num small">${s.qty}</td>
+      <td class="small">${s.des}</td><td>${stTag(s.st)}</td>
+      <td class="small num">${s.st==='기획'?'0':s.stage+1}/5</td></tr>`).join('')}
+  </table></div>`;
+}
+
+function openStyle(id){
+  const s=S.styles.find(x=>x.id===id); if(!s)return;
+  const c=cost(s), f=fabOf(s.f), w=S.washes.find(w=>w.id===s.wash);
+  const margin=s.price?((s.price-c.total)/s.price*100):0;
+  const band=BRANDS[s.b].band;
+  const bandOK=s.price>=band[0]&&s.price<=band[1];
+  $('#mhd').innerHTML=`${bTag(s.b)}<b class="code">${s.id}</b><span>${s.name}</span>${stTag(s.st)}
+    <span class="sp" style="margin-left:auto;display:flex;gap:6px">
+      ${!isHQ()?`<button class="btn sm" onclick="dupStyle('${s.id}')">워싱 바꿔 복제</button>`:''}
+      ${!isHQ()&&s.st!=='본사리뷰'&&s.st!=='채택'?`<button class="btn sm pri" onclick="reqHQ('${s.id}')">본사 리뷰 요청</button>`:''}
+      <button class="btn sm" onclick="closeM()">닫기</button></span>`;
+  $('#mbd').innerHTML=`
+  <div class="grid g23">
+    <div>
+      <div class="thumb" style="aspect-ratio:16/10;margin-bottom:10px">${s.img?`<img src="${s.img}">`:'도식화 (플랫) — 데모 이미지 없음'}</div>
+      <div class="card" style="margin-bottom:10px"><h3>샘플 진행</h3>
+        <div class="stepper">${STAGES.map((g,i)=>`<div class="step ${i<s.stage?'done':i===s.stage?'now':''}">${g}</div>`).join('')}</div>
+        <div class="small ${daysLate(s.due)>0?'':'muted'}" style="color:${daysLate(s.due)>0?'var(--red)':''}">
+          도착 예정 ${s.due} ${daysLate(s.due)>0?`· <b>${daysLate(s.due)}일 지연</b>`:''}</div>
+        ${!isHQ()?`<button class="btn sm" style="margin-top:8px" onclick="nextStage('${s.id}')">다음 차수 진행 ▶</button>`:''}
+      </div>
+      <div class="card"><h3>디테일 · 부자재</h3>
+        <table class="small">
+          <tr><td class="muted" style="width:80px">스티치</td><td>골드 #A87 / 20번手</td></tr>
+          <tr><td class="muted">지퍼·버튼</td><td>YKK 4.5 / 샹크버튼 AB</td></tr>
+          <tr><td class="muted">라벨</td><td>${s.b==='CJ'?'가죽패치 CJ-LP-02':'셀비지 러프 HD-LB-01'}</td></tr>
+        </table></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:10px"><h3>기본</h3>
+        <div class="kv">
+          <div class="k">브랜드</div><div>${BRANDS[s.b].en} (${BRANDS[s.b].ko})</div>
+          <div class="k">시즌 / 핏</div><div>${s.ssn} / ${FITS[s.fit]} (${s.fit})</div>
+          <div class="k">담당</div><div>${s.des}</div>
+          <div class="k">계획 수량</div><div class="num">${s.qty} 장</div>
+          <div class="k">도매가</div><div class="num">${money(s.price)}
+            <span class="tag ${bandOK?'t-grn':'t-red'}" style="margin-left:4px">${bandOK?'밴드 적정':'밴드 초과'}</span>
+            <div class="muted small">${BRANDS[s.b].ko} 밴드 $${band[0]}~$${band[1]}</div></div>
+        </div></div>
+      <div class="card" style="margin-bottom:10px"><h3>원단 · 워싱</h3>
+        <div class="kv">
+          <div class="k">원단</div><div>${f?`${f.id}<div class="muted small">${f.name} · ${f.mix} · ${f.oz}oz · ${f.sup}</div>`:'미지정'}</div>
+          <div class="k">요척</div><div class="num">${s.yld} yd / 장 → 총 <b>${(s.yld*s.qty).toFixed(0)} yd</b> 소요</div>
+          <div class="k">워싱</div><div>${w?`${w.id} ${w.name}<div class="muted small">${w.steps}</div>`:'미지정'}</div>
+        </div></div>
+      ${canCost()?`<div class="card"><h3>원가 <span class="tag t-red">지사장 전용</span></h3>
+        <table class="small">
+          <tr><th>원단</th><th>부자재</th><th>공임</th><th>워싱</th><th>물류</th><th>합계</th><th>마진율</th></tr>
+          <tr class="num"><td>${money(c.fab)}</td><td>${money(c.trim)}</td><td>${money(c.sew)}</td><td>${money(c.wash)}</td><td>${money(c.logi)}</td>
+          <td><b>${money(c.total)}</b></td><td style="color:${margin>40?'var(--green)':'var(--amber)'}"><b>${margin.toFixed(1)}%</b></td></tr>
+        </table>
+        <div class="muted small" style="margin-top:6px">원단 = 요척 ${s.yld}yd × ${money(f?f.price:0)}</div></div>`
+      :`<div class="card" style="border-style:dashed"><div class="muted small">
+        <b>원가 정보는 이 계정에 제공되지 않습니다.</b><br>${isHQ()?'Cost, factory price and margin are not provided to HQ accounts by policy.':'원가·공장단가는 지사장 권한에서만 열람됩니다.'}</div></div>`}
+    </div>
+  </div>`;
+  $('#modal').classList.add('on');
+}
+function closeM(){$('#modal').classList.remove('on');}
+$('#modal').onclick=e=>{if(e.target.id==='modal')closeM();};
+
+function nextStage(id){const s=S.styles.find(x=>x.id===id);
+  if(s.stage>=4){s.st='본사리뷰';toast(s.id+' TOP 완료 → 본사 리뷰로 이동');}
+  else{s.stage++;s.st='샘플진행';const d=new Date(TODAY);d.setDate(d.getDate()+7);s.due=d.toISOString().slice(0,10);
+    toast(s.id+' → '+STAGES[s.stage]+' 차수 의뢰 생성');}
+  S.logs.unshift({t:'now',w:'데모',m:`${s.id} 샘플 차수 진행`});save();render();openStyle(id);}
+function reqHQ(id){const s=S.styles.find(x=>x.id===id);s.st='본사리뷰';
+  S.logs.unshift({t:'now',w:'지사',m:`${s.id} 본사 리뷰 요청`});save();toast(s.id+' 본사 리뷰 요청 — HQ에 알림 발송');render();openStyle(id);}
+function dupStyle(id){const s=S.styles.find(x=>x.id===id);
+  const ws=Object.keys(WASH).filter(w=>w!==s.wash);const nw=ws[Math.floor(ws.length/2)];
+  const n=nextNo(s.b,s.ssn,s.fit);
+  const c={...s,id:`${s.b}-${s.ssn}-${s.fit}-${n}`,wash:nw,name:s.name+' '+WASH[nw].split(' ')[0],st:'기획',stage:0};
+  S.styles.push(c);save();toast('복제 완료 — '+c.id+' (바디 동일, 워싱만 '+nw+')');closeM();V.tab='styles';render();}
+function nextNo(b,ssn,fit){
+  const n=S.styles.filter(s=>s.b===b&&s.ssn===ssn&&s.fit===fit).length+1;
+  return String(n).padStart(3,'0');}
+
+function viewUpload(){
+  return `<div class="ptitle"><h1>디자인 업로드</h1><span class="muted small">필수는 브랜드·시즌·핏 3개뿐 — 나머지는 나중에</span></div>
+  <div class="grid g23">
+    <div class="card">
+      <div class="drop" id="drop">
+        <div style="font-size:30px">⬆</div>
+        <b>파일을 끌어다 놓거나 클릭하세요</b>
+        <div class="small">AI · PSD · TIF · JPG · PNG · PDF</div>
+        <input type="file" id="file" accept="image/*,.ai,.psd,.tif,.pdf" style="display:none">
+      </div>
+      <div id="flist" class="small muted" style="margin-top:10px">업로드된 파일 없음</div>
+    </div>
+    <div class="card">
+      <h3>최소 정보</h3>
+      <label class="f">브랜드 *</label>
+      <select class="f" id="u_b">${Object.keys(BRANDS).map(b=>`<option value="${b}" ${V.brand===b?'selected':''}>${BRANDS[b].ko} (${BRANDS[b].en})</option>`).join('')}</select>
+      <label class="f">시즌 *</label><select class="f" id="u_s"><option>26FW</option><option>27SS</option></select>
+      <label class="f">핏 *</label><select class="f" id="u_f">${Object.keys(FITS).map(k=>`<option value="${k}">${FITS[k]} (${k})</option>`).join('')}</select>
+      <label class="f">워싱</label><select class="f" id="u_w"><option value="">나중에</option>${Object.keys(WASH).map(k=>`<option value="${k}">${k} ${WASH[k]}</option>`).join('')}</select>
+      <label class="f">스타일명</label><input class="f" id="u_n" placeholder="예: Nina Barrel">
+      <div class="card" style="margin-top:12px;background:#f6f9fd">
+        <div class="small muted">자동 발번</div><div class="code" id="u_code" style="font-size:18px">—</div>
+      </div>
+      <button class="btn pri" style="width:100%;margin-top:12px" onclick="doUpload()">저장하고 카드 열기</button>
+    </div>
+  </div>`;
+}
+let UPFILE=null;
+function bindUpload(){
+  const d=$('#drop'),f=$('#file');if(!d)return;
+  const upd=()=>{const b=$('#u_b').value,s=$('#u_s').value,ft=$('#u_f').value,w=$('#u_w').value;
+    $('#u_code').textContent=`${b}-${s}-${ft}-${nextNo(b,s,ft)}${w?'-'+w:''}`;};
+  ['u_b','u_s','u_f','u_w'].forEach(i=>$('#'+i).onchange=upd);upd();
+  d.onclick=()=>f.click();
+  d.ondragover=e=>{e.preventDefault();d.classList.add('hot')};
+  d.ondragleave=()=>d.classList.remove('hot');
+  d.ondrop=e=>{e.preventDefault();d.classList.remove('hot');take(e.dataTransfer.files[0]);};
+  f.onchange=e=>take(e.target.files[0]);
+  function take(file){if(!file)return;UPFILE=file;
+    const img=file.type.startsWith('image');
+    $('#flist').innerHTML=`▤ <b>${file.name}</b> (${(file.size/1048576).toFixed(1)}MB) · 용도: <b>도식화</b>`;
+    if(img){const r=new FileReader();r.onload=ev=>{UPFILE={name:file.name,data:ev.target.result};
+      $('#flist').innerHTML+=`<div style="margin-top:8px"><img src="${ev.target.result}" style="max-width:180px;border-radius:8px;border:1px solid var(--line)"></div>`;};r.readAsDataURL(file);}
+    else UPFILE={name:file.name,data:null};
+    toast('업로드 완료 — '+file.name);}
+}
+function doUpload(){
+  const b=$('#u_b').value,ssn=$('#u_s').value,fit=$('#u_f').value,w=$('#u_w').value||'MW';
+  const name=$('#u_n').value||(FITS[fit]+' 신규');
+  const id=`${b}-${ssn}-${fit}-${nextNo(b,ssn,fit)}`;
+  const f=S.fabrics.find(x=>x.brand===b);
+  const base=b==='CJ'?{price:27,trim:1.8,sew:4.8,logi:1.6,qty:400,yld:1.5}:{price:62,trim:4.9,sew:11.8,logi:3.2,qty:150,yld:1.8};
+  S.styles.push({id,b,ssn,fit,wash:w,name,des:'김디자이너',f:f?f.id:'',yld:base.yld,qty:base.qty,st:'기획',stage:0,
+    due:'2026-08-20',price:base.price,trim:base.trim,sew:base.sew,logi:base.logi,img:UPFILE&&UPFILE.data?UPFILE.data:null});
+  S.logs.unshift({t:'now',w:'김디자이너',m:`${id} 신규 디자인 등록`});save();UPFILE=null;
+  toast('등록 완료 — '+id);V.tab='styles';render();setTimeout(()=>openStyle(id),150);
+}
+
+function viewFabric(){
+  const fs=fabrics(), sh=shortages();
+  return `<div class="ptitle"><h1>원단 · 재고</h1>
+    <span class="sp"><button class="btn sm" onclick="toast('입고 등록 화면 (데모)')">＋ 입고 등록</button></span></div>
+  ${sh.length?`<div class="alert"><b style="color:var(--red)">소요 대비 부족 ${sh.length}건</b>
+    <div class="scrollx"><table style="margin-top:6px">
+    <tr><th>원단</th><th>계획 소요</th><th>가용 잔량</th><th>부족</th><th>리드타임</th><th>발주 마감일</th><th></th></tr>
+    ${sh.map(x=>{const d=new Date(TODAY);d.setDate(d.getDate()+ (60-x.f.lead));
+      return `<tr><td class="code small">${x.f.id}</td><td class="num">${Math.ceil(x.need)} yd</td><td class="num">${x.have} yd</td>
+      <td class="num" style="color:var(--red)"><b>${Math.ceil(x.need-x.have)} yd</b></td><td class="num">${x.f.lead}일</td>
+      <td style="color:var(--red)"><b>${d.toISOString().slice(0,10)}까지</b></td>
+      <td><button class="btn sm dan" onclick="toast('${x.f.id} 발주서 초안이 생성되었습니다 (데모)')">발주서 생성</button></td></tr>`;}).join('')}
+    </table></div></div>`:`<div class="alert g"><b>원단 부족 없음</b></div>`}
+
+  <div class="card" style="margin-bottom:12px"><h3>소요 계산 근거 <span class="muted small" style="font-weight:400">— 계획 수량을 바꾸면 부족량이 즉시 재계산됩니다</span></h3>
+    <div class="scrollx"><table>
+    <tr><th>브랜드</th><th>스타일</th><th>원단</th><th>계획 수량</th><th>요척</th><th>소요</th></tr>
+    ${styles().filter(s=>s.f).map(s=>`<tr><td>${bTag(s.b)}</td><td class="code small">${s.id}</td><td class="small">${s.f}</td>
+      <td><input class="f num" style="width:82px;padding:4px 7px" type="number" value="${s.qty}" onchange="setQty('${s.id}',this.value)"></td>
+      <td class="num">${s.yld}yd</td><td class="num"><b>${(s.qty*s.yld).toFixed(0)}yd</b></td></tr>`).join('')}
+    </table></div></div>
+
+  <div class="card" style="margin-bottom:12px"><h3>원단 라이브러리</h3>
+    <div class="scrollx"><table>
+    <tr><th>브랜드</th><th>원단코드</th><th>원단명</th><th>공급처</th><th>혼용률</th><th>중량</th><th>신축</th>${canCost()?'<th>단가</th>':''}<th>리드타임</th><th>가용 재고</th></tr>
+    ${fs.map(f=>`<tr><td>${bTag(f.brand)}</td><td class="code small">${f.id}</td><td>${f.name}</td><td class="small">${f.sup}</td>
+      <td class="small">${f.mix}</td><td class="num">${f.oz}oz</td><td class="num">${f.st}</td>
+      ${canCost()?`<td class="num">${money(f.price)}</td>`:''}<td class="num">${f.lead}일</td>
+      <td class="num"><b>${avail(f.id)}</b> yd</td></tr>`).join('')}
+    </table></div></div>
+
+  <div class="card"><h3>롤 · 로트 재고 <span class="muted small" style="font-weight:400">— 데님은 로트가 다르면 색이 다릅니다</span></h3>
+    <div class="scrollx"><table>
+    <tr><th>롤번호</th><th>원단</th><th>로트</th><th>입고일</th><th>입고</th><th>잔량</th><th>위치</th><th>상태</th></tr>
+    ${S.rolls.filter(r=>fs.some(f=>f.id===r.f)).map(r=>`<tr><td class="code small">${r.roll}</td><td class="small">${r.f}</td>
+      <td><span class="tag ${r.lot==='L-B2'?'t-red':'t-cj'}">${r.lot}</span></td><td class="small">${r.in}</td>
+      <td class="num">${r.yd}</td><td class="num"><b>${r.left}</b></td><td>${r.loc}</td>
+      <td><span class="tag ${r.st==='장기'?'t-amb':'t-gray'}">${r.st}</span></td></tr>`).join('')}
+    </table></div>
+    <div class="small" style="color:var(--red);margin-top:8px">⚠ WO-0031에 로트 L-A7 2롤이 배정되어 있습니다. 다른 로트(L-B2) 혼입 시 색차 경고가 발생합니다.</div>
+  </div>`;
+}
+function setQty(id,v){const s=S.styles.find(x=>x.id===id);s.qty=parseInt(v)||0;save();render();toast(id+' 계획 수량 변경 → 소요 원단 재계산');}
+
+function viewSample(){
+  const ss=styles();
+  return `<div class="ptitle"><h1>샘플 트래커</h1><span class="muted small">1차 → 2차 → 핏 → PP → TOP</span>
+    <span class="sp"><button class="btn sm" onclick="toast('샘플 의뢰서 PDF가 생성됩니다 (데모)')">＋ 샘플 의뢰</button></span></div>
+  <div class="kan">
+    ${STAGES.map((g,i)=>`<div class="kcol"><h4>${g}</h4>
+      ${ss.filter(s=>(s.st==='샘플진행'||s.st==='본사리뷰')&&s.stage===i).map(s=>{
+        const L=daysLate(s.due)>0;
+        return `<div class="kcard ${L?'late':''}" onclick="openStyle('${s.id}')" style="cursor:pointer">
+          <div class="c">${s.id}</div>
+          <div class="muted" style="font-size:11px">${s.name} · ${BRANDS[s.b].ko}</div>
+          <div style="font-size:11px;margin-top:3px;color:${L?'var(--red)':'var(--sub)'}">${L?`<b>${daysLate(s.due)}일 지연</b>`:'예정 '+s.due}</div>
+          ${!isHQ()?`<button class="btn sm" style="margin-top:6px;width:100%" onclick="event.stopPropagation();nextStage('${s.id}')">다음 차수 ▶</button>`:''}
+        </div>`;}).join('')||'<div class="muted small" style="text-align:center;padding:8px">—</div>'}
+    </div>`).join('')}
+  </div>
+  <div class="demo-note" style="margin-top:12px"><b>시연 포인트</b> — 카드의 「다음 차수」를 누르면 단계가 이동하고, 도착 예정일이 새로 잡힙니다. 예정일이 지난 건은 자동으로 빨갛게 표시되고 대시보드 최상단에 올라갑니다.</div>`;
+}
+
+function viewProd(){
+  const os=S.orders.filter(o=>{const s=S.styles.find(x=>x.id===o.sid);return s&&(V.brand==='ALL'||s.b===V.brand);});
+  return `<div class="ptitle"><h1>생산 · 작업지시서</h1>
+    <span class="sp"><button class="btn sm" onclick="toast('작지 PDF(영문/중문)가 생성됩니다 (데모)')">작지 PDF</button>
+    <button class="btn sm" onclick="toast('바코드 라벨 일괄 출력 (데모)')">바코드 출력</button></span></div>
+  ${os.map(o=>{const s=S.styles.find(x=>x.id===o.sid);
+    return `<div class="card" style="margin-bottom:12px">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px">
+        ${bTag(s.b)}<b class="code">${o.wo}</b><span>${s.id} ${s.name}</span>
+        <span class="tag t-amb">${PROC[o.proc]} 진행중</span>
+        <span class="muted small" style="margin-left:auto">납기 ${o.due}</span></div>
+      <div class="grid g2">
+        <div>
+          <div class="small muted">투입 구성</div>
+          <table class="small"><tr><td class="muted" style="width:70px">원단</td><td>${s.f}</td></tr>
+          <tr><td class="muted">롤 배정</td><td>${o.rolls.map(r=>{const R=S.rolls.find(x=>x.roll===r);return `${r} <span class="tag t-cj">${R?R.lot:''}</span>`;}).join('<br>')}</td></tr>
+          <tr><td class="muted">워싱</td><td>${s.wash} ${WASH[s.wash]}</td></tr>
+          <tr><td class="muted">수량</td><td class="num"><b>${o.qty}</b>장 · 소요 ${(o.qty*s.yld).toFixed(0)}yd</td></tr></table>
+        </div>
+        <div>
+          <div class="small muted">공정 진행</div>
+          <div class="stepper" style="margin-top:6px">${PROC.map((p,i)=>`<div class="step ${i<o.proc?'done':i===o.proc?'now':''}">${p}</div>`).join('')}</div>
+          <div class="bar" style="margin-top:8px"><i style="width:${o.pct}%"></i></div>
+          <div class="small muted" style="margin-top:4px">${PROC[o.proc]} ${o.pct}% 진행</div>
+          ${!isHQ()?`<button class="btn sm" style="margin-top:8px" onclick="nextProc('${o.wo}')">단계 완료 처리 ▶</button>`:''}
+        </div>
+      </div></div>`;}).join('')}
+  <div class="demo-note"><b>시연 포인트</b> — 「단계 완료 처리」를 누르면 재단→봉제→워싱 순으로 진행되고, 재단 완료 시점에 배정된 롤의 잔량이 자동 차감됩니다.</div>`;
+}
+function nextProc(wo){const o=S.orders.find(x=>x.wo===wo);const s=S.styles.find(x=>x.id===o.sid);
+  if(o.proc===0){const need=o.qty*s.yld;let left=need;
+    o.rolls.forEach(r=>{const R=S.rolls.find(x=>x.roll===r);if(!R)return;const use=Math.min(R.left,left);R.left-=use;left-=use;R.st=R.left>0?'사용중':'소진';});
+    toast('재단 완료 — 원단 '+need.toFixed(0)+'yd 자동 차감됨');}
+  else toast(PROC[o.proc]+' 완료 처리');
+  if(o.proc<5){o.proc++;o.pct=30;}else o.pct=100;
+  save();render();}
+
+function viewLine(){
+  const ss=styles().filter(s=>s.st!=='드롭');
+  return `<div class="ptitle"><h1>컬렉션 · 라인시트</h1><span class="muted small">26FW · ${ss.length} 스타일</span>
+    <span class="sp"><button class="btn sm" onclick="toast('라인시트 PDF 생성 — 원가 미포함 (데모)')">라인시트 PDF (외부용)</button>
+    ${canCost()?`<button class="btn sm" onclick="toast('내부용 엑셀 — 원가 포함 (데모)')">엑셀 (내부용)</button>`:''}</span></div>
+  <div class="card scrollx"><table>
+    <tr><th>브랜드</th><th>도식화</th><th>품번</th><th>스타일명</th><th>핏</th><th>워싱</th>
+    ${canCost()?'<th>원가</th>':''}<th>도매가</th>${canCost()?'<th>마진율</th>':''}<th>가격 밴드</th></tr>
+    ${ss.map(s=>{const c=cost(s),m=(s.price-c.total)/s.price*100,b=BRANDS[s.b].band,ok=s.price>=b[0]&&s.price<=b[1];
+    return `<tr class="click" onclick="openStyle('${s.id}')"><td>${bTag(s.b)}</td>
+      <td><div class="thumb" style="width:30px;aspect-ratio:3/4;font-size:8px">${s.img?`<img src="${s.img}">`:'—'}</div></td>
+      <td class="code small">${s.id}</td><td>${s.name}</td><td class="small">${FITS[s.fit]}</td><td class="small">${s.wash}</td>
+      ${canCost()?`<td class="num">${money(c.total)}</td>`:''}
+      <td class="num"><b>${money(s.price)}</b></td>
+      ${canCost()?`<td class="num" style="color:${m>40?'var(--green)':'var(--amber)'}">${m.toFixed(1)}%</td>`:''}
+      <td><span class="tag ${ok?'t-grn':'t-red'}">${ok?'적정':'초과'}</span>
+        <span class="muted small">$${b[0]}~$${b[1]}</span></td></tr>`;}).join('')}
+  </table>
+  ${!canCost()?'<div class="muted small" style="margin-top:8px">원가·마진 열은 이 계정에 제공되지 않습니다.</div>':''}
+  </div>
+  <div class="demo-note" style="margin-top:12px"><b>시연 포인트</b> — 브랜드마다 가격 밴드가 다릅니다(첼로 $21.5~32 / 히든 $38~72). 밴드를 벗어난 스타일은 자동으로 빨갛게 뜹니다. 상단 계정을 <b>디자이너</b>나 <b>US HQ</b>로 바꾸면 원가 열이 화면에서 사라집니다.</div>`;
+}
+
+function viewHQ(){
+  const pd=pending(), ss=styles();
+  return `<div class="hqbar">
+    <b>HQ VIEW — English, read-only.</b> Cost, factory price, fabric price and margin are <b>not provided</b> to HQ accounts by policy.
+    <div style="opacity:.7;font-size:12px;margin-top:3px">Updated 09:00 KST / 17:00 PDT · Week of Jul 21–27</div></div>
+  <div class="ptitle"><h1>Approvals</h1><span class="muted small">${pd.length} pending</span></div>
+  ${pd.length?`<div class="card scrollx" style="margin-bottom:12px"><table>
+    <tr><th>Brand</th><th>Style</th><th>Name</th><th>Fit</th><th>Wash</th><th>Waiting</th><th></th></tr>
+    ${pd.map(s=>`<tr><td>${bTag(s.b)}</td><td class="code small">${s.id}</td><td>${s.name}</td><td>${FITS[s.fit]}</td><td>${s.wash}</td>
+      <td class="num" style="color:var(--red)"><b>${Math.max(1,daysLate(s.due))} days</b></td>
+      <td style="white-space:nowrap"><button class="btn sm" onclick="openStyle('${s.id}')">Review</button>
+      <button class="btn sm pri" onclick="hqAct('${s.id}',1)">Approve</button>
+      <button class="btn sm dan" onclick="hqAct('${s.id}',0)">Reject</button></td></tr>`).join('')}
+  </table></div>`:`<div class="alert g"><b>No pending approvals.</b></div>`}
+  <div class="grid g2">
+    <div class="card"><h3>Weekly summary</h3>
+      <div class="grid g2">
+        <div class="kpi"><div class="l">New designs</div><div class="v num">${ss.length}</div></div>
+        <div class="kpi"><div class="l">Sampling</div><div class="v num">${ss.filter(s=>s.st==='샘플진행').length}</div></div>
+        <div class="kpi"><div class="l">Approved</div><div class="v num">${ss.filter(s=>s.st==='채택').length}</div></div>
+        <div class="kpi"><div class="l">Dropped</div><div class="v num">${ss.filter(s=>s.st==='드롭').length}</div></div>
+      </div></div>
+    <div class="card"><h3>Development pipeline</h3>
+      ${['CJ','HD'].filter(b=>V.brand==='ALL'||V.brand===b).map(b=>{const a=S.styles.filter(s=>s.b===b);
+        return `<div style="margin-bottom:12px"><b>${BRANDS[b].en}</b> <span class="muted small">${a.length} styles</span>
+        <div class="bar" style="margin-top:5px"><i style="width:${pct(a.filter(s=>s.st==='채택').length,a.length)}%;background:${BRANDS[b].c2}"></i></div>
+        <div class="muted small">Concept ${a.filter(s=>s.st==='기획').length} · Design fixed ${a.filter(s=>s.st==='디자인확정').length} · Sampling ${a.filter(s=>s.st==='샘플진행').length} · Approved ${a.filter(s=>s.st==='채택').length}</div></div>`;}).join('')}
+    </div>
+  </div>`;
+}
+function hqAct(id,ok){const s=S.styles.find(x=>x.id===id);
+  s.st=ok?'채택':'기획';
+  S.logs.unshift({t:'now',w:'US HQ',m:`${id} ${ok?'APPROVED':'REJECTED'} — ${ok?'proceed to production':'revise and resubmit'}`});
+  save();toast(id+(ok?' 승인됨 — 한국 담당자에게 알림 발송':' 반려됨 — 기획 단계로 회귀'));render();}
+
+/* ============ 렌더 ============ */
+function go(t){V.tab=t;render();window.scrollTo(0,0);}
+function render(){
+  theme();
+  if(isHQ()&&!TABS.find(t=>t.k===V.tab&&t.en))V.tab='hq';
+  renderNav();
+  const m={dash:viewDash,styles:viewStyles,upload:viewUpload,fabric:viewFabric,sample:viewSample,prod:viewProd,line:viewLine,hq:viewHQ};
+  $('#app').innerHTML=(m[V.tab]||viewDash)();
+  if(V.tab==='upload')bindUpload();
+}
+document.querySelectorAll('#bsw button').forEach(b=>b.onclick=()=>{
+  V.brand=b.dataset.b;
+  document.querySelectorAll('#bsw button').forEach(x=>x.classList.toggle('on',x===b));
+  render();toast(V.brand==='ALL'?'통합 보기 — 첼로진 + 히든진':BRANDS[V.brand].ko+' ('+BRANDS[V.brand].en+') 보기');
+});
+$('#role').onchange=e=>{V.role=e.target.value;
+  if(isHQ()){V.tab='hq';toast('US HQ 계정 — 영문 · 읽기전용 · 원가 비공개');}
+  else toast(V.role==='manager'?'지사장 계정 — 전체 권한':'디자이너 계정 — 원가 비공개');
+  render();};
+render();
+</script>
+</body>
+</html>
