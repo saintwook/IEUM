@@ -1,0 +1,654 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SKn테크노파크 관리단 운영시스템 v1.0">
+<meta property="og:description" content="700실·453사·65,000평 지식산업센터 통합 운영시스템 — 관리비·회계·주차·전자투표 10개 모듈">
+<meta name="description" content="700실·453사·65,000평 지식산업센터 통합 운영시스템 — 관리비·회계·주차·전자투표 10개 모듈">
+<title>SKn테크노파크 관리단 운영시스템 v1.0</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --bg:#F4F8F9; --panel:#FFFFFF;
+  --side:#FFFFFF; --side-ink:#5B666D; --side-ink-2:#9AA5AB; --side-rule:#E3EAEC; --side-wm:#0F6C7C;
+  --ink:#152026; --ink-2:#53616A; --ink-3:#8A959B;
+  --rule:#E2E9EB; --rule-2:#F0F5F6;
+  --accent:#0F6C7C; --accent-2:#149BB2; --accent-soft:#E3F3F6;
+  --good:#1F6B4A; --good-soft:#E4F1EA;
+  --warn:#8A6410; --warn-soft:#FAF0DC;
+  --crit:#9E3128; --crit-soft:#FAE8E6;
+  --sans:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+  --serif:"AppleMyungjo","Nanum Myeongjo","Batang",serif;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0D1114; --panel:#161B1F;
+  --side:#0A1316; --side-ink:#C3D3D8; --side-ink-2:#5D818A; --side-rule:#1E282C; --side-wm:#8FD3E0;
+  --ink:#E9EDEF; --ink-2:#AEB8BE; --ink-3:#7B858B;
+  --rule:#252D32; --rule-2:#1D2429;
+  --accent:#5FAEBD; --accent-2:#7FC6D3; --accent-soft:#152A30;
+  --good:#5FB98D; --good-soft:#13291F;
+  --warn:#D3A63C; --warn-soft:#2B2213;
+  --crit:#E0837A; --crit-soft:#2C1A18;
+}}
+:root[data-theme="dark"]{
+  --bg:#0D1114; --panel:#161B1F;
+  --side:#0A1316; --side-ink:#C3D3D8; --side-ink-2:#5D818A; --side-rule:#1E282C; --side-wm:#8FD3E0;
+  --ink:#E9EDEF; --ink-2:#AEB8BE; --ink-3:#7B858B;
+  --rule:#252D32; --rule-2:#1D2429;
+  --accent:#5FAEBD; --accent-2:#7FC6D3; --accent-soft:#152A30;
+  --good:#5FB98D; --good-soft:#13291F;
+  --warn:#D3A63C; --warn-soft:#2B2213;
+  --crit:#E0837A; --crit-soft:#2C1A18;
+}
+:root[data-theme="light"]{
+  --bg:#F4F8F9; --panel:#FFFFFF;
+  --side:#FFFFFF; --side-ink:#5B666D; --side-ink-2:#9AA5AB; --side-rule:#E3EAEC; --side-wm:#0F6C7C;
+  --ink:#152026; --ink-2:#53616A; --ink-3:#8A959B;
+  --rule:#E2E9EB; --rule-2:#F0F5F6;
+  --accent:#0F6C7C; --accent-2:#149BB2; --accent-soft:#E3F3F6;
+  --good:#1F6B4A; --good-soft:#E4F1EA;
+  --warn:#8A6410; --warn-soft:#FAF0DC;
+  --crit:#9E3128; --crit-soft:#FAE8E6;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.app{display:grid;grid-template-columns:236px 1fr;min-height:100vh}
+
+.side{background:var(--side);color:var(--side-ink);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--side-rule)}
+.brand{padding:20px 18px 16px;border-bottom:1px solid var(--side-rule)}
+.brand .wm{font-family:var(--serif);font-size:19px;color:var(--side-wm);letter-spacing:-.01em}
+.brand .sub{font-size:11px;color:var(--side-ink-2);letter-spacing:.09em;margin-top:3px;text-transform:uppercase}
+.navlist{padding:10px 8px;display:flex;flex-direction:column;gap:1px;flex:1}
+.navgrp{font-size:10.5px;letter-spacing:.13em;color:var(--side-ink-2);padding:14px 10px 6px;text-transform:uppercase;font-weight:700}
+.nav{display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:6px;cursor:pointer;color:var(--side-ink);font-size:13.5px;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.nav:hover{background:var(--rule-2);color:var(--ink)}
+.nav.on{background:var(--accent-soft);color:var(--accent);font-weight:700;box-shadow:inset 3px 0 0 var(--accent)}
+.nav .n{font-size:10.5px;width:17px;color:var(--side-ink-2);font-variant-numeric:tabular-nums}
+.nav.on .n{color:var(--accent)}
+.sidefoot{padding:14px 18px;border-top:1px solid var(--side-rule);font-size:11px;color:var(--side-ink-2)}
+
+.main{min-width:0}
+.top{background:var(--panel);border-bottom:1px solid var(--rule);padding:14px 26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.top h1{margin:0;font-size:17px;font-weight:700}
+.top .crumb{font-size:12px;color:var(--ink-3)}
+.spacer{flex:1}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:3px;letter-spacing:.02em;white-space:nowrap}
+.b-demo{background:var(--warn-soft);color:var(--warn);border:1px solid currentColor}
+.who{font-size:12px;color:var(--ink-2);text-align:right;line-height:1.35}
+.who b{display:block;color:var(--ink);font-size:13px}
+.body{padding:24px 26px 70px;max-width:1240px}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--panel);border:1px solid var(--rule);border-radius:8px;padding:15px 16px;box-shadow:0 1px 2px rgba(16,48,56,.04)}
+.kpi .k{font-size:11.5px;color:var(--ink-3);font-weight:600;letter-spacing:.02em}
+.kpi .v{font-size:26px;font-weight:800;letter-spacing:-.03em;margin-top:5px;font-variant-numeric:tabular-nums;line-height:1.15}
+.kpi .d{font-size:11.5px;color:var(--ink-3);margin-top:4px}
+.kpi .d em{font-style:normal;font-weight:700}
+.up{color:var(--good)} .dn{color:var(--crit)} .ac{color:var(--accent)}
+
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:1fr 1fr}
+.g21{grid-template-columns:1.6fr 1fr}
+.card{background:var(--panel);border:1px solid var(--rule);border-radius:8px;overflow:hidden;min-width:0;box-shadow:0 1px 2px rgba(16,48,56,.04)}
+.card>h3{margin:0;padding:13px 16px;font-size:13.5px;border-bottom:1px solid var(--rule-2);display:flex;align-items:center;gap:9px}
+.card>h3 .hint{font-weight:400;color:var(--ink-3);font-size:11.5px;margin-left:auto}
+.pad{padding:16px}
+
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px;min-width:480px}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--rule-2);white-space:nowrap}
+th{font-size:11px;letter-spacing:.05em;color:var(--ink-3);font-weight:700;text-transform:uppercase;background:var(--rule-2)}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--accent-soft)}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:3px;white-space:nowrap}
+.t-ok{background:var(--good-soft);color:var(--good)}
+.t-wn{background:var(--warn-soft);color:var(--warn)}
+.t-cr{background:var(--crit-soft);color:var(--crit)}
+.t-nu{background:var(--rule-2);color:var(--ink-2)}
+.t-ac{background:var(--accent-soft);color:var(--accent)}
+
+.bl{display:flex;flex-direction:column;gap:11px}
+.br{display:grid;grid-template-columns:96px 1fr 78px;gap:11px;align-items:center;font-size:12.5px}
+.bt{background:var(--rule-2);height:9px;border-radius:5px;overflow:hidden}
+.bf{height:100%;background:var(--accent);border-radius:5px}
+.bf.g{background:var(--good)} .bf.w{background:var(--warn)} .bf.c{background:var(--crit)}
+.bv{text-align:right;font-variant-numeric:tabular-nums;font-weight:700;font-size:12.5px}
+
+.chart{display:flex;align-items:flex-end;gap:3px;height:132px;padding-top:6px}
+.col{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px;min-width:0}
+.col .bar{width:100%;background:var(--accent);border-radius:2px 2px 0 0;min-height:2px;transition:opacity .15s}
+.col:hover .bar{opacity:.7}
+.col .lb{font-size:9.5px;color:var(--ink-3);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.gauge{display:flex;flex-direction:column;gap:5px}
+.gauge .gt{display:flex;justify-content:space-between;font-size:12.5px}
+.gauge .gt b{font-variant-numeric:tabular-nums}
+.gtrack{height:22px;background:var(--rule-2);border-radius:4px;position:relative;overflow:hidden}
+.gfill{height:100%;background:var(--accent)}
+.gfill.pass{background:var(--good)}
+.gline{position:absolute;top:0;bottom:0;width:2px;background:var(--ink);opacity:.55}
+.glab{font-size:10.5px;color:var(--ink-3)}
+
+.formula{background:var(--rule-2);border-radius:6px;padding:13px 15px;font-size:12.5px;line-height:1.85;color:var(--ink-2)}
+.formula b{color:var(--ink)}
+.ftrow{display:flex;justify-content:space-between;gap:12px;border-bottom:1px dashed var(--rule);padding:6px 0}
+.ftrow:last-child{border-bottom:none}
+.note{font-size:11.5px;color:var(--ink-3);margin-top:10px}
+.btnrow{display:flex;gap:7px;flex-wrap:wrap;padding:12px 16px;border-top:1px solid var(--rule-2)}
+.btn{font-family:inherit;font-size:12.5px;padding:6px 13px;border-radius:5px;border:1px solid var(--rule);background:var(--panel);color:var(--ink-2);cursor:pointer}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.pri:hover{opacity:.88;color:#fff}
+.btn:focus-visible,.nav:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px}
+.list{display:flex;flex-direction:column}
+.li{padding:11px 16px;border-bottom:1px solid var(--rule-2);display:flex;gap:11px;align-items:flex-start}
+.li:last-child{border-bottom:none}
+.li .ttl{font-size:13px;font-weight:600}
+.li .meta{font-size:11.5px;color:var(--ink-3);margin-top:2px}
+.li .rt{margin-left:auto;text-align:right;white-space:nowrap}
+h4.sec{margin:24px 0 12px;font-size:14px;display:flex;align-items:center;gap:9px}
+.planlink{display:inline-block;margin-left:auto;font-size:12px;color:var(--accent);text-decoration:none;border:1px solid var(--rule);border-radius:5px;padding:4px 10px}
+.planlink:hover{border-color:var(--accent)}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:column}
+  .navlist{flex-direction:row;overflow-x:auto;padding:8px;gap:5px}
+  .navgrp{display:none}
+  .nav{white-space:nowrap;width:auto;padding:7px 12px}
+  .nav .n{display:none}
+  .sidefoot{display:none}
+  .g2,.g21{grid-template-columns:1fr}
+  .body{padding:16px 14px 60px}
+  .top{padding:12px 14px}
+  .kpis{grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:9px}
+  .kpi .v{font-size:22px}
+  .br{grid-template-columns:80px 1fr 66px}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="wm">SKn 관리단 OS</div>
+      <div class="sub">Operations v1.0</div>
+    </div>
+    <nav class="navlist" id="nav"></nav>
+    <div class="sidefoot">성남 SKn테크노파크<br>65,000평 · 700실 · 453사</div>
+  </aside>
+
+  <div class="main">
+    <header class="top">
+      <div>
+        <h1 id="ttl">경영 대시보드</h1>
+        <div class="crumb" id="crumb">2026년 7월 · 관리단</div>
+      </div>
+      <span class="spacer"></span>
+      <a class="planlink" href="plan.html">기획서 보기 →</a>
+      <span class="badge b-demo">시연용 샘플 데이터</span>
+      <div class="who"><b>입주자대표회장</b>관리단 · 전체 권한</div>
+    </header>
+    <div class="body" id="view"></div>
+  </div>
+</div>
+
+<script>
+const W=(n)=>n.toLocaleString('ko-KR');
+const 억=(n)=>(n/100000000).toFixed(n>=1000000000?1:2)+'억';
+const 만=(n)=>W(Math.round(n/10000))+'만';
+
+const DONG=['메가동','제넥스센터동','테크노동','리서치동'];
+const UPJONG=['전자부품','정밀기계','금형·사출','소프트웨어','반도체장비','자동차부품','의료기기','광학기기','화장품 제조','물류·유통','디스플레이','전기제어'];
+const PUM=['커넥터·하네스','CNC 가공품','정밀 금형','산업용 SW','웨이퍼 캐리어','ECU 모듈','진단키트','렌즈 모듈','기초화장품','3PL 보관','백라이트 유닛','제어반'];
+const PRE=['대성','한신','아이','에스','태광','제이','케이','미래','동보','신우','우진','성진','한울','두원','유니','세종','명진','청우'];
+const SUF=['테크','정밀','전자','산업','시스템','엔지니어링','메탈','솔루션','기공','산기'];
+
+let _s=20260728;
+const R=()=>{_s=(_s*1103515245+12345)&0x7fffffff;return _s/0x7fffffff;};
+const pick=a=>a[Math.floor(R()*a.length)];
+const ri=(a,b)=>Math.floor(R()*(b-a+1))+a;
+
+const HOSIL=[],COMPANY=[];
+(function(){
+  let hid=0, cid=0;
+  for(let d=0;d<4;d++){
+    const cnt=[210,190,160,140][d];
+    for(let i=0;i<cnt;i++){
+      hid++;
+      const fl=Math.floor(i/26)+1;
+      HOSIL.push({id:hid,dong:DONG[d],ho:fl+String(101+(i%26)).slice(1)+'호',floor:fl,
+        area:[35,48,61,80,103,140,179][ri(0,6)], own:R()<0.46?'자가':'임차', cid:null});
+    }
+  }
+  const vac=new Set(); while(vac.size<6) vac.add(ri(0,HOSIL.length-1));
+  const free=HOSIL.map((h,i)=>i).filter(i=>!vac.has(i));
+  let p=0;
+  while(p<free.length && COMPANY.length<453){
+    cid++;
+    const u=ri(0,11);
+    const c={id:cid,name:pick(PRE)+pick(SUF),up:UPJONG[u],pum:PUM[u],
+      ceo:'대표 '+pick(['김','이','박','최','정','강','조','윤','장','임'])+'○○',
+      emp:ri(3,85),rooms:[],area:0};
+    const take=Math.min(R()<0.72?1:(R()<0.7?2:3), free.length-p, COMPANY.length===452?99:3);
+    for(let k=0;k<take;k++){const h=HOSIL[free[p++]];h.cid=cid;c.rooms.push(h.ho);c.area+=h.area;}
+    COMPANY.push(c);
+  }
+  while(p<free.length){const h=HOSIL[free[p++]];const c=COMPANY[ri(0,COMPANY.length-1)];h.cid=c.id;c.rooms.push(h.ho);c.area+=h.area;}
+})();
+const VACANT=HOSIL.filter(h=>!h.cid);
+
+const BILL_TOTAL=550000000, PAID_RATE=0.9724;
+const PAID=Math.round(BILL_TOTAL*PAID_RATE), UNPAID=BILL_TOTAL-PAID;
+const RESERVE=3500000000, PARK_M=33000000;
+
+const 체납=COMPANY.slice(0,9).map((c,i)=>({name:c.name,rooms:c.rooms.join(', '),
+  amt:[4820000,3140000,2260000,1580000,1240000,980000,760000,540000,410000][i],
+  mon:[7,6,5,4,3,3,2,2,1][i]}));
+
+const 집행=[['위탁관리 인건비',126000000],['전기료(공용·개별)',198000000],['경비 용역',72000000],
+  ['미화 용역',48000000],['승강기 유지보수',21000000],['수도·수선비',34000000],
+  ['소방·전기 안전관리',12000000],['보험·제세공과',15000000],['기타 운영비',24000000]];
+
+const 수선=[['승강기 교체(28대)',2028,2400000000,'적립중'],['옥상 방수',2027,480000000,'적립중'],
+  ['수배전반 교체',2029,620000000,'적립중'],['외벽 도장',2030,350000000,'계획'],
+  ['주차장 바닥',2027,180000000,'적립중']];
+
+const 민원=[['B동 3층 화장실 누수','메가동 312호','시설','접수 2시간 전','처리중','t-wn'],
+  ['화물엘리베이터 오작동','제넥스센터동','설비','접수 5시간 전','처리중','t-wn'],
+  ['지하 주차장 조명 불량','테크노동 B1','시설','어제','완료','t-ok'],
+  ['야간 소음 민원(용접)','리서치동 508호','민원','어제','처리중','t-wn'],
+  ['입주사 간판 교체 승인 요청','메가동 705호','승인','2일 전','완료','t-ok'],
+  ['옥상 배수구 막힘','제넥스센터동 옥상','시설','3일 전','완료','t-ok']];
+
+const 공지=[['2026년 8월 정기 소방점검 안내','전체','예약발송 · 8/3 09:00',453],
+  ['하계 전력 피크 시간대 협조 요청','전체','발송완료 · 7/26',453],
+  ['주차 정기권 갱신 안내','정기권 보유 218사','발송완료 · 7/24',218],
+  ['승강기 정기검사에 따른 운행 제한','메가동','발송완료 · 7/20',148]];
+
+const PARK=[];for(let i=0;i<30;i++){PARK.push(ri(2780,3210));}
+const PARK_TODAY=PARK[29];
+const PARK_AVG=Math.round(PARK.reduce((a,b)=>a+b,0)/30);
+
+const PAGES=[
+  {id:'dash',t:'경영 대시보드',c:'2026년 7월 · 관리단',g:'경영'},
+  {id:'ho',t:'호실 대장',c:'총 700실 · 4개동',g:'자산'},
+  {id:'co',t:'입주사 대장',c:'453개사',g:'자산'},
+  {id:'fee',t:'관리비 정산',c:'2026년 7월 부과분',g:'회계'},
+  {id:'exp',t:'회계 · 집행',c:'월 5.5억 집행',g:'회계'},
+  {id:'res',t:'적립금 · 수선충당금',c:'35억 예치',g:'회계'},
+  {id:'park',t:'주차 · 수입 관리',c:'일 3,000대 · 월 3,300만원',g:'회계'},
+  {id:'cs',t:'민원 · 업무관리',c:'접수 6건',g:'운영'},
+  {id:'noti',t:'공지 발송',c:'입주사 알림',g:'운영'},
+  {id:'vote',t:'전자투표',c:'관리단 집회',g:'운영'},
+];
+
+const kpi=(k,v,d,cls='')=>`<div class="kpi"><div class="k">${k}</div><div class="v ${cls}">${v}</div><div class="d">${d}</div></div>`;
+const bar=(l,pct,v,c='')=>`<div class="br"><span>${l}</span><span class="bt"><span class="bf ${c}" style="width:${Math.min(pct,100)}%"></span></span><span class="bv">${v}</span></div>`;
+const tbl=(h,rows)=>`<div class="tw"><table><thead><tr>${h.map(x=>`<th class="${x[1]||''}">${x[0]}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+
+const V={};
+
+V.dash=()=>`
+<div class="kpis">
+  ${kpi('7월 관리비 수납률',(PAID_RATE*100).toFixed(1)+'%','부과 '+억(BILL_TOTAL)+' · 수납 '+억(PAID),'up')}
+  ${kpi('미수금',만(UNPAID)+'원','체납 9개사 <em class="dn">▲2</em>','dn')}
+  ${kpi('이달 주차 수입',만(PARK_M)+'원','연 환산 3억 9,600만','up')}
+  ${kpi('적립금 잔액',억(RESERVE),'수선충당금 포함','ac')}
+  ${kpi('공실',VACANT.length+'실','공실률 0.86%','up')}
+  ${kpi('민원 처리율','92.4%','평균 처리 1.4일')}
+</div>
+
+<div class="grid g21">
+  <div class="card">
+    <h3>월별 관리비 부과 · 수납<span class="hint">최근 12개월</span></h3>
+    <div class="pad">
+      <div class="chart">
+        ${[5.12,5.24,5.31,5.18,5.42,5.36,5.28,5.47,5.39,5.44,5.51,5.50].map((v,i)=>
+          `<div class="col" title="${(i+8>12?i-4:i+8)}월 ${v}억"><div class="bar" style="height:${(v/5.6)*100}%;${i===11?'background:var(--accent-2)':''}"></div><div class="lb">${(i+8>12?i-4:i+8)}</div></div>`).join('')}
+      </div>
+      <div class="note">단위: 억원 · 최근 12개월 부과액 추이. 7월 5.50억(전월 대비 △0.2%)</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>이달 집행 상위</h3>
+    <div class="pad"><div class="bl">
+      ${집행.slice(0,6).sort((a,b)=>b[1]-a[1]).map(x=>bar(x[0],(x[1]/198000000)*100,만(x[1])+'원')).join('')}
+    </div></div>
+  </div>
+</div>
+
+<h4 class="sec">체납 현황 <span class="tag t-cr">즉시 조치 3건</span></h4>
+<div class="card">
+  ${tbl([['입주사'],['사용 호실'],['체납 개월','n'],['체납액','n'],['상태']],
+    체납.map(t=>`<tr><td><b>${t.name}</b></td><td style="color:var(--ink-3)">${t.rooms}</td>
+      <td class="n">${t.mon}개월</td><td class="n"><b>${W(t.amt)}원</b></td>
+      <td><span class="tag ${t.mon>=5?'t-cr':t.mon>=3?'t-wn':'t-nu'}">${t.mon>=5?'법적조치 검토':t.mon>=3?'독촉 2차':'독촉 1차'}</span></td></tr>`).join(''))}
+  <div class="btnrow"><button class="btn pri">독촉장 일괄 발송</button><button class="btn">체납확인서 발급</button><button class="btn">엑셀 내려받기</button></div>
+</div>
+
+<h4 class="sec">주차 통행 · 30일</h4>
+<div class="card"><div class="pad">
+  <div class="chart">
+    ${PARK.map((v,i)=>`<div class="col" title="${W(v)}대"><div class="bar" style="height:${((v-2600)/700)*100}%;${i===29?'background:var(--accent-2)':''}"></div>${i%5===0?`<div class="lb">${i+1}</div>`:'<div class="lb">&nbsp;</div>'}</div>`).join('')}
+  </div>
+  <div class="note">일평균 <b>${W(PARK_AVG)}대</b> · 최근일 ${W(PARK_TODAY)}대 · 월 수입 ${만(PARK_M)}원</div>
+</div></div>`;
+
+V.ho=()=>{
+  const byDong=DONG.map(d=>{const l=HOSIL.filter(h=>h.dong===d);
+    return{d,n:l.length,v:l.filter(h=>!h.cid).length,a:l.reduce((s,h)=>s+h.area,0)}});
+  return `
+<div class="kpis">
+  ${kpi('총 호실','700실','4개동')}
+  ${kpi('입주','694실','자가 46% · 임차 54%','up')}
+  ${kpi('공실',VACANT.length+'실','0.86%','up')}
+  ${kpi('연면적','65,000평','63빌딩의 1.3배','ac')}
+</div>
+<div class="grid g2">
+  <div class="card"><h3>동별 현황</h3>
+    ${tbl([['동'],['호실','n'],['공실','n'],['계약면적 합','n']],
+      byDong.map(b=>`<tr><td><b>${b.d}</b></td><td class="n">${b.n}</td>
+      <td class="n">${b.v?`<span class="tag t-wn">${b.v}</span>`:'<span class="tag t-ok">0</span>'}</td>
+      <td class="n">${W(b.a)}평</td></tr>`).join(''))}
+  </div>
+  <div class="card"><h3>공실 목록 <span class="hint">즉시 임대 가능</span></h3>
+    ${tbl([['호실'],['면적','n'],['소유구분'],['상태']],
+      VACANT.map(h=>`<tr><td><b>${h.dong} ${h.ho}</b></td><td class="n">${h.area}평</td>
+      <td>${h.own}</td><td><span class="tag t-wn">공실</span></td></tr>`).join(''))}
+  </div>
+</div>
+<h4 class="sec">호실 대장 <span style="font-weight:400;color:var(--ink-3);font-size:12px">700실 중 상위 14건 표시</span></h4>
+<div class="card">
+  ${tbl([['호실'],['층','n'],['계약면적','n'],['소유구분'],['사용 입주사'],['업종']],
+    HOSIL.slice(0,14).map(h=>{const c=COMPANY.find(c=>c.id===h.cid);
+    return `<tr><td><b>${h.dong} ${h.ho}</b></td><td class="n">${h.floor}F</td><td class="n">${h.area}평</td>
+    <td><span class="tag ${h.own==='자가'?'t-ac':'t-nu'}">${h.own}</span></td>
+    <td>${c?c.name:'<span style="color:var(--ink-3)">— 공실</span>'}</td>
+    <td style="color:var(--ink-2)">${c?c.up:'—'}</td></tr>`}).join(''))}
+  <div class="btnrow"><button class="btn pri">호실 등록</button><button class="btn">면적 일괄 수정</button><button class="btn">엑셀 내려받기</button></div>
+</div>`;
+};
+
+V.co=()=>{
+  const multi=COMPANY.filter(c=>c.rooms.length>1).length;
+  const byUp={};COMPANY.forEach(c=>byUp[c.up]=(byUp[c.up]||0)+1);
+  const top=Object.entries(byUp).sort((a,b)=>b[1]-a[1]).slice(0,7);
+  return `
+<div class="kpis">
+  ${kpi('입주사','453개사','호실 694실 사용')}
+  ${kpi('복수 호실 사용',multi+'개사','2~3칸 사용','ac')}
+  ${kpi('평균 사용 면적',Math.round(COMPANY.reduce((s,c)=>s+c.area,0)/453)+'평','회사당')}
+  ${kpi('총 종사자',W(COMPANY.reduce((s,c)=>s+c.emp,0))+'명','추정')}
+</div>
+<div class="grid g2">
+  <div class="card"><h3>업종 분포 <span class="hint">상위 7</span></h3><div class="pad"><div class="bl">
+    ${top.map(t=>bar(t[0],(t[1]/top[0][1])*100,t[1]+'사')).join('')}
+  </div></div></div>
+  <div class="card"><h3>입주 자격 점검 <span class="hint">산업집적법</span></h3><div class="pad">
+    <div class="bl">
+      ${bar('적격 확인',100,'447사','g')}
+      ${bar('서류 보완 필요',1.3,'6사','w')}
+      ${bar('부적격',0,'0사','g')}
+    </div>
+    <div class="note">입주계약 만료 <b>D-90 이내 12개사</b> · 관리기관(성남산업단지관리공단) 신고 대상 자동 알림</div>
+  </div></div>
+</div>
+<h4 class="sec">입주사 대장 <span style="font-weight:400;color:var(--ink-3);font-size:12px">453사 중 상위 12건 표시</span></h4>
+<div class="card">
+  ${tbl([['입주사'],['업종'],['주요 품목'],['사용 호실'],['면적','n'],['인원','n']],
+    COMPANY.slice(0,12).map(c=>`<tr><td><b>${c.name}</b><div style="font-size:11px;color:var(--ink-3)">${c.ceo}</div></td>
+    <td>${c.up}</td><td style="color:var(--ink-2)">${c.pum}</td>
+    <td>${c.rooms.join(', ')}${c.rooms.length>1?` <span class="tag t-ac">${c.rooms.length}칸</span>`:''}</td>
+    <td class="n">${c.area}평</td><td class="n">${c.emp}</td></tr>`).join(''))}
+  <div class="btnrow"><button class="btn pri">입주사 등록</button><button class="btn">사업자등록증 일괄 확인</button><button class="btn">엑셀 내려받기</button></div>
+</div>`;
+};
+
+V.fee=()=>`
+<div class="kpis">
+  ${kpi('7월 부과 총액',억(BILL_TOTAL),'700실 · 453사')}
+  ${kpi('수납',억(PAID),(PAID_RATE*100).toFixed(1)+'%','up')}
+  ${kpi('미수',만(UNPAID)+'원','9개사','dn')}
+  ${kpi('평당 관리비','8,462원','업계 평균 5,000원+실비')}
+</div>
+<div class="grid g21">
+  <div class="card"><h3>부과 산식 <span class="hint">입주사에게 그대로 공개됩니다</span></h3><div class="pad">
+    <div class="formula">
+      <div class="ftrow"><span><b>① 개별 사용분</b> — 실사용량 × 단가</span><span>전기 · 수도</span></div>
+      <div class="ftrow"><span><b>② 공용 배분분</b> — 공용 발생액 × (해당 호실 면적 ÷ 총 면적)</span><span>공용전기 · 인건비 · 시설비</span></div>
+      <div class="ftrow"><span><b>③ 수선충당금</b> — 면적 × 적립 단가</span><span>장기수선계획 연동</span></div>
+      <div class="ftrow"><span style="color:var(--ink)"><b>고지액 = ① + ② + ③</b></span><span style="color:var(--accent)"><b>호실별 산출 근거 자동 첨부</b></span></div>
+    </div>
+    <div class="note">엑셀에서는 이 계산을 사람이 맞췄습니다. 시스템은 호실 700개와 입주사 453개의 관계를 자동으로 반영해 <b>회사 단위 고지서 1장</b>으로 합산합니다.</div>
+  </div></div>
+  <div class="card"><h3>수납 경로</h3><div class="pad"><div class="bl">
+    ${bar('계좌이체',68,'3.74억','g')}${bar('가상계좌',21,'1.16억','g')}
+    ${bar('카드',8.4,'0.46억','g')}${bar('미수',2.76,'0.15억','c')}
+  </div>
+  <div class="note">전자세금계산서 <b>453건</b> 자동 발행 · 국세청 전송 완료</div>
+  </div></div>
+</div>
+<h4 class="sec">호실별 고지 내역 <span style="font-weight:400;color:var(--ink-3);font-size:12px">상위 10건</span></h4>
+<div class="card">
+  ${tbl([['입주사 / 호실'],['면적','n'],['① 개별','n'],['② 공용','n'],['③ 충당금','n'],['고지액','n'],['상태']],
+    COMPANY.slice(0,10).map((c,i)=>{const a=c.area;const g=a*4100,gg=a*3200,s=a*1160;
+    return `<tr><td><b>${c.name}</b><div style="font-size:11px;color:var(--ink-3)">${c.rooms.join(', ')}</div></td>
+    <td class="n">${a}평</td><td class="n">${W(Math.round(g))}</td><td class="n">${W(Math.round(gg))}</td>
+    <td class="n">${W(Math.round(s))}</td><td class="n"><b>${W(Math.round(g+gg+s))}원</b></td>
+    <td><span class="tag ${i===3?'t-cr':'t-ok'}">${i===3?'미납':'수납'}</span></td></tr>`}).join(''))}
+  <div class="btnrow"><button class="btn pri">7월 고지서 일괄 발송</button><button class="btn">세금계산서 발행</button><button class="btn">회계감사 자료 출력</button></div>
+</div>`;
+
+V.exp=()=>{
+  const tot=집행.reduce((s,x)=>s+x[1],0);
+  return `
+<div class="kpis">
+  ${kpi('7월 집행액',억(tot),'예산 대비 98.2%','up')}
+  ${kpi('연간 누계','38.6억','예산 66억의 58.5%')}
+  ${kpi('예산 초과 항목','1건','전기료 +4.2%','dn')}
+  ${kpi('회계감사','준비 완료','증빙 100% 전자보관','up')}
+</div>
+<div class="grid g21">
+  <div class="card"><h3>항목별 집행 <span class="hint">2026년 7월</span></h3>
+    ${tbl([['항목'],['예산','n'],['집행','n'],['집행률','n'],['상태']],
+      집행.map(x=>{const bud=Math.round(x[1]*(0.94+R()*0.14));const rt=(x[1]/bud*100);
+      return `<tr><td>${x[0]}</td><td class="n">${만(bud)}</td><td class="n"><b>${만(x[1])}</b></td>
+      <td class="n">${rt.toFixed(1)}%</td><td><span class="tag ${rt>100?'t-cr':rt>95?'t-wn':'t-ok'}">${rt>100?'초과':rt>95?'주의':'정상'}</span></td></tr>`}).join(''))}
+  </div>
+  <div class="card"><h3>지출 결의 대기</h3><div class="list">
+    ${[['승강기 부품 교체(메가동 4호기)','8,420,000','승인 대기'],['하계 방역 용역','3,150,000','승인 대기'],
+      ['소화펌프 정비','5,600,000','회장 결재'],['조경 관리 7월분','2,800,000','승인 완료']].map(x=>
+      `<div class="li"><div><div class="ttl">${x[0]}</div><div class="meta">${x[2]}</div></div>
+      <div class="rt"><b>${x[1]}원</b></div></div>`).join('')}
+  </div>
+  <div class="btnrow"><button class="btn pri">일괄 결재</button><button class="btn">반려</button></div>
+  </div>
+</div>
+<div class="card" style="margin-top:14px"><h3>회계감사 대응 <span class="hint">집합건물법 제26조의2 · 전유부분 150개 이상 매년 의무</span></h3><div class="pad">
+  <div class="bl">
+    ${bar('수입 증빙',100,'완비','g')}${bar('지출 증빙',100,'완비','g')}
+    ${bar('통장 대사',100,'일치','g')}${bar('충당금 대사',100,'일치','g')}
+  </div>
+  <div class="note">회계연도 종료 후 3개월 내 감사인 선임 · <b>감사 제출 서류 원클릭 출력</b></div>
+</div></div>`;
+};
+
+V.res=()=>{
+  const need=수선.reduce((s,x)=>s+x[2],0);
+  return `
+<div class="kpis">
+  ${kpi('적립금 총액',억(RESERVE),'관리비 예치 + 수선충당금','ac')}
+  ${kpi('향후 소요 추정',억(need),'장기수선계획 5개 항목')}
+  ${kpi('충족률',Math.round(RESERVE/need*100)+'%','부족 '+억(need-RESERVE),'dn')}
+  ${kpi('월 적립액','7,540만원','평당 1,160원')}
+</div>
+<div class="grid g21">
+  <div class="card"><h3>장기수선계획 <span class="hint">부위별 수선주기 · 예상비용</span></h3>
+    ${tbl([['수선 항목'],['예정','n'],['예상 비용','n'],['잔여','n'],['상태']],
+      수선.map(x=>`<tr><td><b>${x[0]}</b></td><td class="n">${x[1]}년</td>
+      <td class="n">${억(x[2])}</td><td class="n">${x[1]-2026}년</td>
+      <td><span class="tag ${x[3]==='적립중'?'t-ok':'t-nu'}">${x[3]}</span></td></tr>`).join(''))}
+    <div class="btnrow"><button class="btn pri">적립 목표액 재산출</button><button class="btn">계획 수정</button></div>
+  </div>
+  <div class="card"><h3>적립 추이</h3><div class="pad">
+    <div class="chart">
+      ${[21.4,23.1,24.8,26.2,27.9,29.4,30.8,32.1,33.0,33.8,34.4,35.0].map((v,i)=>
+        `<div class="col" title="${v}억"><div class="bar" style="height:${(v/36)*100}%;${i===11?'background:var(--accent-2)':''}"></div><div class="lb">${i%3===0?(i+8>12?i-4:i+8):'&nbsp;'}</div></div>`).join('')}
+    </div>
+    <div class="note">단위: 억원 · 최근 12개월. <b>승강기 28대 교체(2028년, 24억)</b>가 최대 소요 항목입니다.</div>
+  </div></div>
+</div>`;
+};
+
+V.park=()=>{
+  const hourly=[42,31,28,35,88,268,412,386,241,198,224,312,268,214,236,289,341,398,264,148,96,72,58,48];
+  return `
+<div class="kpis">
+  ${kpi('오늘 입·출차',W(PARK_TODAY)+'대','일평균 '+W(PARK_AVG)+'대','ac')}
+  ${kpi('이달 수입',만(PARK_M)+'원','연 환산 3억 9,600만','up')}
+  ${kpi('정기권','218사 / 1,042대','입주사 배정분 포함')}
+  ${kpi('호실당 환산','47,000원','월 · 700실 기준','up')}
+</div>
+<div class="card"><h3>시간대별 통행 <span class="hint">오늘 · 총 ${W(PARK_TODAY)}대</span></h3><div class="pad">
+  <div class="chart">
+    ${hourly.map((v,i)=>`<div class="col" title="${i}시 ${v}대"><div class="bar" style="height:${(v/420)*100}%;${v>350?'background:var(--accent-2)':''}"></div><div class="lb">${i%3===0?i:'&nbsp;'}</div></div>`).join('')}
+  </div>
+  <div class="note">출근 피크 <b>07~08시</b> · 퇴근 피크 <b>17~18시</b> · 심야 통행 대비 야간 개방 검토 가능</div>
+</div></div>
+
+<div class="grid g2" style="margin-top:14px">
+  <div class="card"><h3>수입 구성</h3><div class="pad"><div class="bl">
+    ${bar('시간권(방문)',100,'1,880만원','g')}
+    ${bar('정기권 초과분',58,'1,090만원','g')}
+    ${bar('월 정기 방문사',17,'330만원','g')}
+  </div>
+  <div class="note">합계 <b>3,300만원</b> · 미수 및 부정출차 점검 대상 <b>월 62건</b></div>
+  </div></div>
+  <div class="card"><h3>배정 대수 vs 실제 등록 <span class="hint">면적 기준 자동 산출</span></h3>
+    ${tbl([['입주사'],['면적','n'],['배정','n'],['등록','n'],['상태']],
+      COMPANY.slice(0,7).map(c=>{const al=Math.max(1,Math.floor(c.area/40));const rg=al+ri(-1,3);
+      return `<tr><td><b>${c.name}</b></td><td class="n">${c.area}평</td><td class="n">${al}대</td>
+      <td class="n">${rg}대</td><td><span class="tag ${rg>al?'t-wn':'t-ok'}">${rg>al?'초과 '+(rg-al)+'대 과금':'정상'}</span></td></tr>`}).join(''))}
+  </div>
+</div>
+<div class="card" style="margin-top:14px"><h3>수익 개선 여지</h3><div class="pad">
+  <div class="formula">
+    <div class="ftrow"><span>연간 주차 수입</span><span><b>3억 9,600만원</b></span></div>
+    <div class="ftrow"><span>초과 등록 미과금 추정</span><span><b>월 약 240만원</b></span></div>
+    <div class="ftrow"><span>정기권 갱신 누락</span><span><b>월 약 90만원</b></span></div>
+    <div class="ftrow"><span style="color:var(--ink)"><b>연간 개선 여지</b></span><span style="color:var(--good)"><b>약 3,960만원 (10%)</b></span></div>
+  </div>
+  <div class="note">현재는 관제 장비의 정산 내역만 존재하고 <b>입주사·호실과 연결된 대장이 없어</b> 위 항목을 확인할 수 없습니다. 본 모듈이 이를 연결합니다.</div>
+</div></div>`;
+};
+
+V.cs=()=>`
+<div class="kpis">
+  ${kpi('처리 대기','3건','기한 초과 0건','up')}
+  ${kpi('이달 접수','48건','전월 대비 △6건','up')}
+  ${kpi('평균 처리시간','1.4일','목표 2일 이내','up')}
+  ${kpi('처리율','92.4%','완료 44 / 접수 48','up')}
+</div>
+<div class="grid g21">
+  <div class="card"><h3>접수 현황</h3><div class="list">
+    ${민원.map(m=>`<div class="li">
+      <span class="tag t-nu">${m[2]}</span>
+      <div><div class="ttl">${m[0]}</div><div class="meta">${m[1]} · ${m[3]}</div></div>
+      <div class="rt"><span class="tag ${m[5]}">${m[4]}</span></div></div>`).join('')}
+  </div>
+  <div class="btnrow"><button class="btn pri">신규 접수</button><button class="btn">담당 배정</button><button class="btn">처리 완료</button></div>
+  </div>
+  <div class="card"><h3>유형별 접수 <span class="hint">이달</span></h3><div class="pad"><div class="bl">
+    ${bar('시설 하자',100,'19건')}${bar('설비 고장',68,'13건')}
+    ${bar('주차 민원',42,'8건')}${bar('소음·환경',26,'5건')}${bar('승인 요청',16,'3건')}
+  </div>
+  <div class="note">처리기한(SLA) 초과 시 담당자와 관리소장에게 <b>자동 알림</b>이 발송됩니다.</div>
+  </div></div>
+</div>`;
+
+V.noti=()=>`
+<div class="kpis">
+  ${kpi('이달 발송','12건','수신 대상 누계 3,847')}
+  ${kpi('평균 열람률','78.2%','문자 + 알림톡','up')}
+  ${kpi('예약 발송','1건','8/3 09:00')}
+  ${kpi('긴급 알림','0건','정전·단수 없음','up')}
+</div>
+<div class="grid g21">
+  <div class="card"><h3>발송 내역</h3><div class="list">
+    ${공지.map(n=>`<div class="li"><div><div class="ttl">${n[0]}</div>
+      <div class="meta">대상: ${n[1]} · ${n[2]}</div></div>
+      <div class="rt"><b>${W(n[3])}사</b><div class="meta">수신</div></div></div>`).join('')}
+  </div>
+  <div class="btnrow"><button class="btn pri">새 공지 작성</button><button class="btn">긴급 알림 발송</button></div>
+  </div>
+  <div class="card"><h3>긴급 알림 <span class="hint">정전 · 단수 · 화재</span></h3><div class="pad">
+    <div class="formula">
+      <div class="ftrow"><span>전체 입주사</span><span><b>453사</b></span></div>
+      <div class="ftrow"><span>동별 선택 발송</span><span>메가동 · 제넥스센터동 · 테크노동 · 리서치동</span></div>
+      <div class="ftrow"><span>발송 채널</span><span>문자 + 알림톡 + 시스템 팝업</span></div>
+      <div class="ftrow"><span style="color:var(--ink)"><b>예상 도달 시간</b></span><span style="color:var(--accent)"><b>30초 이내</b></span></div>
+    </div>
+    <div class="note">입주사는 별도 앱 설치 없이 문자 링크로 바로 확인합니다.</div>
+  </div></div>
+</div>`;
+
+V.vote=()=>`
+<div class="kpis">
+  ${kpi('진행 중 안건','1건','투표 마감 D-3','ac')}
+  ${kpi('참여','282 / 453','62.3%','up')}
+  ${kpi('의결권(면적)','58.1%','과반 충족','up')}
+  ${kpi('전자투표 절감','약 340만원','서면 발송 대비')}
+</div>
+<div class="card"><h3>제12차 관리단 집회 — 통합 운영시스템 도입의 건 <span class="hint">투표 마감 2026-07-31 18:00</span></h3>
+<div class="pad">
+  <p style="margin:0 0 16px;color:var(--ink-2)">관리단 의결은 <b style="color:var(--ink)">구분소유자 수</b>와 <b style="color:var(--ink)">의결권(면적 지분)</b>을 <b style="color:var(--ink)">동시에</b> 충족해야 합니다. 700실·453사 구조에서는 두 기준이 따로 움직이므로 시스템이 실시간으로 함께 집계합니다.</p>
+  <div class="gauge" style="margin-bottom:16px">
+    <div class="gt"><span>① 구분소유자 수 기준</span><span><b>62.3%</b> · 282 / 453</span></div>
+    <div class="gtrack"><div class="gfill pass" style="width:62.3%"></div><div class="gline" style="left:50%"></div></div>
+    <div class="glab">검은 선 = 과반(50%) 기준선 · <span style="color:var(--good);font-weight:700">충족</span></div>
+  </div>
+  <div class="gauge" style="margin-bottom:16px">
+    <div class="gt"><span>② 의결권(면적 지분) 기준</span><span><b>58.1%</b> · 37,765평 / 65,000평</span></div>
+    <div class="gtrack"><div class="gfill pass" style="width:58.1%"></div><div class="gline" style="left:50%"></div></div>
+    <div class="glab">검은 선 = 과반(50%) 기준선 · <span style="color:var(--good);font-weight:700">충족</span></div>
+  </div>
+  <div class="formula">
+    <div class="ftrow"><span>찬성</span><span><b style="color:var(--good)">241표 (85.5%)</b></span></div>
+    <div class="ftrow"><span>반대</span><span><b>28표 (9.9%)</b></span></div>
+    <div class="ftrow"><span>기권</span><span><b>13표 (4.6%)</b></span></div>
+    <div class="ftrow"><span style="color:var(--ink)"><b>현재 판정</b></span><span><span class="tag t-ok" style="font-size:12px">이중 정족수 충족 · 가결 요건 성립</span></span></div>
+  </div>
+  <div class="note">임차인(점유자)은 관리인 선임·해임, 회계감사 실시 여부 등 <b>법이 정한 사안</b>에만 의결권이 있습니다. 시스템이 안건 종류별로 투표권자를 자동 구분합니다.</div>
+</div>
+<div class="btnrow"><button class="btn pri">안건 상정</button><button class="btn">미참여자 독려 발송</button><button class="btn">회의록 출력</button></div>
+</div>`;
+
+const nav=document.getElementById('nav');
+let lastG='';
+PAGES.forEach(p=>{
+  if(p.g!==lastG){lastG=p.g;const h=document.createElement('div');h.className='navgrp';h.textContent=p.g;nav.appendChild(h);}
+  const b=document.createElement('button');
+  b.className='nav';b.dataset.id=p.id;
+  b.innerHTML=`<span class="n">${String(PAGES.indexOf(p)+1).padStart(2,'0')}</span><span>${p.t}</span>`;
+  b.onclick=()=>go(p.id);
+  nav.appendChild(b);
+});
+function go(id){
+  const p=PAGES.find(x=>x.id===id);
+  document.getElementById('ttl').textContent=p.t;
+  document.getElementById('crumb').textContent=p.c;
+  document.getElementById('view').innerHTML=V[id]();
+  document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('on',n.dataset.id===id));
+  window.scrollTo({top:0,behavior:'instant'});
+}
+go('dash');
+</script>
+</body>
+</html>

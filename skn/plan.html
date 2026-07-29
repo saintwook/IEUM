@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="SKn테크노파크 관리단 통합 운영시스템 기획서">
+<meta property="og:description" content="연 101억 규모 관리 자금을 엑셀에서 시스템으로 — 현황 진단·10개 모듈·3단계 로드맵">
+<meta name="description" content="연 101억 규모 관리 자금을 엑셀에서 시스템으로 — 현황 진단·10개 모듈·3단계 로드맵">
+<title>SKn테크노파크 관리단 통합 운영시스템 기획서</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  :root{
+    --paper:#FCFBF9;--panel:#FFFFFF;--ink:#161A20;--ink-2:#3D454F;--ink-3:#6B747F;
+    --rule:#DFDCD6;--rule-2:#EDEAE5;--accent:#1C5A66;--accent-soft:#E4EEEF;
+    --good:#2C6A4C;--warn:#8C6410;--crit:#9E3128;--crit-soft:#F7E9E7;
+    --sans:-apple-system,BlinkMacSystemFont,"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif;
+    --serif:"AppleMyungjo","Apple SD Gothic Neo","Nanum Myeongjo","Batang",serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#101318;--panel:#171B21;--ink:#EDEFF2;--ink-2:#B9C0C9;--ink-3:#858D97;
+      --rule:#2C323A;--rule-2:#232930;--accent:#6FB6C2;--accent-soft:#1A2B2F;
+      --good:#6FBE94;--warn:#D6A83E;--crit:#E08279;--crit-soft:#2E1D1B;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#101318;--panel:#171B21;--ink:#EDEFF2;--ink-2:#B9C0C9;--ink-3:#858D97;
+    --rule:#2C323A;--rule-2:#232930;--accent:#6FB6C2;--accent-soft:#1A2B2F;
+    --good:#6FBE94;--warn:#D6A83E;--crit:#E08279;--crit-soft:#2E1D1B;
+  }
+  :root[data-theme="light"]{
+    --paper:#FCFBF9;--panel:#FFFFFF;--ink:#161A20;--ink-2:#3D454F;--ink-3:#6B747F;
+    --rule:#DFDCD6;--rule-2:#EDEAE5;--accent:#1C5A66;--accent-soft:#E4EEEF;
+    --good:#2C6A4C;--warn:#8C6410;--crit:#9E3128;--crit-soft:#F7E9E7;
+  }
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+       font-size:16px;line-height:1.72;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px 96px;}
+
+  .mast{padding:56px 0 28px;border-bottom:2px solid var(--ink);}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+           color:var(--accent);font-weight:700;}
+  .mast h1{font-family:var(--serif);font-size:clamp(30px,5vw,46px);line-height:1.24;
+           margin:14px 0 0;text-wrap:balance;letter-spacing:-.01em;}
+  .mast .sub{color:var(--ink-2);font-size:17px;margin-top:12px;}
+  .metaline{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:22px;
+            font-size:13px;color:var(--ink-3);}
+  .metaline b{color:var(--ink-2);font-weight:600;}
+  .applink{display:inline-block;margin-top:22px;font-size:14px;font-weight:700;
+           color:var(--paper);background:var(--accent);text-decoration:none;
+           padding:10px 18px;border-radius:5px;}
+  .applink:hover{opacity:.88}
+
+  section{padding-top:52px;}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+          color:var(--ink-3);font-weight:700;margin-bottom:10px;}
+  h2{font-family:var(--serif);font-size:clamp(23px,3.2vw,30px);line-height:1.34;
+     margin:0 0 18px;text-wrap:balance;}
+  h3{font-size:17px;margin:30px 0 10px;font-weight:700;}
+  p{margin:0 0 15px;max-width:68ch;color:var(--ink-2);}
+  p strong,li strong{color:var(--ink);font-weight:700;}
+  ul{margin:0 0 15px;padding-left:20px;color:var(--ink-2);}
+  li{margin-bottom:7px;max-width:66ch;}
+  .lead{font-size:18px;color:var(--ink);}
+
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+         gap:1px;background:var(--rule);border:1px solid var(--rule);margin:26px 0 8px;}
+  .tile{background:var(--panel);padding:20px 18px;}
+  .tile .lab{font-size:12px;color:var(--ink-3);letter-spacing:.04em;font-weight:600;}
+  .tile .val{font-family:var(--serif);font-size:34px;line-height:1.12;margin-top:7px;
+             font-variant-numeric:tabular-nums;letter-spacing:-.02em;}
+  .tile .note{font-size:12.5px;color:var(--ink-3);margin-top:6px;}
+  .tile.hi .val{color:var(--accent);}
+  .tile.bad .val{color:var(--crit);}
+  .tile.ok .val{color:var(--good);}
+
+  .callout{background:var(--panel);border:1px solid var(--rule);
+           border-left:4px solid var(--accent);padding:18px 20px;margin:22px 0;}
+  .callout.alarm{border-left-color:var(--crit);background:var(--crit-soft);}
+  .callout p{margin:0;max-width:none;}
+  .callout .big{font-family:var(--serif);font-size:19px;line-height:1.55;color:var(--ink);}
+
+  .tblwrap{overflow-x:auto;margin:20px 0;border:1px solid var(--rule);background:var(--panel);}
+  table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:520px;}
+  th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--rule-2);
+        vertical-align:top;}
+  thead th{background:var(--accent-soft);color:var(--ink);font-size:12.5px;
+           letter-spacing:.05em;text-transform:uppercase;font-weight:700;
+           border-bottom:1px solid var(--rule);}
+  tbody tr:last-child td{border-bottom:none;}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap;}
+  .pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;
+        border-radius:2px;letter-spacing:.03em;white-space:nowrap;}
+  .p-now{background:var(--accent);color:var(--panel);}
+  .p-next{background:var(--rule-2);color:var(--ink-2);}
+  .p-late{background:transparent;color:var(--ink-3);border:1px solid var(--rule);}
+
+  .bars{display:flex;flex-direction:column;gap:14px;margin:22px 0;}
+  .bar-row{display:grid;grid-template-columns:130px 1fr auto;gap:14px;align-items:center;
+           font-size:14px;}
+  .bar-track{background:var(--rule-2);height:26px;position:relative;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--crit);}
+  .bar-fill.mine{background:var(--good);}
+  .bar-val{font-variant-numeric:tabular-nums;font-weight:700;min-width:56px;text-align:right;}
+
+  .phases{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);
+          grid-template-columns:repeat(auto-fit,minmax(230px,1fr));margin:22px 0;}
+  .phase{background:var(--panel);padding:20px 18px;}
+  .phase .ph{font-size:12px;font-weight:700;letter-spacing:.1em;color:var(--accent);}
+  .phase h4{margin:8px 0 4px;font-size:17px;font-family:var(--serif);}
+  .phase .dur{font-size:12.5px;color:var(--ink-3);margin-bottom:10px;}
+  .phase ul{margin:0;padding-left:17px;font-size:13.5px;}
+  .phase li{margin-bottom:5px;}
+
+  .terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+         gap:1px;background:var(--rule);border:1px solid var(--rule);margin:22px 0;}
+  .term{background:var(--panel);padding:20px;}
+  .term h4{margin:0 0 10px;font-size:15px;letter-spacing:.02em;}
+  .term ul{margin:0;padding-left:17px;font-size:14px;}
+
+  footer{margin-top:64px;padding-top:22px;border-top:1px solid var(--rule);
+         font-size:12.5px;color:var(--ink-3);}
+  footer p{color:var(--ink-3);font-size:12.5px;}
+
+  @media (max-width:600px){
+    body{font-size:15px;}
+    .wrap{padding:0 16px 64px;}
+    .bar-row{grid-template-columns:88px 1fr auto;font-size:13px;}
+    .tile .val{font-size:29px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header class="mast">
+    <div class="eyebrow">관리단 보고 · 개발 제안</div>
+    <h1>SKn테크노파크 관리단<br>통합 운영시스템 구축 기획서</h1>
+    <p class="sub">연 101억 규모의 관리 자금과 700개 호실을 엑셀에서 시스템으로 옮기는 일에 관하여</p>
+    <div class="metaline">
+      <span><b>대상</b> 입주자대표회장 · 관리단</span>
+      <span><b>대상 단지</b> 성남 SKn테크노파크 (성남하이테크밸리)</span>
+      <span><b>작성일</b> 2026. 7. 29.</span>
+      <span><b>구분</b> v1.0 기획(안)</span>
+    </div>
+    <a class="applink" href="./">▶ 실제 v1.0 화면 보기</a>
+  </header>
+
+  <section>
+    <div class="kicker">한 장 요약</div>
+    <h2>지금 이 단지의 숫자</h2>
+    <div class="tiles">
+      <div class="tile"><div class="lab">연면적</div><div class="val">65,000평</div><div class="note">63빌딩의 약 1.3배</div></div>
+      <div class="tile"><div class="lab">총 호실 / 입주사</div><div class="val">700 / 453</div><div class="note">한 회사가 2~3칸 사용</div></div>
+      <div class="tile ok"><div class="lab">공실</div><div class="val">6실</div><div class="note">공실률 0.86%</div></div>
+      <div class="tile hi"><div class="lab">월 집행 관리비</div><div class="val">5.5억</div><div class="note">연 66억</div></div>
+      <div class="tile hi"><div class="lab">적립금(관리비·수선충당금)</div><div class="val">35억</div><div class="note">예치 자산</div></div>
+      <div class="tile ok"><div class="lab">주차 수입</div><div class="val">월 3,300만</div><div class="note">연 약 4억 · 일 3,000대</div></div>
+      <div class="tile bad"><div class="lab">현재 관리 도구</div><div class="val">엑셀</div><div class="note">단일 파일 의존</div></div>
+    </div>
+    <div class="callout alarm">
+      <p class="big"><strong>연 66억을 집행하고 35억을 예치한 조직이, 엑셀 파일 하나로 운영되고 있습니다.</strong></p>
+    </div>
+    <p class="lead">본 기획서는 이 상태를 <strong>관리단 전용 웹 시스템</strong>으로 옮기는 3개월 계획입니다. 입주사에게는 관리비 조회만 열고, 나머지는 전부 관리단·관리사무소 내부 도구로 만듭니다.</p>
+  </section>
+
+  <section>
+    <div class="kicker">진단 01 — 규모</div>
+    <h2>이 단지는 국내 지식산업센터 중 최상위 규모입니다</h2>
+    <p>연면적 65,000평(약 214,900㎡)은 일반적인 지식산업센터(1~3만평)의 두 배를 훌쩍 넘습니다. 익숙한 건물과 비교하면 규모가 분명해집니다.</p>
+    <div class="bars">
+      <div class="bar-row"><span>SKn테크노파크</span><span class="bar-track"><span class="bar-fill mine" style="width:100%"></span></span><span class="bar-val">65,000평</span></div>
+      <div class="bar-row"><span>63빌딩</span><span class="bar-track"><span class="bar-fill" style="width:77%"></span></span><span class="bar-val">50,305평</span></div>
+      <div class="bar-row"><span>일반 지식산업센터</span><span class="bar-track"><span class="bar-fill" style="width:31%"></span></span><span class="bar-val">약 2만평</span></div>
+    </div>
+    <p>전국 지식산업센터는 <strong>1,549개</strong>, 성남시에만 <strong>56개</strong>가 있습니다(공공데이터 기준). 그중 6.5만평·700실 규모는 손에 꼽힙니다. <strong>규모가 곧 관리 난이도이며, 동시에 협상력입니다.</strong></p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>지표</th><th class="num">SKn테크노파크</th><th>해석</th></tr></thead>
+        <tbody>
+          <tr><td>평당 월 관리비</td><td class="num">약 8,500원</td><td>업계 일반관리비 평균 5,000원선 + 전기·수도 실비 포함 구조로 추정</td></tr>
+          <tr><td>호실당 평균 면적</td><td class="num">약 93평</td><td>계약면적 기준. 제조·물류 병행 단지 특성</td></tr>
+          <tr><td>연간 집행 규모</td><td class="num">약 66억</td><td>중견기업 1개사의 연간 예산 수준</td></tr>
+          <tr><td>회계감사</td><td class="num">의무 대상</td><td>전유부분 150개 이상 → 매년 외부 회계감사(집합건물법)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">진단 02 — 경쟁력</div>
+    <h2>공실률 0.86%. 전국 평균의 60분의 1입니다</h2>
+    <div class="bars">
+      <div class="bar-row"><span>수도권 평균</span><span class="bar-track"><span class="bar-fill" style="width:100%"></span></span><span class="bar-val">약 55%</span></div>
+      <div class="bar-row"><span>경기도</span><span class="bar-track"><span class="bar-fill" style="width:58%"></span></span><span class="bar-val">약 32%</span></div>
+      <div class="bar-row"><span>SKn테크노파크</span><span class="bar-track"><span class="bar-fill mine" style="width:2%"></span></span><span class="bar-val">0.86%</span></div>
+    </div>
+    <p>2026년 현재 수도권 지식산업센터는 <strong>절반 이상이 비어 있습니다.</strong> 국토교통부가 빈 지식산업센터를 주거용으로 전환하는 방안까지 검토할 만큼 업계가 침체돼 있습니다. 그 한복판에서 700실 중 6실만 비어 있다는 것은 대단히 이례적입니다.</p>
+    <div class="callout">
+      <p class="big">공실이 없다는 것은 곧 <strong>관리비 수입이 안정적</strong>이라는 뜻입니다. 시스템 투자를 감당할 체력이 있고, 투자 회수도 확실합니다. 지금이 적기입니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">진단 03 — 수익</div>
+    <h2>주차 하나로 이미 연 4억이 들어오고 있습니다</h2>
+    <div class="tiles">
+      <div class="tile"><div class="lab">일평균 입·출차</div><div class="val">2,800~3,200</div><div class="note">대 / 일</div></div>
+      <div class="tile"><div class="lab">월간 통행</div><div class="val">약 9만</div><div class="note">연 100만 대 이상</div></div>
+      <div class="tile ok"><div class="lab">월 주차 수입</div><div class="val">3,300만원</div><div class="note">연 약 3억 9,600만원</div></div>
+      <div class="tile ok"><div class="lab">호실당 환산</div><div class="val">47,000원</div><div class="note">월 · 700실 기준</div></div>
+    </div>
+    <p>이 숫자가 이 기획서에서 가장 중요합니다. <strong>부대수입(잡수입) 사업이 가능하다는 것을 이 단지가 이미 스스로 증명하고 있기 때문입니다.</strong> 일 3,000대가 드나드는 동선은 그 자체로 상권이며, 광고·임대·서비스를 얹을 수 있는 기반입니다.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>비교 기준</th><th class="num">금액</th><th>주차 수입의 위치</th></tr></thead>
+        <tbody>
+          <tr><td>월 집행 관리비</td><td class="num">5억 5,000만원</td><td>주차 수입이 <strong>약 6%</strong>를 상쇄</td></tr>
+          <tr><td>연간 집행 관리비</td><td class="num">약 66억원</td><td>연 주차 수입 <strong>약 4억</strong></td></tr>
+          <tr><td>평당 월 관리비</td><td class="num">약 8,500원</td><td>주차 수입 환산 <strong>평당 약 500원</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <p class="big">연 4억이 오가는 사업이 <strong>지금은 시스템 없이 운영되고 있습니다.</strong> 정기권 관리, 미수·부정출차, 입주사별 배정 대수와 실제 등록 대수의 차이 — 이 중 어디서 새는지 확인할 방법이 현재로선 없습니다. <strong>3%만 개선해도 연 1,200만원입니다.</strong></p>
+    </div>
+    <p>따라서 본 기획에서는 당초 2단계로 계획했던 <strong>주차·수입 관리 모듈을 v1.0으로 앞당겨</strong> 포함합니다. 일 3,000대는 관리사무소의 최대 업무 부하이기도 하므로, 업무 효율 측면에서도 우선순위가 높습니다.</p>
+  </section>
+
+  <section>
+    <div class="kicker">진단 04 — 위험</div>
+    <h2>엑셀은 왜 지금 한계에 왔는가</h2>
+    <h3>① 호실 700개와 입주사 453개가 어긋납니다</h3>
+    <p>한 회사가 2~3칸을 쓰기 때문에 <strong>호실과 입주사는 1:1이 아닙니다.</strong> 관리비는 호실별로 부과하지만 고지서와 소통은 회사 단위여야 하고, 주차 배정은 그 회사가 가진 호실 면적의 합으로 계산해야 합니다. 엑셀에서 이 셋을 사람 손으로 맞추면 반드시 어긋나고, 어긋난 순간 그것이 곧 분쟁입니다.</p>
+    <h3>② 부과 근거를 즉시 소명할 수 없습니다</h3>
+    <p>지식산업센터 분쟁의 대부분은 <strong>"관리비를 왜 이렇게 걷었고 어디에 썼는가"</strong>입니다. 최근 구리의 한 지식산업센터에서는 관리비 7억을 두고 관리단과 시행사가 정면 충돌했습니다. 부과 산식과 집행 내역이 시스템에 남아 있으면 이 다툼은 애초에 생기지 않습니다.</p>
+    <h3>③ 담당자가 바뀌면 기록이 사라집니다</h3>
+    <p>엑셀은 만든 사람만 이해합니다. 담당자 퇴사 한 번에 연 66억의 산출 근거가 통째로 증발할 수 있습니다. <strong>매년 의무인 외부 회계감사 대응도 엑셀로는 사실상 불가능합니다.</strong></p>
+  </section>
+
+  <section>
+    <div class="kicker">해결안</div>
+    <h2>v1.0 — 관리단·관리사무소 전용 웹 시스템</h2>
+    <p>입주사는 사용하지 않습니다. <strong>관리단과 관리사무소의 업무 효율</strong>이 1차 목표이며, 입주사에게는 <strong>관리비 조회 화면 하나만</strong> 엽니다. 별도 앱 설치 없이 PC와 휴대폰 브라우저에서 바로 쓰는 웹 방식입니다. 총 <strong>10개 모듈</strong>이며, 이 중 <strong>3·4·5·9번이 돈을 직접 다루는 핵심</strong>입니다.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>모듈</th><th>핵심 기능</th><th>해결하는 문제</th></tr></thead>
+        <tbody>
+          <tr><td><strong>1. 호실 대장</strong></td><td>700실 · 동/층/호, 계약면적, 소유자, 자가/임차, 주차 배정</td><td>모든 계산의 기준</td></tr>
+          <tr><td><strong>2. 입주사 대장</strong></td><td>453사 · 사업자등록, 업종 적격, 주요 취급품목, 담당자, 호실 연결</td><td>호실↔회사 불일치</td></tr>
+          <tr><td><strong>3. 관리비 정산</strong></td><td>개별 검침(전기·수도) + 면적 배분, 고지서 자동생성, 세금계산서, 수납·체납</td><td><strong>엑셀 대체</strong></td></tr>
+          <tr><td><strong>4. 회계·집행</strong></td><td>월 5.5억 집행 관리, 예산 대비 실적, 지출결의, 회계감사 자료 자동 출력</td><td>감사 대응·소명</td></tr>
+          <tr><td><strong>5. 적립금·수선충당금</strong></td><td>35억 잔고 추적, 장기수선계획(승강기·방수 등 부위별 적립 목표 역산)</td><td>노후 대비 재원</td></tr>
+          <tr><td><strong>6. 민원·업무관리</strong></td><td>접수 → 담당 배정 → 처리기한 → 완료, 처리율 통계</td><td>관리사무소 효율</td></tr>
+          <tr><td><strong>7. 공지 발송</strong></td><td>관리단 → 입주사 문자·알림톡·웹 공지, 정전·단수 긴급알림</td><td>입주사 소통</td></tr>
+          <tr><td><strong>8. 전자투표</strong></td><td>관리단 집회 소집·의결·집계, <strong>구분소유자 수 + 면적 지분 이중 정족수 자동계산</strong></td><td>의결 절차 간소화</td></tr>
+          <tr><td><strong>9. 주차·수입 관리</strong></td><td>일 3,000대 통행 집계, <strong>주차 수입 3,300만원 정산</strong>, 정기권, 입주사별 배정 대수 vs 실제 등록 대수, 방문차량 사전등록, 미수·부정출차 점검</td><td><strong>연 4억 수입 관리</strong></td></tr>
+          <tr><td><strong>10. 경영 대시보드</strong></td><td>회장 전용 한 화면 — 수납률, 체납 상위, 집행 현황, 적립금, <strong>주차 수입</strong>, 민원 처리율</td><td>한눈에 파악</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>입주사 화면 (읽기 전용)</h3>
+    <p>로그인하면 <strong>자기 회사의 관리비 고지서와 납부 내역만</strong> 보입니다. 그 외 기능은 열지 않습니다. 향후 버전에서 개방 여부를 단계적으로 판단합니다.</p>
+    <div class="callout">
+      <p class="big"><strong>전자투표는 이 규모에서 특히 값어치가 큽니다.</strong> 관리단 의결은 「구분소유자 수」와 「면적 지분」을 동시에 충족해야 하는데, 700실·453사 구조에서는 사람 수와 면적이 따로 놉니다. 시스템이 두 기준을 동시에 자동 집계합니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">일정</div>
+    <h2>3단계 로드맵</h2>
+    <div class="phases">
+      <div class="phase">
+        <div class="ph">STEP 1</div>
+        <h4>v1.0 구축</h4>
+        <div class="dur">약 3개월</div>
+        <ul>
+          <li>호실·입주사 대장</li>
+          <li>관리비 정산 (엑셀 이관)</li>
+          <li>회계·집행, 적립금</li>
+          <li><strong>주차·수입 관리</strong></li>
+          <li>민원·공지, 전자투표</li>
+          <li>경영 대시보드</li>
+          <li>입주사 관리비 조회</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="ph">STEP 2</div>
+        <h4>v1.5 운영 확장</h4>
+        <div class="dur">+2~3개월</div>
+        <ul>
+          <li>직원 근태·연차</li>
+          <li>법정점검 캘린더<br>(소방·승강기·전기·저수조)</li>
+          <li>시설·자산 대장</li>
+          <li>용역업체 계약 관리</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="ph">STEP 3</div>
+        <h4>v2.0 수익 전환</h4>
+        <div class="dur">+6개월~</div>
+        <ul>
+          <li>잡수입 원장<br>(광고·임대·주차)</li>
+          <li>엘리베이터 광고 관리</li>
+          <li>입주사 전면 개방 검토</li>
+          <li>입주사 디렉토리·공동구매</li>
+          <li>급여·물류</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>단계</th><th>착수 시점</th><th>완료 시 관리단이 얻는 것</th></tr></thead>
+        <tbody>
+          <tr><td><span class="pill p-now">STEP 1</span></td><td class="num">즉시</td><td>엑셀 탈피 · 회계감사 대응 · 부과 근거 상시 소명 · <strong>주차 연 4억 수입 관리</strong> · 전자투표</td></tr>
+          <tr><td><span class="pill p-next">STEP 2</span></td><td class="num">v1.0 안정화 후</td><td>법정점검 누락 방지 · 인건비·용역비 통제 · 시설 이력 축적</td></tr>
+          <tr><td><span class="pill p-late">STEP 3</span></td><td class="num">협의</td><td><strong>잡수입 창출 → 관리비 인하</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">투자</div>
+    <h2>비용은 한 달 집행비의 일부입니다</h2>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>기준</th><th class="num">금액</th><th class="num">v1.0 개발비 비중</th></tr></thead>
+        <tbody>
+          <tr><td>월 집행 관리비</td><td class="num">5억 5,000만원</td><td class="num">약 5~9%</td></tr>
+          <tr><td>연간 집행 관리비</td><td class="num">약 66억원</td><td class="num">약 0.5~0.8%</td></tr>
+          <tr><td>적립금(관리비·수선충당금)</td><td class="num">약 35억원</td><td class="num">약 0.9~1.4%</td></tr>
+          <tr><td><strong>연간 주차 수입</strong></td><td class="num">약 3억 9,600만원</td><td class="num"><strong>약 8~13%</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <p class="big">v1.0 개발비 <strong>3,000만 ~ 5,000만원(협의)</strong> — 한 달 집행비의 10%에 미치지 않으며, <strong>주차 수입 한 달 반 치</strong>에 해당합니다. 이후 유지·운영비는 별도 월 정액으로 협의합니다.</p>
+    </div>
+    <h3>회수 근거</h3>
+    <ul>
+      <li><strong>주차 수입 개선</strong> — 연 4억 규모에서 3%만 개선해도 연 1,200만원. 정기권 누락·미수·부정출차를 잡는 것만으로 도달 가능한 수준입니다.</li>
+      <li><strong>관리비 분쟁 1건 예방</strong> — 인근 구리 지식산업센터 사례는 7억 규모였습니다.</li>
+      <li><strong>회계감사 대응 인건비 절감</strong> — 매년 의무인 외부 회계감사 자료를 자동 출력합니다.</li>
+      <li><strong>STEP 3 잡수입 창출</strong> — 광고·공용부 임대는 아직 손대지 않은 영역입니다.</li>
+    </ul>
+    <p>넷 중 <strong>첫 번째 하나만으로도</strong> 3~4년이면 개발비를 회수합니다. 나머지는 전부 추가 이익입니다.</p>
+  </section>
+
+  <section>
+    <div class="kicker">계약 조건(안)</div>
+    <h2>소유권과 사용권을 나눕니다</h2>
+    <p>본 시스템은 SKn테크노파크의 운영 실무를 바탕으로 개발되며, 동일한 구조의 시스템을 다른 지식산업센터에도 공급할 것을 전제로 설계합니다. 이 구조 덕분에 <strong>관리단은 개발비를 대폭 낮춰 도입할 수 있습니다.</strong></p>
+    <div class="terms">
+      <div class="term">
+        <h4>SKn테크노파크 관리단이 갖는 것</h4>
+        <ul>
+          <li><strong>영구 사용권</strong> — 기간 제한 없이 사용</li>
+          <li><strong>1호 도입 특별가</strong> — 개발 원가 수준</li>
+          <li><strong>단지 명의</strong> — 시스템 명칭·브랜드는 SKn테크노파크</li>
+          <li><strong>우선 기능 요청권</strong> — 개선 요구가 최우선 반영</li>
+          <li><strong>데이터 전량 소유</strong> — 관리비·입주사·회계 데이터는 관리단 자산</li>
+        </ul>
+      </div>
+      <div class="term">
+        <h4>개발사가 갖는 것</h4>
+        <ul>
+          <li><strong>소프트웨어 저작권·소유권</strong></li>
+          <li><strong>제3자 공급권</strong> — 타 지식산업센터에 사용권 부여 및 대가 수취</li>
+          <li>단, 공급 시 <strong>SKn의 데이터는 일절 이전하지 않음</strong></li>
+        </ul>
+      </div>
+    </div>
+    <h3>데이터 보안 — 비공개 원칙</h3>
+    <p>관리비·입주사·회계 자료는 <strong>전량 비공개로 처리</strong>합니다. 시스템은 처음부터 단지별로 데이터가 완전히 분리되는 구조(멀티테넌트)로 설계되어, 다른 단지에 공급되더라도 <strong>SKn테크노파크의 데이터는 기술적으로 조회 자체가 불가능</strong>합니다. 외부 반출·통계 활용도 하지 않습니다.</p>
+  </section>
+
+  <section>
+    <div class="kicker">향후 구상</div>
+    <h2>관리사무소를 비용에서 수익으로</h2>
+    <p>이미 <strong>주차에서 연 4억</strong>이 나오고 있습니다. 같은 논리를 나머지 자산에 적용하는 것이 STEP 3입니다. 6.5만평·700실·<strong>일 3,000대 통행</strong>이라는 규모에서만 가능한 사업들입니다.</p>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>영역</th><th>대상</th><th>현재 상태</th></tr></thead>
+        <tbody>
+          <tr><td><strong>주차</strong></td><td>시간권·정기권, 입주사 배정 초과분, 야간·주말 외부 개방</td><td><span class="pill p-now">실현 중 · 연 4억</span></td></tr>
+          <tr><td><strong>광고</strong></td><td>엘리베이터 내부·승강기 홀, 로비 배너, <strong>주차장 진출입 게이트(일 3,000대 노출)</strong>, 옥외</td><td><span class="pill p-late">미개발</span></td></tr>
+          <tr><td><strong>공용부 임대</strong></td><td>옥상 통신 중계기·태양광, 로비 ATM·무인카페, <strong>주차장 세차장·전기차 충전기</strong></td><td><span class="pill p-late">미개발</span></td></tr>
+          <tr><td><strong>서비스</strong></td><td>회의실 대관, 인터넷 회선 단지 일괄계약, 공동구매</td><td><span class="pill p-late">미개발</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>특히 <strong>주차장은 이미 검증된 채널</strong>입니다. 일 3,000대가 지나는 진출입 게이트의 광고 가치, 그리고 그 통행량을 그대로 받는 <strong>세차장·전기차 충전기</strong>는 별도 영업 없이도 성립할 가능성이 높습니다.</p>
+    <div class="callout">
+      <p class="big">여기서 발생하는 잡수입은 전액 관리단 회계로 편입되어 <strong>관리비 인하 재원</strong>이 됩니다. 700개 호실이 매달 체감하는 성과입니다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker">다음 단계</div>
+    <h2>착수를 위해 필요한 것</h2>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>구분</th><th>내용</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>자료</td><td><strong>현재 사용 중인 관리비 엑셀 원본</strong></td><td>이관 작업량 산정의 핵심</td></tr>
+          <tr><td>자료</td><td>호실 대장 · 입주사 명부 · 관리규약</td><td>대외비 처리</td></tr>
+          <tr><td>자료</td><td><strong>주차 수입 내역 및 주차관제 장비·운영업체 정보</strong></td><td>연동 가능 여부가 개발 난이도를 좌우</td></tr>
+          <tr><td>확인</td><td>월 5.5억의 내역 구분 — 전기·수도 실비 / 순수 일반관리비</td><td>잡수입 효과 산정용</td></tr>
+          <tr><td>확인</td><td>주차 외 잡수입 유무 (광고·자판기·중계기 등)</td><td>기존 계약 승계 여부</td></tr>
+          <tr><td>확인</td><td>관리규약의 <strong>전자적 방법 의결</strong> 근거 조항 유무</td><td>없을 경우 규약 개정 선행</td></tr>
+          <tr><td>확인</td><td>경비·미화 인력의 직고용 / 용역 구분</td><td>인사 모듈 설계 기준</td></tr>
+          <tr><td>합의</td><td>계약 조건 및 개발비 확정</td><td>착수 전 서면</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lead">자료가 확보되는 즉시 <strong>화면 설계와 상세 개발 계획</strong>을 제출하겠습니다.</p>
+    <p><a class="applink" href="./">▶ 실제 v1.0 화면 보기</a></p>
+  </section>
+
+  <footer>
+    <p><strong>출처</strong> — 성남시 지식산업센터 현황 및 한국산업단지공단 전국 지식산업센터 현황(공공데이터포털), 산업집적활성화 및 공장설립에 관한 법률, 집합건물의 소유 및 관리에 관한 법률, 2026년 지식산업센터 공실 관련 언론 보도.</p>
+    <p>단지 내부 수치(호실 수, 입주사 수, 공실, 집행액, 적립금, 주차 수입, 연면적)는 관리단 제공 자료에 근거하며 <strong>대외비</strong>로 취급합니다. 개발비는 협의를 전제로 한 개략치입니다.</p>
+  </footer>
+
+</div>
+</body>
+</html>
