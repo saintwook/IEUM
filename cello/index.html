@@ -129,9 +129,19 @@ input.f,select.f,textarea.f{width:100%;border:1px solid var(--line);border-radiu
   .g4{grid-template-columns:repeat(2,1fr)} .g3,.g2,.g23{grid-template-columns:1fr}
   .kan{grid-template-columns:1fr;gap:6px}
   .kcol{min-height:auto}
-  .hd-in{gap:8px} .logo small{display:none}
   .scrollx{overflow-x:auto}
   table{min-width:640px}
+  /* 상단바 2줄 배치 */
+  .hd-in{height:auto;padding:9px 12px;gap:8px;flex-wrap:wrap}
+  .logo{font-size:13.5px;flex:1 1 auto}
+  .logo small{display:none}
+  .hd-sp{display:none}
+  .sel{flex:0 0 auto;max-width:132px;font-size:12px;padding:5px 6px}
+  .bswitch{order:9;flex:1 1 100%;justify-content:stretch}
+  .bswitch button{flex:1;padding:7px 4px;font-size:12.5px;white-space:nowrap}
+  nav{top:auto;position:static}
+  .ptitle h1{font-size:18px}
+  .kpi .v{font-size:22px}
 }
 </style>
 </head>
@@ -183,10 +193,14 @@ const SEED={
   {roll:'R-2607-001',f:'VN-DNM-12oz',lot:'L-A7',in:'2026-07-02',yd:500,left:500,loc:'A-3',st:'가용'},
   {roll:'R-2607-002',f:'VN-DNM-12oz',lot:'L-A7',in:'2026-07-02',yd:500,left:420,loc:'A-3',st:'사용중'},
   {roll:'R-2605-014',f:'VN-DNM-12oz',lot:'L-B2',in:'2026-05-18',yd:500,left:320,loc:'B-1',st:'장기'},
-  {roll:'R-2606-021',f:'CN-DNM-11oz',lot:'L-C1',in:'2026-06-11',yd:400,left:380,loc:'A-1',st:'가용'},
-  {roll:'R-2607-030',f:'VN-DNM-10oz',lot:'L-D4',in:'2026-07-10',yd:600,left:600,loc:'B-2',st:'가용'},
+  {roll:'R-2606-021',f:'CN-DNM-11oz',lot:'L-C1',in:'2026-06-11',yd:1000,left:980,loc:'A-1',st:'가용'},
+  {roll:'R-2606-022',f:'CN-DNM-11oz',lot:'L-C1',in:'2026-06-11',yd:900,left:900,loc:'A-1',st:'가용'},
+  {roll:'R-2607-030',f:'VN-DNM-10oz',lot:'L-D4',in:'2026-07-10',yd:900,left:900,loc:'B-2',st:'가용'},
+  {roll:'R-2607-031',f:'VN-DNM-10oz',lot:'L-D4',in:'2026-07-10',yd:800,left:800,loc:'B-2',st:'가용'},
   {roll:'R-2606-101',f:'JP-SEL-14oz',lot:'L-J1',in:'2026-06-20',yd:300,left:240,loc:'C-1',st:'사용중'},
-  {roll:'R-2607-110',f:'IT-BLK-12oz',lot:'L-I3',in:'2026-07-05',yd:450,left:450,loc:'C-2',st:'가용'}
+  {roll:'R-2607-102',f:'JP-SEL-14oz',lot:'L-J2',in:'2026-07-14',yd:400,left:400,loc:'C-1',st:'가용'},
+  {roll:'R-2607-110',f:'IT-BLK-12oz',lot:'L-I3',in:'2026-07-05',yd:450,left:450,loc:'C-2',st:'가용'},
+  {roll:'R-2607-111',f:'IT-BLK-12oz',lot:'L-I3',in:'2026-07-05',yd:300,left:260,loc:'C-2',st:'사용중'}
  ],
  washes:[
   {id:'MW',name:'미디엄 빈티지',steps:'데시징20분60℃ → 스톤40분50℃ → 블리치15분40℃ → 소프너15분',fac:'DK워시(VN)',cost:1.15,days:3},
@@ -222,11 +236,11 @@ const PROC=['재단','봉제','워싱','검단','포장','출고'];
 /* ============ 상태 ============ */
 let S = load();
 function load(){
-  try{const r=localStorage.getItem('cellodemo_v1'); if(r) return JSON.parse(r);}catch(e){}
+  try{const r=localStorage.getItem('cellodemo_v3'); if(r) return JSON.parse(r);}catch(e){}
   return JSON.parse(JSON.stringify(SEED));
 }
-function save(){ try{localStorage.setItem('cellodemo_v1',JSON.stringify(S));}catch(e){} }
-function reset(){ localStorage.removeItem('cellodemo_v1'); S=JSON.parse(JSON.stringify(SEED)); render(); toast('데모 데이터를 초기화했습니다'); }
+function save(){ try{localStorage.setItem('cellodemo_v3',JSON.stringify(S));}catch(e){} }
+function reset(){ localStorage.removeItem('cellodemo_v3'); S=JSON.parse(JSON.stringify(SEED)); render(); toast('데모 데이터를 초기화했습니다'); }
 
 let V = { brand:'ALL', role:'manager', tab:'dash' };
 const isHQ=()=>V.role==='hq';
