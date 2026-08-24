@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>이음 OS — 스튜디오·폐쇄몰 운영 인트라넷</title>
+<title>IEUM OS — 스튜디오·폐쇄몰 운영 인트라넷</title>
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="이음 IEUM">
-<meta property="og:title" content="이음 OS — 운영 인트라넷">
+<meta property="og:site_name" content="IEUM">
+<meta property="og:title" content="IEUM OS — 운영 인트라넷">
 <meta property="og:description" content="성남상생 라이브 스튜디오·폐쇄몰 운영 시스템 (센터엠 4층)">
 <meta property="og:image" content="https://saintwook.github.io/IEUM/os/og_os.png">
 <meta property="og:image:width" content="1200">
@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <style>
-:root{--navy:#16263b;--green:#157a63;--greenL:#e8f3ef;--greenL2:#f2f9f6;--coral:#f5623c;--coralL:#fff0ea;--ink:#20272e;--muted:#7a848d;--line:#e6e9ec;--bg:#f5f7f8}
+:root{--navy:#1F3B73;--green:#2E7D72;--greenL:#e8f3ef;--greenL2:#f2f9f6;--coral:#EE7B25;--coralL:#fff0ea;--ink:#20272e;--muted:#7a848d;--line:#e6e9ec;--bg:#f5f7f8}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer;border:none}
@@ -23,8 +23,7 @@ button{font-family:inherit;cursor:pointer;border:none}
 /* 사이드바 (밝게) */
 .side{background:#fff;border-right:1px solid var(--line);padding:16px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
 .side .lg{display:flex;align-items:center;font-size:19px;font-weight:800;color:var(--navy);padding:4px 18px 4px}
-.ring{width:15px;height:15px;border-radius:50%;border:3px solid var(--green)}
-.ring2{width:15px;height:15px;border:3px solid var(--coral);margin-left:-7px;margin-right:6px}
+.mark{height:1.6em;width:auto;display:inline-block;margin-right:9px;vertical-align:-.45em;flex:none}.mark .nv{stroke:#1F3B73}.mark .or{stroke:#EE7B25}.mark .tl{stroke:#2E7D72}.mark-dark .nv{stroke:#fff}
 .side .os{font-size:11px;color:var(--muted);padding:0 18px 14px;margin-top:2px}
 .side .grp{font-size:10.5px;color:#a7b0b8;font-weight:700;padding:10px 18px 5px;letter-spacing:.3px}
 .side a{display:flex;align-items:center;gap:10px;padding:9px 18px;font-size:13.5px;color:#44505c;text-decoration:none;cursor:pointer;border-left:3px solid transparent}
@@ -101,7 +100,7 @@ td.r{text-align:right}
 <div class="app">
   <!-- 사이드바 -->
   <nav class="side">
-    <div class="lg"><span class="ring"></span><span class="ring2"></span>이음 OS</div>
+    <div class="lg"><svg class="mark" viewBox="0 0 300 210" fill="none" stroke-width="32" aria-hidden="true"><circle class="nv" cx="115" cy="105" r="62"/><circle class="or" cx="185" cy="105" r="62"/><path class="tl" d="M115 43A62 62 0 0 1 154.9 152.5"/><path class="tl" d="M185 167A62 62 0 0 1 145.1 57.5"/></svg>IEUM OS</div>
     <div class="os">스튜디오·폐쇄몰 운영</div>
     <div class="grp">운영</div>
     <a class="on" data-v="dash" onclick="go('dash',this)"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>대시보드</a>
@@ -141,9 +140,9 @@ td.r{text-align:right}
           <div class="panel" style="margin-top:0">
             <h3>오늘 방송 편성 <span class="more">스튜디오 편성 &gt;</span></h3>
             <div class="list">
-              <div class="it"><span class="tt">11:00</span><span class="dotc" style="background:#157a63"></span><b>주방 스튜디오</b> · 위생기업사 친환경 생활용품 <span class="st live" style="margin-left:auto">진행중</span></div>
+              <div class="it"><span class="tt">11:00</span><span class="dotc" style="background:#2E7D72"></span><b>주방 스튜디오</b> · 위생기업사 친환경 생활용품 <span class="st live" style="margin-left:auto">진행중</span></div>
               <div class="it"><span class="tt">14:00</span><span class="dotc" style="background:#2f6bc0"></span><b>패션 스튜디오</b> · 한보텍스타일 니트 신상 <span class="st mut" style="margin-left:auto">예정</span></div>
-              <div class="it"><span class="tt">16:00</span><span class="dotc" style="background:#f5623c"></span><b>뷰티 스튜디오</b> · 그린명품제약 이너뷰티 <span class="st mut" style="margin-left:auto">예정</span></div>
+              <div class="it"><span class="tt">16:00</span><span class="dotc" style="background:#EE7B25"></span><b>뷰티 스튜디오</b> · 그린명품제약 이너뷰티 <span class="st mut" style="margin-left:auto">예정</span></div>
             </div>
           </div>
           <div class="panel" style="margin-top:0">
@@ -240,7 +239,7 @@ td.r{text-align:right}
       <section id="settle" class="view">
         <div class="crumb">홈 / 정산 · 세금계산서 / 2026.07</div>
         <div class="panel" style="margin-top:0">
-          <h3>기업별 월 정산 <span class="more">자동 계산 · 이음 코어</span></h3>
+          <h3>기업별 월 정산 <span class="more">자동 계산 · IEUM 코어</span></h3>
           <table><thead><tr><th>입점업체</th><th class="r">매출액</th><th class="r">수수료</th><th class="r">환불차감</th><th class="r">정산액</th><th>세금계산서</th></tr></thead><tbody>
             <tr><td>위생기업사</td><td class="r">5,000,000</td><td class="r">500,000</td><td class="r">80,000</td><td class="r"><b>4,420,000</b></td><td><span class="st ok">발행완료</span></td></tr>
             <tr><td>한보텍스타일</td><td class="r">5,400,000</td><td class="r">540,000</td><td class="r">0</td><td class="r"><b>4,860,000</b></td><td><button class="rowbtn" onclick="issue(this)">발행</button></td></tr>

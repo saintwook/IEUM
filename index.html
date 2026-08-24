@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>이음 (IEUM)</title>
+<title>IEUM — 성남산단 상생 커머스</title>
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="이음 IEUM">
-<meta property="og:title" content="이음 — 성남산단 상생 커머스">
+<meta property="og:site_name" content="IEUM">
+<meta property="og:title" content="IEUM — 성남산단 상생 커머스">
 <meta property="og:description" content="성남이 만든 진짜, 바로 만나다 · 산단 3,658개 기업 직거래 + 라이브">
 <meta property="og:image" content="https://saintwook.github.io/IEUM/og_app.png">
 <meta property="og:image:width" content="1200">
@@ -14,18 +14,18 @@
 <meta property="og:url" content="https://saintwook.github.io/IEUM/">
 <meta name="twitter:card" content="summary_large_image">
 
-<meta name="description" content="성남산단 상생 커머스 플랫폼 이음 — 사람과 기업을 잇다">
-<meta name="theme-color" content="#16263b">
+<meta name="description" content="성남산단 상생 커머스 플랫폼 IEUM — 사람과 기업을 잇다">
+<meta name="theme-color" content="#1F3B73">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="이음">
+<meta name="apple-mobile-web-app-title" content="IEUM">
 <style>
 :root{
-  --navy:#16263b; --green:#157a63; --greenL:#e3f0eb; --coral:#f5623c; --coralL:#fff0ea;
+  --navy:#1F3B73; --green:#2E7D72; --greenL:#e3f0eb; --coral:#EE7B25; --coralL:#fff0ea;
   --sand:#f4f1ec; --ink:#20272e; --muted:#7a848d; --line:#e6e9ec; --bg:#f7f8f9; --card:#fff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -42,8 +42,7 @@ a{color:inherit}
 .protobar button{background:#24384f;color:#cdd8e2;border-radius:20px;padding:6px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
 .protobar button.on{background:var(--coral);color:#fff}
 .protobar .brand{display:flex;align-items:center;gap:0;font-weight:800;font-size:16px;margin-right:14px}
-.ring{display:inline-block;width:16px;height:16px;border-radius:50%;border:3px solid var(--green)}
-.ring2{width:16px;height:16px;border:3px solid var(--coral);margin-left:-7px;margin-right:7px}
+.mark{height:1.6em;width:auto;display:inline-block;margin-right:9px;vertical-align:-.45em;flex:none}.mark .nv{stroke:#1F3B73}.mark .or{stroke:#EE7B25}.mark .tl{stroke:#2E7D72}.mark-dark .nv{stroke:#fff}
 .rdot{width:8px;height:8px;border-radius:50%;background:var(--coral);display:inline-block}
 .on .rdot{background:#fff}
 
@@ -61,7 +60,7 @@ a{color:inherit}
 .icobtn{background:var(--bg);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;position:relative}
 .cartbadge{position:absolute;top:-3px;right:-3px;background:var(--coral);color:#fff;font-size:10px;font-weight:800;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px}
 
-.hero{background:linear-gradient(120deg,#0f5c4a,#157a63 55%,#1f8f74);color:#fff;border-radius:18px;padding:34px 32px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(120deg,#0f5c4a,#2E7D72 55%,#1f8f74);color:#fff;border-radius:18px;padding:34px 32px;position:relative;overflow:hidden}
 .hero .tag{display:inline-block;background:rgba(255,255,255,.16);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:12px}
 .hero h1{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.25}
 .hero p{margin-top:8px;color:#d5ede5;font-size:14px}
@@ -265,7 +264,7 @@ table.stl{min-width:520px}
 <body>
 
 <div class="protobar">
-  <span class="brand"><span class="ring"></span><span class="ring2"></span>이음</span>
+  <span class="brand"><svg class="mark mark-dark" viewBox="0 0 300 210" fill="none" stroke-width="32" aria-hidden="true"><circle class="nv" cx="115" cy="105" r="62"/><circle class="or" cx="185" cy="105" r="62"/><path class="tl" d="M115 43A62 62 0 0 1 154.9 152.5"/><path class="tl" d="M185 167A62 62 0 0 1 145.1 57.5"/></svg>IEUM</span>
   <span class="lbl">화면 미리보기</span>
   <button class="on" data-v="shop" onclick="sw('shop',this)">통합몰</button>
   <button data-v="live" onclick="sw('live',this)"><span class="rdot"></span>라이브</button>
@@ -277,7 +276,7 @@ table.stl{min-width:520px}
 <!-- ============ 통합몰 ============ -->
 <section id="shop" class="view on">
   <div class="shop-head"><div class="in">
-    <div class="logo" onclick="sw('shop',document.querySelector('[data-v=shop]'))"><span class="ring"></span><span class="ring2"></span>이음</div>
+    <div class="logo" onclick="sw('shop',document.querySelector('[data-v=shop]'))"><svg class="mark" viewBox="0 0 300 210" fill="none" stroke-width="32" aria-hidden="true"><circle class="nv" cx="115" cy="105" r="62"/><circle class="or" cx="185" cy="105" r="62"/><path class="tl" d="M115 43A62 62 0 0 1 154.9 152.5"/><path class="tl" d="M185 167A62 62 0 0 1 145.1 57.5"/></svg>IEUM</div>
     <div class="search">성남이 만든 우수 제품을 검색하세요</div>
     <button class="icobtn"><svg class="svgico" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
     <button class="icobtn" onclick="openCart()"><svg class="svgico" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg><span class="cartbadge" id="cartBadge" style="display:none">0</span></button>
@@ -291,7 +290,7 @@ table.stl{min-width:520px}
       <div class="rings"><span style="width:200px;height:200px;right:20px;top:10px"></span><span style="width:120px;height:120px;right:120px;top:80px"></span></div>
       <span class="tag">SEONGNAM MADE · 산단 직거래</span>
       <h1>성남이 만든 진짜,<br>바로 만나다.</h1>
-      <p>3,658개 산단 기업의 우수 완제품을 중간유통 없이 — 이음</p>
+      <p>3,658개 산단 기업의 우수 완제품을 중간유통 없이 — IEUM</p>
       <button class="cta" onclick="toast('이번주 라이브 기획전으로 이동합니다')">이번주 기획전 보기 →</button>
     </div>
 
@@ -323,7 +322,7 @@ table.stl{min-width:520px}
     <div class="sec-t">오늘의 추천 상품 <span style="font-size:12px;font-weight:500;color:var(--muted)">— 상품을 눌러 상세 페이지를 보세요</span></div>
     <div class="grid" id="prodGrid"></div>
 
-    <div class="foot">이음 (IEUM) · 성남상생협동조합 운영 · 사람과 기업을 잇다 &nbsp;|&nbsp; 프로토타입 화면입니다</div>
+    <div class="foot">IEUM · 성남상생협동조합 운영 · 사람과 기업을 잇다 &nbsp;|&nbsp; 프로토타입 화면입니다</div>
   </div>
 </section>
 
@@ -387,7 +386,7 @@ table.stl{min-width:520px}
   <div class="done">
     <div class="ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
     <h2>주문이 완료되었습니다</h2>
-    <p>이음에서 성남 우수 제품을 구매해 주셔서 감사합니다.</p>
+    <p>IEUM에서 성남 우수 제품을 구매해 주셔서 감사합니다.</p>
     <div class="num">주문번호 IEUM-2026-000312</div>
     <p style="font-size:12px">이 주문의 매출·정산은 관리자·입점기업 화면에 자동 반영됩니다.</p>
     <button class="checkout" style="max-width:260px;margin:18px auto 0" onclick="sw('shop',document.querySelector('[data-v=shop]'))">계속 쇼핑하기</button>
@@ -396,7 +395,7 @@ table.stl{min-width:520px}
 
 <!-- ============ 라이브 ============ -->
 <section id="live" class="view">
-  <div class="ptitle" style="margin-top:16px">이음 LIVE — 실시간 판매</div>
+  <div class="ptitle" style="margin-top:16px">IEUM LIVE — 실시간 판매</div>
   <div class="phones">
     <div class="phone"><div class="notch"></div><div class="scr">
       <div class="lv-video">
@@ -411,7 +410,7 @@ table.stl{min-width:520px}
       <div class="lv-chat">
         <div class="m"><b>소비자1</b> 저번에 사고 재구매해요!</div>
         <div class="m"><b>소비자2</b> 배송 얼마나 걸리나요?</div>
-        <div class="m"><b>이음</b> 오늘 주문 시 내일 출고됩니다</div>
+        <div class="m"><b>IEUM</b> 오늘 주문 시 내일 출고됩니다</div>
       </div>
     </div></div>
     <div style="max-width:320px">
@@ -419,7 +418,7 @@ table.stl{min-width:520px}
         <h3>이 화면의 작동 원리</h3>
         <ul style="font-size:13px;color:#44505c;line-height:1.7;padding-left:18px">
           <li><b>영상</b>은 네이버쇼핑라이브·그립을 <b>임베드</b> (자체 개발 X)</li>
-          <li><b>‘바로 구매’ 주문</b>은 이음 <b>정산 코어</b>로 수집</li>
+          <li><b>‘바로 구매’ 주문</b>은 IEUM <b>정산 코어</b>로 수집</li>
           <li>재고 자동 차감 · <b>방송별 매출·정산</b> 자동 집계</li>
           <li>방송 종료 시 → 관리자 화면에 기업별 정산 반영</li>
         </ul>
@@ -431,11 +430,11 @@ table.stl{min-width:520px}
 
 <!-- ============ 복지몰 ============ -->
 <section id="work" class="view">
-  <div class="ptitle" style="margin-top:16px">이음 워크 — 근로자 복지몰</div>
+  <div class="ptitle" style="margin-top:16px">IEUM WORK — 근로자 복지몰</div>
   <div class="phones">
     <div class="phone"><div class="notch"></div><div class="scr">
       <div class="wk-top">
-        <div><div class="t">이음 워크</div><div class="s">홍길동님 · ㈜위생기업사</div></div>
+        <div><div class="t">IEUM WORK</div><div class="s">홍길동님 · ㈜위생기업사</div></div>
         <div class="cert">근로자<br>인증완료</div>
       </div>
       <div class="wk-note"><b>성남사랑상품권 결제 가능</b><p>복지포인트 사용은 추후 오픈 예정 (법률검토 후)</p></div>
@@ -466,7 +465,7 @@ table.stl{min-width:520px}
 <section id="portal" class="view">
   <div class="admin">
     <div class="side">
-      <div class="lg"><span class="ring"></span><span class="ring2"></span>이음 PARTNER</div>
+      <div class="lg"><svg class="mark" viewBox="0 0 300 210" fill="none" stroke-width="32" aria-hidden="true"><circle class="nv" cx="115" cy="105" r="62"/><circle class="or" cx="185" cy="105" r="62"/><path class="tl" d="M115 43A62 62 0 0 1 154.9 152.5"/><path class="tl" d="M185 167A62 62 0 0 1 145.1 57.5"/></svg>IEUM PARTNER</div>
       <a>대시보드</a><a class="on">내 상품·재고</a><a>주문·CS</a><a>정산·세금계산서</a><a>입점 신청</a>
     </div>
     <div class="main">
@@ -508,7 +507,7 @@ table.stl{min-width:520px}
 <section id="admin" class="view">
   <div class="admin">
     <div class="side">
-      <div class="lg"><span class="ring"></span><span class="ring2"></span>이음 ADMIN</div>
+      <div class="lg"><svg class="mark" viewBox="0 0 300 210" fill="none" stroke-width="32" aria-hidden="true"><circle class="nv" cx="115" cy="105" r="62"/><circle class="or" cx="185" cy="105" r="62"/><path class="tl" d="M115 43A62 62 0 0 1 154.9 152.5"/><path class="tl" d="M185 167A62 62 0 0 1 145.1 57.5"/></svg>IEUM ADMIN</div>
       <a>대시보드</a><a>입점기업 관리</a><a>상품·SKU</a><a>주문·재고</a><a class="on">정산·세금계산서</a><a>라이브 편성</a><a>데이터 리포트</a>
     </div>
     <div class="main">
@@ -557,14 +556,14 @@ table.stl{min-width:520px}
 // ---- 상품 이미지 (SVG 일러스트, 타일 꽉 채움) ----
 var A="<svg viewBox='0 0 120 100' preserveAspectRatio='xMidYMid slice' xmlns='http://www.w3.org/2000/svg'>";
 var IMG={
- det:A+"<rect width='120' height='100' fill='#e3f0eb'/><rect x='38' y='30' width='12' height='7' rx='2' fill='#16263b'/><path d='M50 31 h10 v6 h-14 z' fill='#16263b'/><rect x='56' y='19' width='16' height='9' rx='2' fill='#16263b'/><rect x='60' y='27' width='8' height='7' fill='#16263b'/><rect x='50' y='33' width='28' height='53' rx='8' fill='#157a63'/><rect x='55' y='48' width='18' height='27' rx='3' fill='#fff'/><rect x='58' y='53' width='12' height='3' rx='1.5' fill='#a9cfc3'/><rect x='58' y='59' width='12' height='3' rx='1.5' fill='#a9cfc3'/><rect x='58' y='65' width='8' height='3' rx='1.5' fill='#a9cfc3'/></svg>",
+ det:A+"<rect width='120' height='100' fill='#e3f0eb'/><rect x='38' y='30' width='12' height='7' rx='2' fill='#1F3B73'/><path d='M50 31 h10 v6 h-14 z' fill='#1F3B73'/><rect x='56' y='19' width='16' height='9' rx='2' fill='#1F3B73'/><rect x='60' y='27' width='8' height='7' fill='#1F3B73'/><rect x='50' y='33' width='28' height='53' rx='8' fill='#2E7D72'/><rect x='55' y='48' width='18' height='27' rx='3' fill='#fff'/><rect x='58' y='53' width='12' height='3' rx='1.5' fill='#a9cfc3'/><rect x='58' y='59' width='12' height='3' rx='1.5' fill='#a9cfc3'/><rect x='58' y='65' width='8' height='3' rx='1.5' fill='#a9cfc3'/></svg>",
  tissue:A+"<rect width='120' height='100' fill='#eaf1fb'/><g stroke='#d3def0' stroke-width='1'><rect x='33' y='47' width='23' height='37' rx='3' fill='#fff'/><ellipse cx='44.5' cy='47' rx='11.5' ry='4' fill='#f4f8ff'/><rect x='64' y='47' width='23' height='37' rx='3' fill='#fff'/><ellipse cx='75.5' cy='47' rx='11.5' ry='4' fill='#f4f8ff'/><rect x='48' y='30' width='24' height='37' rx='3' fill='#fff'/><ellipse cx='60' cy='30' rx='12' ry='4.2' fill='#eef4ff'/></g><ellipse cx='60' cy='30' rx='4' ry='1.6' fill='#cdd9ec'/></svg>",
- probiotic:A+"<rect width='120' height='100' fill='#eaf7f0'/><rect x='49' y='25' width='22' height='8' rx='2' fill='#2d8a72'/><rect x='45' y='31' width='30' height='52' rx='6' fill='#3fae90'/><rect x='50' y='42' width='20' height='31' rx='3' fill='#fff'/><circle cx='60' cy='52' r='6' fill='#f5623c'/><rect x='53' y='63' width='14' height='2.6' rx='1.3' fill='#bfe0d4'/><rect x='53' y='68' width='10' height='2.6' rx='1.3' fill='#bfe0d4'/></svg>",
+ probiotic:A+"<rect width='120' height='100' fill='#eaf7f0'/><rect x='49' y='25' width='22' height='8' rx='2' fill='#2d8a72'/><rect x='45' y='31' width='30' height='52' rx='6' fill='#3fae90'/><rect x='50' y='42' width='20' height='31' rx='3' fill='#fff'/><circle cx='60' cy='52' r='6' fill='#EE7B25'/><rect x='53' y='63' width='14' height='2.6' rx='1.3' fill='#bfe0d4'/><rect x='53' y='68' width='10' height='2.6' rx='1.3' fill='#bfe0d4'/></svg>",
  ginseng:A+"<rect width='120' height='100' fill='#fbf1e0'/><rect x='79' y='38' width='7' height='40' rx='3.5' fill='#9a4426'/><rect x='41' y='30' width='33' height='50' rx='3' fill='#b5462a'/><rect x='41' y='30' width='33' height='14' rx='3' fill='#c85a3c'/><rect x='47' y='50' width='21' height='22' rx='2' fill='#f3e2c8'/><circle cx='57.5' cy='61' r='5.5' fill='#b5462a'/></svg>",
- powerstrip:A+"<rect width='120' height='100' fill='#eef1f4'/><rect x='28' y='42' width='60' height='19' rx='5' fill='#fff' stroke='#d0d5da'/><g fill='#16263b'><circle cx='41' cy='51.5' r='4.2'/><circle cx='58' cy='51.5' r='4.2'/><circle cx='75' cy='51.5' r='4.2'/></g><path d='M88 51 q13 0 13 13 v16' fill='none' stroke='#16263b' stroke-width='3.4'/></svg>",
- soap:A+"<rect width='120' height='100' fill='#fbeef1'/><rect x='37' y='57' width='46' height='17' rx='5' fill='#ef97ab'/><rect x='42' y='43' width='38' height='16' rx='5' fill='#ffd0da'/><rect x='47' y='29' width='30' height='16' rx='5' fill='#f5623c' opacity='0.82'/><circle cx='62' cy='37' r='3.4' fill='#fff' opacity='.6'/></svg>",
+ powerstrip:A+"<rect width='120' height='100' fill='#eef1f4'/><rect x='28' y='42' width='60' height='19' rx='5' fill='#fff' stroke='#d0d5da'/><g fill='#1F3B73'><circle cx='41' cy='51.5' r='4.2'/><circle cx='58' cy='51.5' r='4.2'/><circle cx='75' cy='51.5' r='4.2'/></g><path d='M88 51 q13 0 13 13 v16' fill='none' stroke='#1F3B73' stroke-width='3.4'/></svg>",
+ soap:A+"<rect width='120' height='100' fill='#fbeef1'/><rect x='37' y='57' width='46' height='17' rx='5' fill='#ef97ab'/><rect x='42' y='43' width='38' height='16' rx='5' fill='#ffd0da'/><rect x='47' y='29' width='30' height='16' rx='5' fill='#EE7B25' opacity='0.82'/><circle cx='62' cy='37' r='3.4' fill='#fff' opacity='.6'/></svg>",
  gloves:A+"<rect width='120' height='100' fill='#eaf1fb'/><g fill='#4a86da'><rect x='46' y='52' width='31' height='29' rx='6'/><rect x='47' y='37' width='6.5' height='19' rx='3'/><rect x='55.5' y='33' width='6.5' height='23' rx='3'/><rect x='64' y='35' width='6.5' height='21' rx='3'/><rect x='72.5' y='39' width='6.5' height='17' rx='3'/><rect x='39' y='53' width='9' height='15' rx='4'/></g><rect x='46' y='75' width='31' height='6' rx='3' fill='#2f6bc0'/></svg>",
- vitamin:A+"<rect width='120' height='100' fill='#eaf7f0'/><ellipse cx='39' cy='79' rx='7' ry='4' fill='#ffd08a'/><ellipse cx='81' cy='81' rx='7' ry='4' fill='#bfe0d4'/><rect x='50' y='27' width='20' height='9' rx='2' fill='#16263b'/><rect x='46' y='35' width='28' height='47' rx='6' fill='#f5623c'/><rect x='51' y='50' width='18' height='25' rx='2' fill='#fff'/><path d='M60 55 v15 M52.5 62.5 h15' stroke='#157a63' stroke-width='3.2'/></svg>"
+ vitamin:A+"<rect width='120' height='100' fill='#eaf7f0'/><ellipse cx='39' cy='79' rx='7' ry='4' fill='#ffd08a'/><ellipse cx='81' cy='81' rx='7' ry='4' fill='#bfe0d4'/><rect x='50' y='27' width='20' height='9' rx='2' fill='#1F3B73'/><rect x='46' y='35' width='28' height='47' rx='6' fill='#EE7B25'/><rect x='51' y='50' width='18' height='25' rx='2' fill='#fff'/><path d='M60 55 v15 M52.5 62.5 h15' stroke='#2E7D72' stroke-width='3.2'/></svg>"
 };
 // ---- 상품 데이터 (k = 이미지 키) ----
 var PRODUCTS=[
