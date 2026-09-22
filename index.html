@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>IEUM — 성남산단 상생 커머스</title>
+<title>SN LIVE — 성남산단 상생 커머스</title>
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="IEUM">
-<meta property="og:title" content="IEUM — 성남산단 상생 커머스">
+<meta property="og:site_name" content="SN LIVE">
+<meta property="og:title" content="SN LIVE — 성남산단 상생 커머스">
 <meta property="og:description" content="성남이 만든 진짜, 바로 만나다 · 산단 3,658개 기업 직거래 + 라이브">
 <meta property="og:image" content="https://saintwook.github.io/IEUM/og_app.png">
 <meta property="og:image:width" content="1200">
@@ -14,7 +14,7 @@
 <meta property="og:url" content="https://saintwook.github.io/IEUM/">
 <meta name="twitter:card" content="summary_large_image">
 
-<meta name="description" content="성남산단 상생 커머스 플랫폼 IEUM — 사람과 기업을 잇다">
+<meta name="description" content="성남산단 상생 커머스 플랫폼 SN LIVE — 사람과 기업을 잇다">
 <meta name="theme-color" content="#1F356B">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -22,7 +22,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="IEUM">
+<meta name="apple-mobile-web-app-title" content="SN LIVE">
 <style>
 :root{
   --navy:#1F356B; --green:#187474; --greenL:#e3f0eb; --coral:#EF701E; --coralL:#fff0ea;
@@ -241,8 +241,8 @@ table.stl{min-width:520px}
   .protobar .lbl{display:none}
   .protobar .brand{white-space:nowrap;flex:none;margin-right:8px}
   /* 폰에서는 로고를 조금 줄여 검색창 자리를 확보 */
-  .logo{font-size:21px}
-  .logo .mark{height:1.6em;margin-right:7px}
+  .logo{font-size:19px;letter-spacing:.2px}
+  .logo .mark{height:1.55em;margin-right:6px}
   .protobar .brand{font-size:16px}
   .search{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   /* 폰 목업 제거 → 실제 앱처럼 꽉 차게 */
@@ -280,7 +280,7 @@ table.stl{min-width:520px}
 <!-- ============ 통합몰 ============ -->
 <section id="shop" class="view on">
   <div class="shop-head"><div class="in">
-    <div class="logo" onclick="sw('shop',document.querySelector('[data-v=shop]'))"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>IEUM</div>
+    <div class="logo" onclick="sw('shop',document.querySelector('[data-v=shop]'))"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>SN LIVE</div>
     <div class="search">성남이 만든 우수 제품을 검색하세요</div>
     <button class="icobtn"><svg class="svgico" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg></button>
     <button class="icobtn" onclick="openCart()"><svg class="svgico" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg><span class="cartbadge" id="cartBadge" style="display:none">0</span></button>
@@ -294,7 +294,7 @@ table.stl{min-width:520px}
       <div class="rings"><span style="width:200px;height:200px;right:20px;top:10px"></span><span style="width:120px;height:120px;right:120px;top:80px"></span></div>
       <span class="tag">SEONGNAM MADE · 산단 직거래</span>
       <h1>성남이 만든 진짜,<br>바로 만나다.</h1>
-      <p>3,658개 산단 기업의 우수 완제품을 중간유통 없이 — IEUM</p>
+      <p>3,658개 산단 기업의 우수 완제품을 중간유통 없이 — SN LIVE</p>
       <button class="cta" onclick="toast('이번주 라이브 기획전으로 이동합니다')">이번주 기획전 보기 →</button>
     </div>
 
@@ -326,7 +326,7 @@ table.stl{min-width:520px}
     <div class="sec-t">오늘의 추천 상품 <span style="font-size:12px;font-weight:500;color:var(--muted)">— 상품을 눌러 상세 페이지를 보세요</span></div>
     <div class="grid" id="prodGrid"></div>
 
-    <div class="foot">IEUM · 성남상생협동조합 운영 · 사람과 기업을 잇다 &nbsp;|&nbsp; 프로토타입 화면입니다</div>
+    <div class="foot">SN LIVE · 성남상생협동조합 운영 · 사람과 기업을 잇다 &nbsp;|&nbsp; 프로토타입 화면입니다</div>
   </div>
 </section>
 
@@ -390,8 +390,8 @@ table.stl{min-width:520px}
   <div class="done">
     <div class="ok"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg></div>
     <h2>주문이 완료되었습니다</h2>
-    <p>IEUM에서 성남 우수 제품을 구매해 주셔서 감사합니다.</p>
-    <div class="num">주문번호 IEUM-2026-000312</div>
+    <p>SN LIVE에서 성남 우수 제품을 구매해 주셔서 감사합니다.</p>
+    <div class="num">주문번호 SNL-2026-000312</div>
     <p style="font-size:12px">이 주문의 매출·정산은 관리자·입점기업 화면에 자동 반영됩니다.</p>
     <button class="checkout" style="max-width:260px;margin:18px auto 0" onclick="sw('shop',document.querySelector('[data-v=shop]'))">계속 쇼핑하기</button>
   </div>
@@ -399,7 +399,7 @@ table.stl{min-width:520px}
 
 <!-- ============ 라이브 ============ -->
 <section id="live" class="view">
-  <div class="ptitle" style="margin-top:16px">IEUM LIVE — 실시간 판매</div>
+  <div class="ptitle" style="margin-top:16px">SN LIVE — 실시간 판매</div>
   <div class="phones">
     <div class="phone"><div class="notch"></div><div class="scr">
       <div class="lv-video">
@@ -414,7 +414,7 @@ table.stl{min-width:520px}
       <div class="lv-chat">
         <div class="m"><b>소비자1</b> 저번에 사고 재구매해요!</div>
         <div class="m"><b>소비자2</b> 배송 얼마나 걸리나요?</div>
-        <div class="m"><b>IEUM</b> 오늘 주문 시 내일 출고됩니다</div>
+        <div class="m"><b>SN LIVE</b> 오늘 주문 시 내일 출고됩니다</div>
       </div>
     </div></div>
     <div style="max-width:320px">
@@ -422,7 +422,7 @@ table.stl{min-width:520px}
         <h3>이 화면의 작동 원리</h3>
         <ul style="font-size:13px;color:#44505c;line-height:1.7;padding-left:18px">
           <li><b>영상</b>은 네이버쇼핑라이브·그립을 <b>임베드</b> (자체 개발 X)</li>
-          <li><b>‘바로 구매’ 주문</b>은 IEUM <b>정산 코어</b>로 수집</li>
+          <li><b>‘바로 구매’ 주문</b>은 SN LIVE <b>정산 코어</b>로 수집</li>
           <li>재고 자동 차감 · <b>방송별 매출·정산</b> 자동 집계</li>
           <li>방송 종료 시 → 관리자 화면에 기업별 정산 반영</li>
         </ul>
@@ -434,11 +434,11 @@ table.stl{min-width:520px}
 
 <!-- ============ 복지몰 ============ -->
 <section id="work" class="view">
-  <div class="ptitle" style="margin-top:16px">IEUM WORK — 근로자 복지몰</div>
+  <div class="ptitle" style="margin-top:16px">SN LIVE WORK — 근로자 복지몰</div>
   <div class="phones">
     <div class="phone"><div class="notch"></div><div class="scr">
       <div class="wk-top">
-        <div><div class="t">IEUM WORK</div><div class="s">홍길동님 · ㈜위생기업사</div></div>
+        <div><div class="t">SN LIVE WORK</div><div class="s">홍길동님 · ㈜위생기업사</div></div>
         <div class="cert">근로자<br>인증완료</div>
       </div>
       <div class="wk-note"><b>성남사랑상품권 결제 가능</b><p>복지포인트 사용은 추후 오픈 예정 (법률검토 후)</p></div>
@@ -469,7 +469,7 @@ table.stl{min-width:520px}
 <section id="portal" class="view">
   <div class="admin">
     <div class="side">
-      <div class="lg"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>IEUM PARTNER</div>
+      <div class="lg"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>SN LIVE PARTNER</div>
       <a>대시보드</a><a class="on">내 상품·재고</a><a>주문·CS</a><a>정산·세금계산서</a><a>입점 신청</a>
     </div>
     <div class="main">
@@ -511,7 +511,7 @@ table.stl{min-width:520px}
 <section id="admin" class="view">
   <div class="admin">
     <div class="side">
-      <div class="lg"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>IEUM ADMIN</div>
+      <div class="lg"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>SN LIVE ADMIN</div>
       <a>대시보드</a><a>입점기업 관리</a><a>상품·SKU</a><a>주문·재고</a><a class="on">정산·세금계산서</a><a>라이브 편성</a><a>데이터 리포트</a>
     </div>
     <div class="main">
