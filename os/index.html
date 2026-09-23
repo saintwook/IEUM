@@ -169,6 +169,55 @@ td.r{text-align:right}
   .btab .dot{position:absolute;top:2px;right:calc(50% - 16px);width:7px;height:7px;border-radius:50%;background:var(--coral)}
   .themebar{bottom:calc(84px + env(safe-area-inset-bottom));font-size:11.5px;padding:8px 13px;gap:9px}
 }
+
+/* ── 팝업(모달) ── */
+.modal{position:fixed;inset:0;z-index:150;display:none;align-items:center;justify-content:center;padding:18px}
+.modal.on{display:flex}
+.modal .bg{position:absolute;inset:0;background:rgba(15,20,26,.52)}
+.modal .box{position:relative;background:#fff;border-radius:14px;width:100%;max-width:760px;max-height:88vh;display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.32)}
+.modal.wide .box{max-width:940px}
+.modal.narrow .box{max-width:460px}
+.modal .mh{display:flex;align-items:center;gap:10px;padding:15px 20px;border-bottom:1px solid var(--line)}
+.modal .mh h3{font-size:16px;color:var(--navy);font-weight:800}
+.modal .mh .sub{font-size:12px;color:var(--muted)}
+.modal .x{margin-left:auto;width:32px;height:32px;border-radius:8px;background:var(--bg);font-size:17px;color:var(--muted);flex:none}
+.modal .mb{padding:18px 20px;overflow-y:auto;flex:1}
+.modal .mf{display:flex;gap:9px;align-items:center;padding:13px 20px;border-top:1px solid var(--line);flex-wrap:wrap}
+.modal .mf .sp{flex:1}
+/* ── 입력 폼 ── */
+.form{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.form .f{display:flex;flex-direction:column;gap:5px}
+.form .f.full{grid-column:1/-1}
+.form label{font-size:12px;color:var(--muted);font-weight:700}
+.form input,.form select,.form textarea{font-family:inherit;font-size:13.5px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.form input:focus,.form select:focus,.form textarea:focus{outline:2px solid var(--navy);outline-offset:-1px}
+.form .hint{font-size:11px;color:var(--muted);line-height:1.5}
+.form .req{color:var(--coral)}
+@media(max-width:700px){.form{grid-template-columns:1fr}}
+/* ── 정산서 미리보기 ── */
+.doc{background:#fff;border:1px solid var(--line);border-radius:10px;padding:24px}
+.doc h4{font-size:18px;text-align:center;color:var(--navy);letter-spacing:3px;margin-bottom:4px}
+.doc .dm{text-align:center;font-size:12px;color:var(--muted);margin-bottom:16px}
+.doc .who{display:flex;gap:20px;font-size:12.5px;margin-bottom:14px;flex-wrap:wrap}
+.doc .who div{flex:1;min-width:180px}
+.doc .who b{color:var(--navy)}
+.doc .sum{background:var(--bg);border-radius:8px;padding:13px 15px;margin-top:12px;display:flex;align-items:center;font-size:13px}
+.doc .sum b{margin-left:auto;font-size:19px;color:var(--navy)}
+.doc .sign{margin-top:18px;text-align:right;font-size:12px;color:var(--muted);line-height:1.8}
+/* ── 잠금 · 클릭 행 ── */
+.lock{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;background:var(--greenL);color:var(--green);border-radius:11px;padding:3px 10px}
+tr.clk{cursor:pointer}
+tr.clk:hover{background:var(--greenL2)}
+.tl td.free{cursor:pointer}
+.tl td.free:hover{background:var(--greenL2)}
+/* ── 로그인 ── */
+.login{position:fixed;inset:0;z-index:300;background:var(--bg);display:none;align-items:center;justify-content:center;padding:20px}
+.login.on{display:flex}
+.login .card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:30px 26px;width:100%;max-width:370px;box-shadow:0 10px 40px rgba(0,0,0,.08)}
+.login .lg2{display:flex;align-items:center;font-size:20px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.login .os2{font-size:11.5px;color:var(--muted);margin-bottom:22px}
+.login .btn{width:100%;margin-top:6px;padding:12px}
+.login .note{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.6;text-align:center}
 </style>
 </head>
 <body>
@@ -210,7 +259,7 @@ td.r{text-align:right}
       <h1 id="ttl">대시보드</h1>
       <span class="loc">스튜디오 4세트 · 센터엠 427 · 공단 503-1·2·3</span>
       <span class="sp"></span>
-      <div class="user"><span class="av">성</span><span class="nm">성동욱 · 센터장</span></div>
+      <div class="user" style="cursor:pointer" onclick="doLogout()" title="로그아웃"><span class="av">성</span><span class="nm">성동욱 · 센터장</span></div>
     </div>
     <div class="main">
 
@@ -243,9 +292,9 @@ td.r{text-align:right}
         <div class="panel">
           <h3>정산 대기 업체 <span class="more">정산 &gt;</span></h3>
           <table><thead><tr><th>업체</th><th class="r">이달 매출</th><th class="r">정산액</th><th>세금계산서</th></tr></thead><tbody>
-            <tr><td>한보텍스타일</td><td class="r">5,400,000</td><td class="r"><b>4,860,000</b></td><td><span class="st wait">발행 대기</span></td></tr>
-            <tr><td>크린텍</td><td class="r">3,200,000</td><td class="r"><b>2,840,000</b></td><td><span class="st wait">발행 대기</span></td></tr>
-            <tr><td>그린명품제약</td><td class="r">1,980,000</td><td class="r"><b>1,782,000</b></td><td><span class="st wait">발행 대기</span></td></tr>
+            <tr class="clk" onclick="openSettleDetail('한보텍스타일')"><td>한보텍스타일</td><td class="r">5,400,000</td><td class="r"><b>4,860,000</b></td><td><span class="st wait">발행 대기</span></td></tr>
+            <tr class="clk" onclick="openSettleDetail('크린텍')"><td>크린텍</td><td class="r">3,200,000</td><td class="r"><b>2,840,000</b></td><td><span class="st wait">발행 대기</span></td></tr>
+            <tr class="clk" onclick="openSettleDetail('그린명품제약')"><td>그린명품제약</td><td class="r">1,980,000</td><td class="r"><b>1,782,000</b></td><td><span class="st wait">발행 대기</span></td></tr>
           </tbody></table>
         </div>
       </section>
@@ -256,10 +305,10 @@ td.r{text-align:right}
         <div class="panel" style="margin-top:0">
           <h3>주간 방송 편성표 <span class="more">스튜디오 4세트 · 이번 주</span></h3>
           <table class="tl"><thead><tr><th class="stu">스튜디오</th><th>10:00</th><th>11:00</th><th>13:00</th><th>14:00</th><th>16:00</th><th>18:00</th></tr></thead><tbody>
-            <tr><td class="stu">식품 <small style="color:var(--muted);font-weight:400">센터엠 427</small></td><td></td><td><div class="blk k">위생기업사<small>친환경 생활용품</small></div></td><td></td><td><div class="blk k">그린명품<small>홍삼·건강식품</small></div></td><td></td><td></td></tr>
-            <tr><td class="stu">의류 <small style="color:var(--muted);font-weight:400">공단 503-1</small></td><td><div class="blk f">한보텍스타일<small>니트 신상</small></div></td><td></td><td><div class="blk f">라플루벨<small>가을 컬렉션</small></div></td><td></td><td></td><td><div class="blk f">인레이먼트<small>홀가먼트</small></div></td></tr>
-            <tr><td class="stu">잡화 <small style="color:var(--muted);font-weight:400">공단 503-2</small></td><td></td><td></td><td><div class="blk j">오리엔트<small>생활잡화</small></div></td><td></td><td></td><td></td></tr>
-            <tr><td class="stu">화장품 <small style="color:var(--muted);font-weight:400">공단 503-3</small></td><td></td><td></td><td></td><td></td><td><div class="blk b">그린명품제약<small>이너뷰티</small></div></td><td></td></tr>
+            <tr><td class="stu">식품 <small style="color:var(--muted);font-weight:400">센터엠 427</small></td><td class="free" onclick="openM('mBroadcast')"></td><td><div class="blk k">위생기업사<small>친환경 생활용품</small></div></td><td class="free" onclick="openM('mBroadcast')"></td><td><div class="blk k">그린명품<small>홍삼·건강식품</small></div></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td></tr>
+            <tr><td class="stu">의류 <small style="color:var(--muted);font-weight:400">공단 503-1</small></td><td><div class="blk f">한보텍스타일<small>니트 신상</small></div></td><td class="free" onclick="openM('mBroadcast')"></td><td><div class="blk f">라플루벨<small>가을 컬렉션</small></div></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td><td><div class="blk f">인레이먼트<small>홀가먼트</small></div></td></tr>
+            <tr><td class="stu">잡화 <small style="color:var(--muted);font-weight:400">공단 503-2</small></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td><td><div class="blk j">오리엔트<small>생활잡화</small></div></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td></tr>
+            <tr><td class="stu">화장품 <small style="color:var(--muted);font-weight:400">공단 503-3</small></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td><td class="free" onclick="openM('mBroadcast')"></td><td><div class="blk b">그린명품제약<small>이너뷰티</small></div></td><td class="free" onclick="openM('mBroadcast')"></td></tr>
           </tbody></table>
           <div style="margin-top:10px"><span class="chip g">식품 3건</span><span class="chip" style="background:#eaf1fb;color:#2f6bc0">의류 3건</span><span class="chip" style="background:#f3eefb;color:#6b4fa8">잡화 2건</span><span class="chip c">화장품 1건</span><button class="rowbtn" style="float:right" onclick="toast('새 방송 편성 화면으로 이동')">+ 방송 편성</button></div>
         </div>
@@ -295,12 +344,14 @@ td.r{text-align:right}
         </div>
         <div class="panel">
           <h3>상품 목록 <span class="more">착수 기준 33개사 · 712 SKU</span></h3>
-          <div class="sel"><button class="btn" style="padding:8px 16px;font-size:13px" onclick="toast('엑셀 일괄등록 — 712개를 한 번에 올립니다')">＋ 엑셀 일괄등록</button><span style="font-size:12px;color:var(--muted)">712개를 손으로 넣지 않습니다</span></div>
+          <div class="sel"><button class="btn" style="padding:8px 16px;font-size:13px" onclick="openM('mProdBulk')">＋ 엑셀 일괄등록</button>
+          <button class="btn gho" style="padding:8px 16px;font-size:13px" onclick="openProdForm('')">＋ 상품 하나 등록</button>
+          <span style="font-size:12px;color:var(--muted)">상품 이름을 누르면 수정할 수 있습니다</span></div>
           <table><thead><tr><th>상품</th><th>업체</th><th>SKU</th><th>샘플</th><th>촬영</th><th>채널</th><th class="r">재고</th></tr></thead><tbody>
-            <tr><td>친환경 주방세제 2L</td><td>위생기업사</td><td>WS-1021</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span><span class="chip">폐쇄몰</span></td><td class="r">320</td></tr>
-            <tr><td>홀가먼트 니트</td><td>한보텍스타일</td><td>HB-3390</td><td><span class="st ok">입고</span></td><td><span class="st wait">대기</span></td><td><span class="chip">폐쇄몰</span></td><td class="r">54</td></tr>
-            <tr><td>홍삼 스틱 60포</td><td>그린명품제약</td><td>GM-7742</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span></td><td class="r">140</td></tr>
-            <tr><td>천연 비누 세트</td><td>위생기업사</td><td>WS-1088</td><td><span class="st wait">미입고</span></td><td><span class="st mut">-</span></td><td><span class="st mut">-</span></td><td class="r">8</td></tr>
+            <tr class="clk" onclick="openProdForm('친환경 주방세제 2L')"><td>친환경 주방세제 2L</td><td>위생기업사</td><td>WS-1021</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span><span class="chip">폐쇄몰</span></td><td class="r">320</td></tr>
+            <tr class="clk" onclick="openProdForm('홀가먼트 니트')"><td>홀가먼트 니트</td><td>한보텍스타일</td><td>HB-3390</td><td><span class="st ok">입고</span></td><td><span class="st wait">대기</span></td><td><span class="chip">폐쇄몰</span></td><td class="r">54</td></tr>
+            <tr class="clk" onclick="openProdForm('홍삼 스틱 60포')"><td>홍삼 스틱 60포</td><td>그린명품제약</td><td>GM-7742</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span></td><td class="r">140</td></tr>
+            <tr class="clk" onclick="openProdForm('천연 비누 세트')"><td>천연 비누 세트</td><td>위생기업사</td><td>WS-1088</td><td><span class="st wait">미입고</span></td><td><span class="st mut">-</span></td><td><span class="st mut">-</span></td><td class="r">8</td></tr>
           </tbody></table>
         </div>
       </section>
@@ -387,7 +438,7 @@ td.r{text-align:right}
         <div id="ordList" class="tabpane">
           <div class="kpis">
             <div class="kpi"><div class="l">이달 주문</div><div class="v">312</div><div class="d">4개 채널 합계</div></div>
-            <div class="kpi"><div class="l">이달 매출</div><div class="v">2.1억</div></div>
+            <div class="kpi"><div class="l">이달 매출</div><div class="v">2,100만</div></div>
             <div class="kpi"><div class="l">환불·취소</div><div class="v">7</div></div>
             <div class="kpi warn"><div class="l">미매칭</div><div class="v">3</div><div class="d" style="color:var(--coral)">매칭 필요</div></div>
           </div>
@@ -395,11 +446,11 @@ td.r{text-align:right}
             <h3>통합 주문 목록 <span class="more">어디서 팔렸든 한 목록</span></h3>
             <div class="sel"><span class="chip">기간 2026.09 ▾</span><span class="chip">채널 전체 ▾</span><span class="chip">업체 전체 ▾</span><span class="chip">상태 전체 ▾</span></div>
             <table><thead><tr><th>주문번호</th><th>채널</th><th>상품</th><th>업체</th><th class="r">금액</th><th>상태</th></tr></thead><tbody>
-              <tr><td>G-20260921-0455</td><td><span class="chip g">그립</span></td><td>친환경 주방세제 2L</td><td>위생기업사</td><td class="r">19,800</td><td><span class="st ok">결제완료</span></td></tr>
-              <tr><td>SA-0921-1187</td><td><span class="chip">삼아 폐쇄몰</span></td><td>홍삼 스틱 60포</td><td>그린명품제약</td><td class="r">39,000</td><td><span class="st mut">배송준비</span></td></tr>
-              <tr><td>CM-0921-0733</td><td><span class="chip" style="background:#eaf1fb;color:#2f6bc0">클릭메이트</span></td><td>유산균 이너케어 30포</td><td>한솔생명과학</td><td class="r">24,900</td><td><span class="st ok">결제완료</span></td></tr>
-              <tr><td>POS-0920-018</td><td><span class="chip c">팝업 POS</span></td><td>니트릴 안전장갑 100매</td><td>크린텍</td><td class="r">11,700</td><td><span class="st ok">현장수령</span></td></tr>
-              <tr><td>G-20260920-0388</td><td><span class="chip g">그립</span></td><td>천연 비누 선물세트</td><td>위생기업사</td><td class="r">18,000</td><td><span class="st wait">환불</span></td></tr>
+              <tr class="clk" onclick="openOrder('G-20260921-0455')"><td>G-20260921-0455</td><td><span class="chip g">그립</span></td><td>친환경 주방세제 2L</td><td>위생기업사</td><td class="r">19,800</td><td><span class="st ok">결제완료</span></td></tr>
+              <tr class="clk" onclick="openOrder('SA-0921-1187')"><td>SA-0921-1187</td><td><span class="chip">삼아 폐쇄몰</span></td><td>홍삼 스틱 60포</td><td>그린명품제약</td><td class="r">39,000</td><td><span class="st mut">배송준비</span></td></tr>
+              <tr class="clk" onclick="openOrder('CM-0921-0733')"><td>CM-0921-0733</td><td><span class="chip" style="background:#eaf1fb;color:#2f6bc0">클릭메이트</span></td><td>유산균 이너케어 30포</td><td>한솔생명과학</td><td class="r">24,900</td><td><span class="st ok">결제완료</span></td></tr>
+              <tr class="clk" onclick="openOrder('POS-0920-018')"><td>POS-0920-018</td><td><span class="chip c">팝업 POS</span></td><td>니트릴 안전장갑 100매</td><td>크린텍</td><td class="r">11,700</td><td><span class="st ok">현장수령</span></td></tr>
+              <tr class="clk" onclick="openOrder('G-20260920-0388')"><td>G-20260920-0388</td><td><span class="chip g">그립</span></td><td>천연 비누 선물세트</td><td>위생기업사</td><td class="r">18,000</td><td><span class="st wait">환불</span></td></tr>
             </tbody></table>
           </div>
         </div>
@@ -411,12 +462,19 @@ td.r{text-align:right}
         <div class="panel" style="margin-top:0">
           <h3>기업별 월 정산 <span class="more">자동 계산 · SN LIVE 코어</span></h3>
           <table><thead><tr><th>입점업체</th><th class="r">매출액</th><th class="r">수수료</th><th class="r">환불차감</th><th class="r">정산액</th><th>세금계산서</th></tr></thead><tbody>
-            <tr><td>위생기업사</td><td class="r">5,000,000</td><td class="r">500,000</td><td class="r">80,000</td><td class="r"><b>4,420,000</b></td><td><span class="st ok">발행완료</span></td></tr>
+            <tr class="clk" onclick="openSettleDetail('위생기업사')"><td>위생기업사</td><td class="r">5,000,000</td><td class="r">500,000</td><td class="r">80,000</td><td class="r"><b>4,420,000</b></td><td><span class="st ok">발행완료</span></td></tr>
             <tr><td>한보텍스타일</td><td class="r">5,400,000</td><td class="r">540,000</td><td class="r">0</td><td class="r"><b>4,860,000</b></td><td><button class="rowbtn" onclick="issue(this)">발행</button></td></tr>
             <tr><td>그린명품제약</td><td class="r">1,980,000</td><td class="r">198,000</td><td class="r">0</td><td class="r"><b>1,782,000</b></td><td><button class="rowbtn" onclick="issue(this)">발행</button></td></tr>
             <tr><td>크린텍</td><td class="r">3,200,000</td><td class="r">320,000</td><td class="r">40,000</td><td class="r"><b>2,840,000</b></td><td><button class="rowbtn" onclick="issue(this)">발행</button></td></tr>
           </tbody></table>
-          <div style="margin-top:12px;display:flex;align-items:center;gap:14px;flex-wrap:wrap"><b style="color:var(--navy)">합계 정산액 ₩ 13,902,000</b><button class="rowbtn" style="background:var(--coral);margin-left:auto;padding:10px 16px;font-size:13px" onclick="issueAll()">세금계산서 일괄 발행</button></div>
+          <div style="margin-top:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <b style="color:var(--navy)">합계 정산액 ₩ 13,902,000</b>
+            <span id="settleLock" style="display:none" class="lock">🔒 2026.09 확정됨 · 잠김</span>
+            <span style="flex:1"></span>
+            <button class="rowbtn" id="btnConfirm" style="padding:10px 16px;font-size:13px" onclick="openM('mSettleConfirm')">월정산 확정</button>
+            <button class="rowbtn" style="background:var(--coral);padding:10px 16px;font-size:13px" onclick="issueAll()">세금계산서 일괄 발행</button>
+          </div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 업체 이름을 누르면 <b>이 숫자가 나온 근거</b>를 주문 단위로 볼 수 있습니다. 확정은 센터장만 가능합니다.</div>
         </div>
       </section>
 
@@ -431,11 +489,12 @@ td.r{text-align:right}
         </div>
         <div class="panel">
           <h3>입점업체 목록</h3>
+          <div class="sel"><button class="btn" style="padding:8px 16px;font-size:13px" onclick="openPartnerForm('')">＋ 업체 등록</button><span style="font-size:12px;color:var(--muted)">업체 이름을 누르면 수정·수수료율 지정</span></div>
           <table><thead><tr><th>업체</th><th>주요 품목</th><th>채널</th><th>계약</th><th>상태</th></tr></thead><tbody>
-            <tr><td>위생기업사</td><td>생활·위생용품</td><td><span class="chip g">라이브</span><span class="chip">폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
-            <tr><td>한보텍스타일</td><td>니트·의류</td><td><span class="chip g">라이브</span></td><td>판매대행</td><td><span class="st ok">운영중</span></td></tr>
-            <tr><td>그린명품제약</td><td>건강기능식품</td><td><span class="chip">폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
-            <tr><td>신규업체 A</td><td>주방가전</td><td><span class="st mut">-</span></td><td>-</td><td><span class="st wait">심사중</span></td></tr>
+            <tr class="clk" onclick="openPartnerForm('위생기업사')"><td>위생기업사</td><td>생활·위생용품</td><td><span class="chip g">라이브</span><span class="chip">폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
+            <tr class="clk" onclick="openPartnerForm('한보텍스타일')"><td>한보텍스타일</td><td>니트·의류</td><td><span class="chip g">라이브</span></td><td>판매대행</td><td><span class="st ok">운영중</span></td></tr>
+            <tr class="clk" onclick="openPartnerForm('그린명품제약')"><td>그린명품제약</td><td>건강기능식품</td><td><span class="chip">폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
+            <tr class="clk" onclick="openPartnerForm('신규업체 A')"><td>신규업체 A</td><td>주방가전</td><td><span class="st mut">-</span></td><td>-</td><td><span class="st wait">심사중</span></td></tr>
           </tbody></table>
         </div>
       </section>
@@ -519,7 +578,37 @@ td.r{text-align:right}
       <!-- 리포트 -->
       <section id="report" class="view">
         <div class="crumb">홈 / 데이터 · 리포트</div>
-        <div class="stub"><b>1단계는 기본 리포트</b>까지 — 채널별 · 업체별 · 기간별 매출.<br>경영 리포트·카테고리 분석은 2단계에서 확장합니다.</div>
+        <div class="sel"><span class="chip">기간 2026.09 ▾</span><span class="chip">채널 전체 ▾</span><button class="btn gho" style="padding:8px 14px;font-size:12.5px;margin-left:auto" onclick="toast('리포트를 엑셀로 내려받았습니다')">엑셀 내려받기</button></div>
+        <div class="kpis">
+          <div class="kpi"><div class="l">이달 거래액</div><div class="v">2,100만</div><div class="d">▲ 전월比 +17%</div></div>
+          <div class="kpi"><div class="l">주문 건수</div><div class="v">312건</div></div>
+          <div class="kpi"><div class="l">객단가</div><div class="v">67,300</div></div>
+          <div class="kpi"><div class="l">환불률</div><div class="v">2.2%</div></div>
+        </div>
+        <div class="row2">
+          <div class="panel"><h3>채널별 매출</h3>
+            <table><thead><tr><th>채널</th><th class="r">매출</th><th class="r">비중</th><th class="r">주문</th><th class="r">수수료</th></tr></thead><tbody>
+              <tr><td><span class="chip">그립</span></td><td class="r"><b>9,240,000</b></td><td class="r">44%</td><td class="r">138</td><td class="r">924,000</td></tr>
+              <tr><td><span class="chip">삼아 폐쇄몰</span></td><td class="r"><b>6,300,000</b></td><td class="r">30%</td><td class="r">96</td><td class="r">126,000</td></tr>
+              <tr><td><span class="chip">클릭메이트</span></td><td class="r"><b>3,360,000</b></td><td class="r">16%</td><td class="r">52</td><td class="r">336,000</td></tr>
+              <tr><td><span class="chip">네이버 쇼핑라이브</span></td><td class="r"><b>1,470,000</b></td><td class="r">7%</td><td class="r">19</td><td class="r">147,000</td></tr>
+              <tr><td><span class="chip">팝업 POS</span></td><td class="r"><b>630,000</b></td><td class="r">3%</td><td class="r">7</td><td class="r">—</td></tr>
+            </tbody></table>
+          </div>
+          <div class="panel"><h3>월별 추이</h3>
+            <div class="bars"><div class="b" style="height:45%"><span>4월</span></div><div class="b" style="height:58%"><span>5월</span></div><div class="b" style="height:52%"><span>6월</span></div><div class="b" style="height:70%"><span>7월</span></div><div class="b" style="height:82%"><span>8월</span></div><div class="b" style="height:96%"><span>9월</span></div></div>
+          </div>
+        </div>
+        <div class="panel"><h3>업체별 매출 상위 <span class="more">33개사 중 상위 5</span></h3>
+          <table><thead><tr><th>순위</th><th>업체</th><th>주요 품목</th><th class="r">매출</th><th class="r">정산액</th></tr></thead><tbody>
+            <tr><td>1</td><td>한보텍스타일</td><td>니트·의류</td><td class="r"><b>5,400,000</b></td><td class="r">4,860,000</td></tr>
+            <tr><td>2</td><td>위생기업사</td><td>생활·위생용품</td><td class="r"><b>5,000,000</b></td><td class="r">4,420,000</td></tr>
+            <tr><td>3</td><td>크린텍</td><td>생활용품</td><td class="r"><b>3,200,000</b></td><td class="r">2,840,000</td></tr>
+            <tr><td>4</td><td>그린명품제약</td><td>건강기능식품</td><td class="r"><b>1,980,000</b></td><td class="r">1,782,000</td></tr>
+            <tr><td>5</td><td>한솔생명과학</td><td>건강기능식품</td><td class="r"><b>1,420,000</b></td><td class="r">1,278,000</td></tr>
+          </tbody></table>
+        </div>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:12px">＊ 경영 리포트·카테고리 분석은 2단계에서 확장합니다.</div>
       </section>
 
     </div>
@@ -533,6 +622,267 @@ td.r{text-align:right}
   <button data-b="studio" onclick="go('studio',null)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>편성</button>
   <button onclick="drawer(true)"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>전체</button>
 </nav>
+
+
+<!-- ============ 팝업 모음 ============ -->
+
+<!-- 9. 정산 상세 (업체별) — "이 숫자 왜 이래요?"에 답하는 화면 -->
+<div class="modal wide" id="mSettleDetail"><div class="bg" onclick="closeM('mSettleDetail')"></div>
+  <div class="box">
+    <div class="mh"><div><h3 id="sdName">위생기업사</h3><div class="sub">2026년 09월 정산 근거 · 주문 단위</div></div>
+      <button class="x" onclick="closeM('mSettleDetail')">✕</button></div>
+    <div class="mb">
+      <div class="kpis" style="grid-template-columns:repeat(4,1fr)">
+        <div class="kpi"><div class="l">매출액</div><div class="v" id="sdSales">5,000,000</div></div>
+        <div class="kpi"><div class="l">수수료</div><div class="v" id="sdFee">500,000</div><div class="d" id="sdRate">10%</div></div>
+        <div class="kpi warn"><div class="l">환불차감</div><div class="v" id="sdRefund">80,000</div></div>
+        <div class="kpi"><div class="l">정산액</div><div class="v" id="sdNet">4,420,000</div></div>
+      </div>
+      <div class="panel">
+        <h3>주문 내역 <span class="more">이 표를 더하면 위 숫자가 나옵니다</span></h3>
+        <table><thead><tr><th>주문번호</th><th>채널</th><th>상품</th><th class="r">수량</th><th class="r">매출</th><th class="r">수수료율</th><th class="r">수수료</th></tr></thead><tbody>
+          <tr><td>G-20260921-0455</td><td><span class="chip">그립</span></td><td>친환경 주방세제 2L</td><td class="r">2</td><td class="r">19,800</td><td class="r">10%</td><td class="r">1,980</td></tr>
+          <tr><td>CM-0921-0662</td><td><span class="chip">클릭메이트</span></td><td>천연 비누 선물세트</td><td class="r">1</td><td class="r">18,000</td><td class="r">10%</td><td class="r">1,800</td></tr>
+          <tr><td>G-20260920-0388</td><td><span class="chip">그립</span></td><td>친환경 주방세제 2L</td><td class="r">1</td><td class="r">9,900</td><td class="r">10%</td><td class="r">990</td></tr>
+          <tr><td colspan="7" style="text-align:center;color:var(--muted);font-size:12px">… 외 83건</td></tr>
+        </tbody></table>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 수수료율은 <b>정산 확정 시점의 값</b>을 그대로 보관합니다. 나중에 요율을 바꿔도 지난 정산은 변하지 않습니다.</div>
+      </div>
+      <div class="panel">
+        <h3>환불 내역</h3>
+        <table><thead><tr><th>주문번호</th><th>상품</th><th class="r">환불금액</th><th>환불일</th><th>사유</th></tr></thead><tbody>
+          <tr><td>G-20260918-0301</td><td>친환경 주방세제 2L</td><td class="r">19,800</td><td>09-19</td><td>단순변심</td></tr>
+          <tr><td>G-20260915-0244</td><td>천연 비누 선물세트</td><td class="r">60,200</td><td>09-17</td><td>파손</td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="mf"><span class="sp" style="font-size:12px;color:var(--muted)">매출 − 수수료 − 환불차감 = 정산액</span>
+      <button class="btn gho" onclick="closeM('mSettleDetail')">닫기</button>
+      <button class="btn" onclick="closeM('mSettleDetail');openM('mSettleDoc')">정산서 보기</button></div>
+  </div></div>
+
+<!-- 10. 정산 확정 (잠금) -->
+<div class="modal narrow" id="mSettleConfirm"><div class="bg" onclick="closeM('mSettleConfirm')"></div>
+  <div class="box">
+    <div class="mh"><h3>2026년 09월 정산 확정</h3><button class="x" onclick="closeM('mSettleConfirm')">✕</button></div>
+    <div class="mb">
+      <div class="drop" style="border-color:#f3c7ba;background:var(--coralL);padding:20px">
+        <b style="color:var(--coral)">확정하면 이 달 숫자가 잠깁니다</b>
+        주문을 더 올려도 <b>다음 달</b>로 넘어갑니다.
+      </div>
+      <table style="min-width:0;margin-top:14px"><tbody>
+        <tr><td>대상 업체</td><td class="r"><b>4개사</b></td></tr>
+        <tr><td>매출 합계</td><td class="r">15,580,000</td></tr>
+        <tr><td>수수료 합계</td><td class="r">1,558,000</td></tr>
+        <tr><td>환불차감 합계</td><td class="r">120,000</td></tr>
+        <tr><td><b>정산액 합계</b></td><td class="r"><b style="font-size:16px;color:var(--navy)">13,902,000</b></td></tr>
+      </tbody></table>
+      <div style="font-size:11.5px;color:var(--muted);margin-top:12px">＊ 확정은 <b>센터장</b>만 할 수 있습니다. 되돌리려면 센터장 권한이 필요합니다.</div>
+    </div>
+    <div class="mf"><span class="sp"></span>
+      <button class="btn gho" onclick="closeM('mSettleConfirm')">취소</button>
+      <button class="btn cor" onclick="doConfirmSettle()">확정하고 잠그기</button></div>
+  </div></div>
+
+<!-- 11. 정산서 미리보기 -->
+<div class="modal" id="mSettleDoc"><div class="bg" onclick="closeM('mSettleDoc')"></div>
+  <div class="box">
+    <div class="mh"><div><h3>정산서 미리보기</h3><div class="sub">업체에 보낼 문서</div></div>
+      <button class="x" onclick="closeM('mSettleDoc')">✕</button></div>
+    <div class="mb" style="background:var(--bg)">
+      <div class="doc">
+        <h4>정 산 서</h4>
+        <div class="dm">2026년 09월 · SN LIVE (성남상생협동조합)</div>
+        <div class="who">
+          <div><b>공급자</b><br>성남상생협동조합<br>491-87-03581</div>
+          <div><b>정산 대상</b><br>위생기업사<br>담당 김위생 · 031-000-0000</div>
+        </div>
+        <table style="min-width:0"><thead><tr><th>채널</th><th class="r">매출액</th><th class="r">수수료율</th><th class="r">수수료</th><th class="r">환불차감</th><th class="r">정산액</th></tr></thead><tbody>
+          <tr><td>그립</td><td class="r">4,700,000</td><td class="r">10%</td><td class="r">470,000</td><td class="r">80,000</td><td class="r">4,150,000</td></tr>
+          <tr><td>클릭메이트</td><td class="r">300,000</td><td class="r">10%</td><td class="r">30,000</td><td class="r">0</td><td class="r">270,000</td></tr>
+        </tbody></table>
+        <div class="sum">2026년 09월 정산액 합계 <b>₩ 4,420,000</b></div>
+        <div class="sign">지급 예정일 : 2026년 10월 10일<br>입금 계좌 : 농협 000-0000-0000-00 (위생기업사)</div>
+      </div>
+    </div>
+    <div class="mf"><span class="sp" style="font-size:12px;color:var(--muted)">세금계산서는 국세청 연동 후 자동 발행됩니다</span>
+      <button class="btn gho" onclick="closeM('mSettleDoc')">닫기</button>
+      <button class="btn" onclick="toast('정산서 PDF를 내려받았습니다')">PDF 내려받기</button></div>
+  </div></div>
+
+
+<!-- 15. 상품 엑셀 일괄등록 -->
+<div class="modal" id="mProdBulk"><div class="bg" onclick="closeM('mProdBulk')"></div>
+  <div class="box">
+    <div class="mh"><div><h3>상품 엑셀 일괄등록</h3><div class="sub">712개를 한 번에</div></div>
+      <button class="x" onclick="closeM('mProdBulk')">✕</button></div>
+    <div class="mb">
+      <div class="wiz">
+        <span class="s on" id="pw1"><span class="n">1</span>파일 고르기</span><span class="ar">›</span>
+        <span class="s" id="pw2"><span class="n">2</span>확인</span><span class="ar">›</span>
+        <span class="s" id="pw3"><span class="n">3</span>저장</span>
+      </div>
+      <div id="pz1">
+        <div class="sel"><button class="btn gho" style="padding:8px 14px;font-size:12.5px" onclick="toast('빈 양식 엑셀을 내려받았습니다')">양식 내려받기</button>
+          <span style="font-size:12px;color:var(--muted)">SKU · 상품명 · 업체 · 카테고리 · 판매가 · 과세구분 · 재고</span></div>
+        <div class="drop" onclick="pStep(2)"><b>상품 엑셀을 끌어다 놓으세요</b>.xlsx · .csv &nbsp;|&nbsp; 눌러서 시범 실행</div>
+      </div>
+      <div id="pz2" style="display:none">
+        <div class="sel"><b style="color:var(--navy)">sn_products_2026-09.xlsx</b><span style="font-size:12px;color:var(--muted)">712행 읽음</span></div>
+        <div class="chk">
+          <div class="c ok"><div class="l">신규 등록</div><div class="v">698개</div></div>
+          <div class="c skip"><div class="l">이미 있음(수정)</div><div class="v">14개</div></div>
+          <div class="c bad"><div class="l">업체 못 찾음</div><div class="v">0개</div></div>
+          <div class="c skip"><div class="l">가격 오류</div><div class="v">0개</div></div>
+        </div>
+        <table><thead><tr><th>SKU</th><th>상품명</th><th>업체</th><th>카테고리</th><th class="r">판매가</th><th>과세</th><th class="r">재고</th></tr></thead><tbody>
+          <tr><td>WS-1021</td><td>친환경 주방세제 리필 2L</td><td>위생기업사</td><td>생활·위생</td><td class="r">9,900</td><td><span class="chip">과세</span></td><td class="r">320</td></tr>
+          <tr><td>GM-7742</td><td>홍삼 스틱 프리미엄 60포</td><td>그린명품제약</td><td>식품</td><td class="r">39,000</td><td><span class="chip g">면세</span></td><td class="r">140</td></tr>
+          <tr><td>HB-3390</td><td>홀가먼트 니트</td><td>한보텍스타일</td><td>패션·잡화</td><td class="r">58,000</td><td><span class="chip">과세</span></td><td class="r">54</td></tr>
+        </tbody></table>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ <b>과세·면세</b>가 섞여 있습니다. 세금계산서가 달라지므로 반드시 확인하세요.</div>
+      </div>
+      <div id="pz3" style="display:none">
+        <div class="drop" style="border-color:#a9cfc3;background:var(--greenL2)"><b style="color:var(--green)">저장 완료 — 712개</b>신규 698 · 수정 14</div>
+      </div>
+    </div>
+    <div class="mf"><span class="sp"></span>
+      <button class="btn gho" onclick="closeM('mProdBulk')">닫기</button>
+      <button class="btn" id="pBtn" onclick="pStep(3)">712개 저장</button></div>
+  </div></div>
+
+<!-- 14. 상품 등록/수정 -->
+<div class="modal" id="mProdForm"><div class="bg" onclick="closeM('mProdForm')"></div>
+  <div class="box">
+    <div class="mh"><div><h3 id="pfTitle">상품 등록</h3><div class="sub">＊ 표시는 꼭 넣어야 합니다</div></div>
+      <button class="x" onclick="closeM('mProdForm')">✕</button></div>
+    <div class="mb"><div class="form">
+      <div class="f"><label>SKU <span class="req">＊</span></label><input id="pfSku" value="WS-1021"><div class="hint">업체별 고유 코드. 중복 불가</div></div>
+      <div class="f"><label>상품명 <span class="req">＊</span></label><input id="pfNm" value="친환경 주방세제 리필 2L"></div>
+      <div class="f"><label>입점업체 <span class="req">＊</span></label><select><option>위생기업사</option><option>크린텍</option><option>한솔생명과학</option><option>그린명품제약</option><option>한보텍스타일</option><option>오리엔트</option></select></div>
+      <div class="f"><label>카테고리</label><select><option>생활·위생</option><option>식품</option><option>화장품·바이오</option><option>전자·부품</option><option>패션·잡화</option><option>사무·MRO</option></select></div>
+      <div class="f"><label>판매가 <span class="req">＊</span></label><input value="9900"><div class="hint">원 단위 정수. 소수점 없음</div></div>
+      <div class="f"><label>원가</label><input placeholder="비워둘 수 있음"></div>
+      <div class="f"><label>과세구분 <span class="req">＊</span></label><select><option>과세</option><option>면세</option></select><div class="hint">면세면 세금계산서에서 분리됩니다</div></div>
+      <div class="f"><label>재고</label><input value="320"></div>
+      <div class="f"><label>판매 상태</label><select><option>판매중</option><option>중지</option></select></div>
+      <div class="f"><label>샘플 상태</label><select><option>입고</option><option>미입고</option><option>촬영대기</option><option>촬영완료</option></select></div>
+    </div></div>
+    <div class="mf"><span class="sp"></span>
+      <button class="btn gho" onclick="closeM('mProdForm')">취소</button>
+      <button class="btn" onclick="closeM('mProdForm');toast('상품을 저장했습니다')">저장</button></div>
+  </div></div>
+
+<!-- 18. 업체 등록/상세 -->
+<div class="modal" id="mPartnerForm"><div class="bg" onclick="closeM('mPartnerForm')"></div>
+  <div class="box">
+    <div class="mh"><div><h3 id="ptTitle">입점업체 등록</h3><div class="sub">정산서를 받을 대상</div></div>
+      <button class="x" onclick="closeM('mPartnerForm')">✕</button></div>
+    <div class="mb"><div class="form">
+      <div class="f"><label>상호 <span class="req">＊</span></label><input id="ptNm" value="위생기업사"></div>
+      <div class="f"><label>사업자번호 <span class="req">＊</span></label><input value="123-45-67890"><div class="hint">세금계산서 발행에 필요</div></div>
+      <div class="f"><label>대표자</label><input value="김위생"></div>
+      <div class="f"><label>담당자 / 연락처</label><input value="이담당 · 031-000-0000"></div>
+      <div class="f"><label>주요 품목</label><input value="생활·위생용품"></div>
+      <div class="f"><label>상태</label><select><option>운영중</option><option>심사중</option><option>계약</option><option>중지</option></select></div>
+      <div class="f full"><label>정산 계좌</label><input value="농협 000-0000-0000-00 (예금주: 위생기업사)"><div class="hint">암호화해서 보관합니다</div></div>
+      <div class="f"><label>업체별 수수료율</label><input placeholder="비우면 채널 수수료율 적용"><div class="hint">채널값보다 <b>우선</b> 적용됩니다</div></div>
+      <div class="f"><label>계약일</label><input value="2026-08-14"></div>
+      <div class="f full"><label>메모</label><textarea rows="2" placeholder="특이사항"></textarea></div>
+    </div></div>
+    <div class="mf"><span class="sp"></span>
+      <button class="btn gho" onclick="closeM('mPartnerForm')">취소</button>
+      <button class="btn" onclick="closeM('mPartnerForm');toast('업체 정보를 저장했습니다')">저장</button></div>
+  </div></div>
+
+<!-- 6. 주문 상세 -->
+<div class="modal" id="mOrderDetail"><div class="bg" onclick="closeM('mOrderDetail')"></div>
+  <div class="box">
+    <div class="mh"><div><h3 id="odNo">G-20260921-0455</h3><div class="sub">그립 · 2026-09-21 11:24</div></div>
+      <button class="x" onclick="closeM('mOrderDetail')">✕</button></div>
+    <div class="mb">
+      <div class="panel" style="margin-top:0">
+        <h3>주문 상품</h3>
+        <table><thead><tr><th>상품</th><th>업체</th><th>매칭 SKU</th><th class="r">수량</th><th class="r">단가</th><th class="r">금액</th><th>상태</th></tr></thead><tbody>
+          <tr><td>친환경세제2L(대용량)</td><td>위생기업사</td><td>WS-1021</td><td class="r">2</td><td class="r">9,900</td><td class="r"><b>19,800</b></td><td><span class="st ok">정상</span></td></tr>
+        </tbody></table>
+      </div>
+      <div class="panel">
+        <h3>배송 정보 <span class="more">개인정보는 암호화 보관 · 정산에는 쓰지 않음</span></h3>
+        <table style="min-width:0"><tbody>
+          <tr><td>수령인</td><td>홍**</td></tr>
+          <tr><td>연락처</td><td>010-****-1234</td></tr>
+          <tr><td>주소</td><td>경기 성남시 ****</td></tr>
+          <tr><td>결제수단</td><td><span class="chip c">성남사랑상품권</span></td></tr>
+          <tr><td>올린 파일</td><td>grip_orders_2026-09.xlsx <span style="color:var(--muted);font-size:11.5px">(09-22 09:12 · 박운영)</span></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+    <div class="mf"><span class="sp"></span>
+      <button class="btn gho" onclick="closeM('mOrderDetail')">닫기</button>
+      <button class="btn cor" onclick="closeM('mOrderDetail');openM('mRefund')">환불·취소 처리</button></div>
+  </div></div>
+
+<!-- 7. 환불·취소 처리 -->
+<div class="modal narrow" id="mRefund"><div class="bg" onclick="closeM('mRefund')"></div>
+  <div class="box">
+    <div class="mh"><h3>환불 · 취소 처리</h3><button class="x" onclick="closeM('mRefund')">✕</button></div>
+    <div class="mb"><div class="form" style="grid-template-columns:1fr">
+      <div class="f"><label>주문</label><input value="G-20260921-0455 · 친환경 주방세제 2L" disabled></div>
+      <div class="f"><label>환불금액 <span class="req">＊</span></label><input value="19800"><div class="hint">부분 환불도 가능합니다</div></div>
+      <div class="f"><label>환불일 <span class="req">＊</span></label><input value="2026-09-23"></div>
+      <div class="f"><label>반영 정산월 <span class="req">＊</span></label><select><option>2026.09 (이번 달)</option><option>2026.10 (다음 달)</option></select>
+        <div class="hint">⚠️ 이미 <b>확정된 달</b>은 고를 수 없습니다 — 다음 달로 넘깁니다</div></div>
+      <div class="f"><label>사유</label><select><option>단순변심</option><option>파손·불량</option><option>오배송</option><option>품절</option></select></div>
+    </div></div>
+    <div class="mf"><span class="sp"></span>
+      <button class="btn gho" onclick="closeM('mRefund')">취소</button>
+      <button class="btn cor" onclick="closeM('mRefund');toast('환불 처리 완료 — 2026.09 정산에서 차감됩니다')">환불 처리</button></div>
+  </div></div>
+
+<!-- 20. 방송 등록/상세 -->
+<div class="modal" id="mBroadcast"><div class="bg" onclick="closeM('mBroadcast')"></div>
+  <div class="box">
+    <div class="mh"><div><h3>방송 편성</h3><div class="sub">판매 상품을 지정해야 방송 실적이 잡힙니다</div></div>
+      <button class="x" onclick="closeM('mBroadcast')">✕</button></div>
+    <div class="mb">
+      <div class="form">
+        <div class="f"><label>스튜디오 <span class="req">＊</span></label><select id="bcStudio"><option>식품 · 센터엠 427</option><option>의류 · 공단 503-1</option><option>잡화 · 공단 503-2</option><option>화장품 · 공단 503-3</option></select></div>
+        <div class="f"><label>송출 채널 <span class="req">＊</span></label><select><option>그립</option><option>네이버 쇼핑라이브</option><option>클릭메이트</option></select></div>
+        <div class="f"><label>날짜 <span class="req">＊</span></label><input id="bcDate" value="2026-09-24"></div>
+        <div class="f"><label>시간 <span class="req">＊</span></label><input id="bcTime" value="11:00 ~ 12:00"></div>
+        <div class="f"><label>입점업체 <span class="req">＊</span></label><select><option>위생기업사</option><option>크린텍</option><option>그린명품제약</option><option>한보텍스타일</option></select></div>
+        <div class="f"><label>진행자</label><select><option>김PD</option><option>이호스트</option><option>박PD</option></select></div>
+        <div class="f full"><label>방송 제목</label><input value="위생기업사 생활용품 특가"></div>
+      </div>
+      <div class="panel">
+        <h3>판매 상품 지정 <span class="more">방송 ↔ 주문을 잇는 고리</span></h3>
+        <table><thead><tr><th>선택</th><th>SKU</th><th>상품</th><th class="r">판매가</th><th class="r">재고</th></tr></thead><tbody>
+          <tr><td><input type="checkbox" checked></td><td>WS-1021</td><td>친환경 주방세제 리필 2L</td><td class="r">9,900</td><td class="r">320</td></tr>
+          <tr><td><input type="checkbox" checked></td><td>WS-1088</td><td>천연 비누 선물세트 6입</td><td class="r">18,000</td><td class="r">8</td></tr>
+          <tr><td><input type="checkbox"></td><td>WS-1102</td><td>주방세제 리필 1L</td><td class="r">6,500</td><td class="r">140</td></tr>
+        </tbody></table>
+        <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 엑셀 주문에는 방송 정보가 없습니다. <b>여기서 지정한 상품 + 방송 시간대</b>로 실적을 잡습니다.</div>
+      </div>
+    </div>
+    <div class="mf"><span class="sp"></span>
+      <button class="btn gho" onclick="closeM('mBroadcast')">취소</button>
+      <button class="btn" onclick="closeM('mBroadcast');toast('방송을 편성했습니다')">편성 저장</button></div>
+  </div></div>
+
+<!-- 1. 로그인 -->
+<div class="login" id="loginView">
+  <div class="card">
+    <div class="lg2"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>SN LIVE OS</div>
+    <div class="os2">스튜디오·폐쇄몰 운영 · 조합 직원 전용</div>
+    <div class="form" style="grid-template-columns:1fr">
+      <div class="f"><label>아이디</label><input value="sd.seong" autocomplete="off"></div>
+      <div class="f"><label>비밀번호</label><input type="password" value="........"></div>
+    </div>
+    <button class="btn login-btn" style="width:100%;margin-top:14px;padding:12px" onclick="doLogin()">로그인</button>
+    <div class="note">이 화면은 직원만 들어옵니다.<br>고객이 보는 화면은 <a href="../" style="color:var(--navy)">SN LIVE 몰</a>입니다.</div>
+  </div>
+</div>
 
 <div id="toast"></div>
 <script>
@@ -557,6 +907,63 @@ function upStep(n){
   if(n===2)toast('143행을 읽었습니다 — 중복 12건, 미매칭 3건 발견');
   if(n===3)toast('정상 128건 저장 완료');
 }
+// ── 팝업 열고 닫기 ──
+function openM(id){ document.getElementById(id).classList.add('on'); document.body.style.overflow='hidden'; }
+function closeM(id){ document.getElementById(id).classList.remove('on'); if(!document.querySelector('.modal.on')) document.body.style.overflow=''; }
+document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ document.querySelectorAll('.modal.on').forEach(function(m){ closeM(m.id); }); } });
+
+// ── 정산 ──
+var SETTLE={
+ '위생기업사':{s:'5,000,000',f:'500,000',r:'10%',rf:'80,000',n:'4,420,000'},
+ '한보텍스타일':{s:'5,400,000',f:'540,000',r:'10%',rf:'0',n:'4,860,000'},
+ '그린명품제약':{s:'1,980,000',f:'198,000',r:'10%',rf:'0',n:'1,782,000'},
+ '크린텍':{s:'3,200,000',f:'320,000',r:'10%',rf:'40,000',n:'2,840,000'}
+};
+function openSettleDetail(name){
+  var d=SETTLE[name]; if(!d)return;
+  document.getElementById('sdName').textContent=name;
+  document.getElementById('sdSales').textContent=d.s;
+  document.getElementById('sdFee').textContent=d.f;
+  document.getElementById('sdRate').textContent=d.r;
+  document.getElementById('sdRefund').textContent=d.rf;
+  document.getElementById('sdNet').textContent=d.n;
+  openM('mSettleDetail');
+}
+function doConfirmSettle(){
+  closeM('mSettleConfirm');
+  document.getElementById('settleLock').style.display='';
+  var b=document.getElementById('btnConfirm');
+  b.textContent='확정 해제(센터장)'; b.style.background='#eef1f4'; b.style.color='#5a6570';
+  b.setAttribute('onclick',"toast('확정 해제는 센터장 권한이 필요합니다')");
+  toast('2026.09 정산을 확정했습니다 — 이 달 숫자가 잠겼습니다');
+}
+// ── 상품 엑셀 일괄등록 마법사 ──
+function pStep(n){
+  [1,2,3].forEach(function(i){
+    document.getElementById('pz'+i).style.display=(i===n)?'':'none';
+    var w=document.getElementById('pw'+i); w.className='s'+(i===n?' on':(i<n?' done':''));
+  });
+  var b=document.getElementById('pBtn');
+  if(n===1){ b.textContent='712개 저장'; b.setAttribute('onclick','pStep(3)'); }
+  if(n===2){ toast('712행을 읽었습니다 — 신규 698, 수정 14'); }
+  if(n===3){ b.textContent='완료'; b.setAttribute('onclick',"closeM('mProdBulk');pStep(1)"); toast('상품 712개를 저장했습니다'); }
+}
+// ── 폼 열기 ──
+function openProdForm(nm){
+  document.getElementById('pfTitle').textContent = nm ? '상품 수정' : '상품 등록';
+  if(nm) document.getElementById('pfNm').value=nm;
+  openM('mProdForm');
+}
+function openPartnerForm(nm){
+  document.getElementById('ptTitle').textContent = nm ? '입점업체 정보' : '입점업체 등록';
+  if(nm) document.getElementById('ptNm').value=nm;
+  openM('mPartnerForm');
+}
+function openOrder(no){ document.getElementById('odNo').textContent=no; openM('mOrderDetail'); }
+// ── 로그인 ──
+function doLogout(){ document.getElementById('loginView').classList.add('on'); }
+function doLogin(){ document.getElementById('loginView').classList.remove('on'); toast('성동욱 센터장으로 로그인했습니다'); }
+
 // 모바일 서랍 열고 닫기
 function drawer(open){
   document.querySelector('.side').classList.toggle('open',open);
