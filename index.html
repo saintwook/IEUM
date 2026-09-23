@@ -25,10 +25,10 @@
 <meta name="apple-mobile-web-app-title" content="SN LIVE">
 <style>
 :root{
-  --navy:#1F356B; --green:#187474; --greenL:#e3f0eb; --coral:#EF701E; --coralL:#fff0ea;
-  --sand:#f4f1ec; --ink:#20272e; --muted:#7a848d; --line:#e6e9ec; --bg:#f7f8f9; --card:#fff;
-  --heroBg:linear-gradient(120deg,#0f5c4a,#187474 55%,#1f8f74); --heroText:#fff;
-  --heroSub:#d5ede5; --heroChip:rgba(255,255,255,.16); --heroCta:#EF701E; --heroCtaText:#fff;
+  --navy:#14305F; --green:#2C6FF6; --greenL:#E8F0FE; --coral:#E8434A; --coralL:#FDECEC;
+  --sand:#F4F7FC; --ink:#16202E; --muted:#77839A; --line:#E7EBF2; --bg:#FFFFFF; --card:#fff;
+  --heroBg:#EDF3FE; --heroText:#14305F;
+  --heroSub:#5A6B85; --heroChip:#ffffff; --heroCta:#2C6FF6; --heroCtaText:#ffffff;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
@@ -633,24 +633,24 @@ function checkout(){if(!cart.length){toast('장바구니가 비어 있습니다'
 
 // 색감 시안 미리보기 — 주소 뒤 ?theme=a|b|c|d|e
 var THEMES={
+ now:{'--navy':'#1F356B','--green':'#187474','--greenL':'#e3f0eb','--coral':'#EF701E','--coralL':'#fff0ea','--sand':'#f4f1ec','--ink':'#20272e','--muted':'#7a848d','--line':'#e6e9ec','--bg':'#f7f8f9',
+    '--heroBg':'linear-gradient(120deg,#0f5c4a,#187474 55%,#1f8f74)','--heroText':'#ffffff','--heroSub':'#d5ede5','--heroChip':'rgba(255,255,255,.16)','--heroCta':'#EF701E','--heroCtaText':'#ffffff'},
  d:{'--navy':'#17191C','--green':'#4A5056','--greenL':'#ECEDEF','--coral':'#DC2626','--coralL':'#FDEAEA','--sand':'#F2F2F3','--ink':'#121417','--muted':'#70747A','--line':'#E3E4E6','--bg':'#F6F6F7',
     '--heroBg':'#17191C','--heroText':'#ffffff','--heroSub':'rgba(255,255,255,.60)','--heroChip':'rgba(255,255,255,.13)','--heroCta':'#ffffff','--heroCtaText':'#17191C'},
  i:{'--navy':'#111111','--green':'#2F2F2F','--greenL':'#F1F1F1','--coral':'#FF2D2D','--coralL':'#FFEFEF','--sand':'#F7F7F7','--ink':'#111111','--muted':'#8A8A8A','--line':'#EAEAEA','--bg':'#FFFFFF',
     '--heroBg':'#111111','--heroText':'#ffffff','--heroSub':'rgba(255,255,255,.58)','--heroChip':'rgba(255,255,255,.14)','--heroCta':'#ffffff','--heroCtaText':'#111111'},
- j:{'--navy':'#14305F','--green':'#2C6FF6','--greenL':'#E8F0FE','--coral':'#E8434A','--coralL':'#FDECEC','--sand':'#F4F7FC','--ink':'#16202E','--muted':'#77839A','--line':'#E7EBF2','--bg':'#FFFFFF',
-    '--heroBg':'#EDF3FE','--heroText':'#14305F','--heroSub':'#5A6B85','--heroChip':'#ffffff','--heroCta':'#2C6FF6','--heroCtaText':'#ffffff'},
  k:{'--navy':'#1C1A17','--green':'#1F5C3D','--greenL':'#E7F0EA','--coral':'#B4452E','--coralL':'#F7E9E5','--sand':'#F5F2EC','--ink':'#1C1A17','--muted':'#8A8378','--line':'#EAE6DF','--bg':'#FCFBF9',
     '--heroBg':'#1C1A17','--heroText':'#ffffff','--heroSub':'rgba(255,255,255,.60)','--heroChip':'rgba(255,255,255,.12)','--heroCta':'#ffffff','--heroCtaText':'#1C1A17'}
 };
-var NAMES={d:'\uff24 모노크롬 (OS와 통일)',i:'\uff29 모노 · 미니멀',j:'\uff2a 화이트 · 블루',k:'\uff2b 웜 뉴트럴 · 딥그린'};
+var NAMES={now:'０ 예전 색(조합 CI)',d:'\uff24 모노크롬',i:'\uff29 모노 · 미니멀',k:'\uff2b 웜 뉴트럴 · 딥그린'};
 (function(){
-  var t=(location.search.match(/[?&]theme=([dijk])/)||[])[1];
+  var t=(location.search.match(/[?&]theme=(now|[dik])/)||[])[1];
   if(!t)return;
   var v=THEMES[t]; for(var k in v) document.documentElement.style.setProperty(k,v[k]);
   var bar=document.createElement('div');
   bar.className='themebar';
   bar.innerHTML='몰 색감 시안 '+NAMES[t]+' <a href="theme/" style="color:#9fc7ff">다른 시안 보기</a>'
-    +'<a href="./" style="color:#cbd6e4">원래 색</a>';
+    +'<a href="./" style="color:#cbd6e4">적용된 색(Ｊ)</a>';
   document.body.appendChild(bar);
 })();
 
