@@ -30,35 +30,36 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
 .sw div{flex:1;min-width:76px;border-radius:9px;padding:9px 8px 8px;font-size:9.5px;font-weight:700;letter-spacing:.2px}
 .sw .t{display:block;font-size:8.5px;font-weight:600;opacity:.72;margin-bottom:2px}
 /* ── 몰 미니 미리보기 ── */
-.mdemo{background:var(--bg);padding:11px;min-height:300px}
+.mdemo{background:var(--bg);padding:11px;min-height:310px}
 .mdemo .mt{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:7px 9px}
 .mdemo .mt img{width:20px;height:20px}
 .mdemo .mt b{font-size:11.5px;color:var(--navy);letter-spacing:.2px}
-.mdemo .mt .sr{flex:1;background:var(--bg);border-radius:12px;font-size:8.5px;color:var(--muted);padding:4px 9px}
-.mdemo .hero{margin-top:9px;border-radius:12px;padding:16px 14px;color:#fff;
-  background:linear-gradient(120deg,var(--heroA),var(--heroB) 55%,var(--heroC))}
-.mdemo .hero .bd{display:inline-block;font-size:7.5px;font-weight:800;letter-spacing:.4px;background:rgba(255,255,255,.22);border-radius:10px;padding:3px 8px}
+.mdemo .mt .sr{flex:1;background:var(--bg);border-radius:8px;font-size:8.5px;color:var(--muted);padding:4px 9px}
+.mdemo .hero{margin-top:9px;border-radius:12px;padding:17px 15px;background:var(--heroBg);color:var(--heroText)}
+.mdemo .hero .bd{display:inline-block;font-size:7.5px;font-weight:800;letter-spacing:.4px;background:var(--heroChip);border-radius:9px;padding:3px 8px}
 .mdemo .hero h5{font-size:15px;font-weight:800;margin:7px 0 4px;line-height:1.3}
-.mdemo .hero p{font-size:8.5px;opacity:.9;line-height:1.5}
-.mdemo .hero .cta{display:inline-block;margin-top:9px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;border-radius:8px;padding:6px 12px}
+.mdemo .hero p{font-size:8.5px;color:var(--heroSub);line-height:1.5}
+.mdemo .hero .cta{display:inline-block;margin-top:10px;background:var(--heroCta);color:var(--heroCtaText);font-size:9px;font-weight:800;border-radius:6px;padding:7px 13px}
 .mdemo .cats{display:flex;gap:5px;margin-top:9px;flex-wrap:wrap}
-.mdemo .cats i{font-style:normal;font-size:8.5px;font-weight:700;background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:4px 9px}
+.mdemo .cats i{font-style:normal;font-size:8.5px;font-weight:700;background:#fff;border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:4px 9px}
 .mdemo .cats i.on{background:var(--greenL);border-color:var(--green);color:var(--green)}
 .mdemo .ps{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:9px}
 .mdemo .pc{background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
-.mdemo .pc .im{height:44px;background:var(--greenL)}
-.mdemo .pc .in{padding:6px 7px 8px}
+.mdemo .pc .im{height:46px;background:var(--sand)}
+.mdemo .pc .in{padding:6px 7px 7px}
 .mdemo .pc .co{font-size:7.5px;color:var(--muted)}
-.mdemo .pc .nm2{font-size:8.5px;font-weight:700;color:var(--ink);line-height:1.35;margin:2px 0 4px;height:23px;overflow:hidden}
-.mdemo .pc .pr{font-size:10px;font-weight:800;color:var(--ink)}
-.mdemo .pc .dc{color:var(--coral);margin-right:3px}
-.mdemo .pc .bu{display:block;width:100%;margin-top:5px;background:var(--coralL);color:var(--coral);font-size:8px;font-weight:800;padding:5px;border-radius:7px;border:none;text-align:center}
-.mdemo[data-m="now"]{--navy:#1F356B;--green:#187474;--greenL:#e3f0eb;--coral:#EF701E;--coralL:#fff0ea;--ink:#20272e;--muted:#7a848d;--line:#e6e9ec;--bg:#f7f8f9;--heroA:#0f5c4a;--heroB:#187474;--heroC:#1f8f74}
-.mdemo[data-m="d"]{--navy:#17191C;--green:#4A5056;--greenL:#ECEDEF;--coral:#DC2626;--coralL:#FDEAEA;--ink:#121417;--muted:#70747A;--line:#E3E4E6;--bg:#F6F6F7;--heroA:#17191C;--heroB:#24282D;--heroC:#3C4249}
-.mdemo[data-m="f"]{--navy:#223140;--green:#12A594;--greenL:#E0F5F2;--coral:#F2603F;--coralL:#FFEDE8;--ink:#1C2630;--muted:#6E7A86;--line:#F0E6E2;--bg:#FFFBF9;--heroA:#FF9A6B;--heroB:#F2603F;--heroC:#E8407A}
-.mdemo[data-m="g"]{--navy:#1F3A5F;--green:#2BA6C9;--greenL:#E2F4FA;--coral:#FF7A59;--coralL:#FFEDE8;--ink:#16283F;--muted:#6B7C90;--line:#E2EBF2;--bg:#F7FBFD;--heroA:#63CDEE;--heroB:#2BA6C9;--heroC:#7ED0B8}
-.mdemo[data-m="h"]{--navy:#14361F;--green:#2E9E53;--greenL:#E4F4E9;--coral:#F5A623;--coralL:#FEF3DE;--ink:#16261B;--muted:#6C7A6F;--line:#E3EBE2;--bg:#F7FBF6;--heroA:#55C06A;--heroB:#2E9E53;--heroC:#9ACD3C}
-.mdemo[data-m="c"]{--navy:#1D4ED8;--green:#0891B2;--greenL:#E0F3F8;--coral:#EAB308;--coralL:#FEF6D9;--ink:#15203A;--muted:#66708F;--line:#E1E7F4;--bg:#F5F7FD;--heroA:#1439A8;--heroB:#1D4ED8;--heroC:#3B6FF0}
+.mdemo .pc .nm2{font-size:8.5px;font-weight:600;color:var(--ink);line-height:1.35;margin:2px 0 5px;height:23px;overflow:hidden}
+.mdemo .pc .pr{font-size:10.5px;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:3px}
+.mdemo .pc .dc{color:var(--coral)}
+.mdemo .pc .ct{margin-left:auto;width:17px;height:17px;border-radius:5px;background:var(--sand)}
+.mdemo .pc .mt2{display:flex;gap:5px;margin-top:6px;padding-top:6px;border-top:1px solid var(--line);font-size:7px;color:var(--muted)}
+.mdemo .pc .mt2 b{color:var(--ink)}
+.mdemo .pc .mt2 .rt{margin-left:auto}
+.mdemo[data-m="now"]{--navy:#1F356B;--green:#187474;--greenL:#e3f0eb;--coral:#EF701E;--coralL:#fff0ea;--sand:#f4f1ec;--ink:#20272e;--muted:#7a848d;--line:#e6e9ec;--bg:#f7f8f9;--heroBg:linear-gradient(120deg,#0f5c4a,#187474 55%,#1f8f74);--heroText:#fff;--heroSub:#d5ede5;--heroChip:rgba(255,255,255,.16);--heroCta:#EF701E;--heroCtaText:#fff}
+.mdemo[data-m="d"]{--navy:#17191C;--green:#4A5056;--greenL:#ECEDEF;--coral:#DC2626;--coralL:#FDEAEA;--sand:#F2F2F3;--ink:#121417;--muted:#70747A;--line:#E3E4E6;--bg:#F6F6F7;--heroBg:#17191C;--heroText:#fff;--heroSub:rgba(255,255,255,.6);--heroChip:rgba(255,255,255,.13);--heroCta:#fff;--heroCtaText:#17191C}
+.mdemo[data-m="i"]{--navy:#111111;--green:#2F2F2F;--greenL:#F1F1F1;--coral:#FF2D2D;--coralL:#FFEFEF;--sand:#F7F7F7;--ink:#111111;--muted:#8A8A8A;--line:#EAEAEA;--bg:#FFFFFF;--heroBg:#111111;--heroText:#fff;--heroSub:rgba(255,255,255,.58);--heroChip:rgba(255,255,255,.14);--heroCta:#fff;--heroCtaText:#111}
+.mdemo[data-m="j"]{--navy:#14305F;--green:#2C6FF6;--greenL:#E8F0FE;--coral:#E8434A;--coralL:#FDECEC;--sand:#F4F7FC;--ink:#16202E;--muted:#77839A;--line:#E7EBF2;--bg:#FFFFFF;--heroBg:#EDF3FE;--heroText:#14305F;--heroSub:#5A6B85;--heroChip:#fff;--heroCta:#2C6FF6;--heroCtaText:#fff}
+.mdemo[data-m="k"]{--navy:#1C1A17;--green:#1F5C3D;--greenL:#E7F0EA;--coral:#B4452E;--coralL:#F7E9E5;--sand:#F5F2EC;--ink:#1C1A17;--muted:#8A8378;--line:#EAE6DF;--bg:#FCFBF9;--heroBg:#1C1A17;--heroText:#fff;--heroSub:rgba(255,255,255,.6);--heroChip:rgba(255,255,255,.12);--heroCta:#fff;--heroCtaText:#1C1A17}
 .sec{margin-top:38px}
 .sec h2{font-size:20px;color:#17191C;letter-spacing:-.3px}
 
@@ -136,7 +137,7 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
         </div>
       </div>
       <div class="demo" data-p="now"></div>
-      <div class="ft"><a href="../os/?theme=now">OS로 보기 →</a><a href="../" style="background:#5a6570">몰로 보기 →</a><span>예전 색</span></div>
+      <div class="ft"><a href="../os/?theme=now">전체 화면으로 보기 →</a><span>예전 색</span></div>
     </div>
 
     <div class="p">
@@ -152,7 +153,7 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
         </div>
       </div>
       <div class="demo" data-p="a"></div>
-      <div class="ft"><a href="../os/?theme=a">OS로 보기 →</a><a href="../?theme=a" style="background:#5a6570">몰로 보기 →</a><span>테크 · 프리미엄</span></div>
+      <div class="ft"><a href="../os/?theme=a">전체 화면으로 보기 →</a><span>테크 · 프리미엄</span></div>
     </div>
 
     <div class="p">
@@ -169,7 +170,7 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
         </div>
       </div>
       <div class="demo" data-p="b"></div>
-      <div class="ft"><a href="../os/?theme=b">OS로 보기 →</a><a href="../?theme=b" style="background:#5a6570">몰로 보기 →</a><span>패션 · 뷰티 감각</span></div>
+      <div class="ft"><a href="../os/?theme=b">전체 화면으로 보기 →</a><span>패션 · 뷰티 감각</span></div>
     </div>
 
     <div class="p">
@@ -186,7 +187,7 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
         </div>
       </div>
       <div class="demo" data-p="c"></div>
-      <div class="ft"><a href="../os/?theme=c">OS로 보기 →</a><a href="../?theme=c" style="background:#5a6570">몰로 보기 →</a><span>밝고 활기참</span></div>
+      <div class="ft"><a href="../os/?theme=c">전체 화면으로 보기 →</a><span>밝고 활기참</span></div>
     </div>
 
     <div class="p">
@@ -204,7 +205,7 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
         </div>
       </div>
       <div class="demo" data-p="d"></div>
-      <div class="ft"><a href="../os/">OS로 보기 →</a><a href="../?theme=d" style="background:#5a6570">몰로 보기 →</a><span>OS에 적용 완료 · 몰은 검토중</span></div>
+      <div class="ft"><a href="../os/">전체 화면으로 보기 →</a><span>OS에 적용 완료 · 몰은 검토중</span></div>
     </div>
 
     <div class="p">
@@ -221,22 +222,23 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
         </div>
       </div>
       <div class="demo" data-p="e"></div>
-      <div class="ft"><a href="../os/?theme=e">OS로 보기 →</a><a href="../?theme=e" style="background:#5a6570">몰로 보기 →</a><span>제조 · 지역 정서</span></div>
+      <div class="ft"><a href="../os/?theme=e">전체 화면으로 보기 →</a><span>제조 · 지역 정서</span></div>
     </div>
 
   </div>
 
 
   <div class="sec">
-    <h2>몰 전용 — 화사한 시안</h2>
-    <p class="lead" style="margin-top:8px">OS는 <b>Ｄ 모노크롬</b>으로 확정했습니다. 몰은 고객이 보는 화면이라
-    <b>밝고 화사한 쪽</b>으로 따로 고릅니다. 아래는 <b>몰 화면 그대로</b>(히어로·카테고리·상품카드) 비교입니다.</p>
+    <h2>몰 전용 — 큰 커머스 기준</h2>
+    <p class="lead" style="margin-top:8px">무신사·쿠팡·29CM 같은 큰 커머스는 <b>UI에 색을 거의 쓰지 않습니다.</b>
+    흰 배경 + 무채색 + 포인트색 하나. <b>화사함은 상품 사진이 만듭니다.</b>
+    그래서 그라데이션 배경을 없애고, 상품 카드도 큰 커머스 방식(가격 위계 · 작은 장바구니 · 배송/리뷰 줄)으로 바꿨습니다.</p>
     <div class="grid">
     <div class="p">
       <div class="hd">
         <div class="nm">０. 지금 몰 색 <span class="tag now">현재</span></div>
-        <div class="ds">조합 CI 초록 히어로. 무난하지만 <b>차분한 쪽</b>이라 "화사"와는 거리가 있습니다.</div>
-        <div class="lo">🎯 <b>로고 궁합</b> — 화면 초록과 로고 청록이 겹쳐 로고가 덜 보입니다.</div>
+        <div class="ds">초록 <b>그라데이션 히어로</b>. 이게 바로 "유치해 보이는" 원인입니다 — 큰 커머스는 그라데이션 배경을 안 씁니다.</div>
+        <div class="lo">📐 <b>참고 기준</b> — 해당 없음. 2010년대 중소 쇼핑몰 문법입니다.</div>
         <div class="sw"><div style="background:#1F356B;color:#fff"><span class="t">주색</span>#1F356B</div><div style="background:#187474;color:#fff"><span class="t">보조</span>#187474</div><div style="background:#EF701E;color:#fff"><span class="t">강조</span>#EF701E</div><div style="background:#f7f8f9;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#f7f8f9</div></div>
       </div>
       <div class="mdemo" data-m="now"></div>
@@ -244,53 +246,43 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
     </div>
     <div class="p">
       <div class="hd">
-        <div class="nm">Ｄ. 모노크롬 (OS와 같은 색) </div>
-        <div class="ds">OS와 한 몸으로 보이지만 <b>고객몰로는 차갑습니다.</b> 프리미엄 편집숍 쪽.</div>
-        <div class="lo">🎯 <b>로고 궁합</b> — 가장 잘 맞습니다. 다만 몰에서는 "친근함"이 약합니다.</div>
+        <div class="nm">Ｉ. 모노 · 미니멀 <span class="tag rec">몰 추천</span></div>
+        <div class="ds">검정 배너 + 흰 카드. <b>할인율만 빨강.</b> 상품 사진이 유일한 색이 되어 제품이 제일 돋보입니다.</div>
+        <div class="lo">📐 <b>참고 기준</b> — <b>무신사 · 29CM · SSF샵</b> — 패션·라이프스타일 커머스의 표준.</div>
+        <div class="sw"><div style="background:#111111;color:#fff"><span class="t">주색</span>#111111</div><div style="background:#2F2F2F;color:#fff"><span class="t">보조</span>#2F2F2F</div><div style="background:#FF2D2D;color:#fff"><span class="t">강조</span>#FF2D2D</div><div style="background:#FFFFFF;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#FFFFFF</div></div>
+      </div>
+      <div class="mdemo" data-m="i"></div>
+      <div class="ft"><a href="../?theme=i">몰 전체 화면으로 보기 →</a><span>제품이 주인공</span></div>
+    </div>
+    <div class="p">
+      <div class="hd">
+        <div class="nm">Ｊ. 화이트 · 블루 </div>
+        <div class="ds">밝은 파랑 배너 + 파랑 브랜드 + <b>빨강 가격</b>. 정보가 많아도 안 어지럽습니다. 친근하고 대중적.</div>
+        <div class="lo">📐 <b>참고 기준</b> — <b>쿠팡 · 네이버쇼핑 · 11번가</b> — 종합몰의 표준. 신뢰감이 필요할 때.</div>
+        <div class="sw"><div style="background:#14305F;color:#fff"><span class="t">주색</span>#14305F</div><div style="background:#2C6FF6;color:#fff"><span class="t">보조</span>#2C6FF6</div><div style="background:#E8434A;color:#fff"><span class="t">강조</span>#E8434A</div><div style="background:#FFFFFF;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#FFFFFF</div></div>
+      </div>
+      <div class="mdemo" data-m="j"></div>
+      <div class="ft"><a href="../?theme=j">몰 전체 화면으로 보기 →</a><span>대중적 · 신뢰감</span></div>
+    </div>
+    <div class="p">
+      <div class="hd">
+        <div class="nm">Ｋ. 웜 뉴트럴 · 딥그린 </div>
+        <div class="ds">따뜻한 아이보리 배경 + 짙은 초록 포인트. <b>큐레이션·프리미엄</b> 느낌. 지역 제조 브랜드와 잘 맞습니다.</div>
+        <div class="lo">📐 <b>참고 기준</b> — <b>오늘의집 · 마켓컬리 · 29CM</b> — 큐레이션형 커머스.</div>
+        <div class="sw"><div style="background:#1C1A17;color:#fff"><span class="t">주색</span>#1C1A17</div><div style="background:#1F5C3D;color:#fff"><span class="t">보조</span>#1F5C3D</div><div style="background:#B4452E;color:#fff"><span class="t">강조</span>#B4452E</div><div style="background:#FCFBF9;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#FCFBF9</div></div>
+      </div>
+      <div class="mdemo" data-m="k"></div>
+      <div class="ft"><a href="../?theme=k">몰 전체 화면으로 보기 →</a><span>큐레이션 · 프리미엄</span></div>
+    </div>
+    <div class="p">
+      <div class="hd">
+        <div class="nm">Ｄ. 모노크롬 (OS와 통일) </div>
+        <div class="ds">OS와 완전히 같은 색. 한 몸으로 보이지만 <b>Ｉ보다 살짝 무겁습니다.</b></div>
+        <div class="lo">📐 <b>참고 기준</b> — Ｉ와 거의 같으나 회색이 더 진합니다.</div>
         <div class="sw"><div style="background:#17191C;color:#fff"><span class="t">주색</span>#17191C</div><div style="background:#4A5056;color:#fff"><span class="t">보조</span>#4A5056</div><div style="background:#DC2626;color:#fff"><span class="t">강조</span>#DC2626</div><div style="background:#F6F6F7;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#F6F6F7</div></div>
       </div>
       <div class="mdemo" data-m="d"></div>
       <div class="ft"><a href="../?theme=d">몰 전체 화면으로 보기 →</a><span>OS와 통일</span></div>
-    </div>
-    <div class="p">
-      <div class="hd">
-        <div class="nm">Ｆ. 코랄 · 민트 <span class="tag rec">몰 추천</span></div>
-        <div class="ds"><b>코랄→핑크 그라데이션 히어로.</b> 가장 화사하고 기분 좋은 쪽. 식품·생활·뷰티 전 카테고리에 두루 맞습니다.</div>
-        <div class="lo">🎯 <b>로고 궁합</b> — 코랄이 로고 주황과 같은 계열이라 <b>로고가 자연스럽게 얹힙니다.</b></div>
-        <div class="sw"><div style="background:#223140;color:#fff"><span class="t">주색</span>#223140</div><div style="background:#12A594;color:#fff"><span class="t">보조</span>#12A594</div><div style="background:#F2603F;color:#fff"><span class="t">강조</span>#F2603F</div><div style="background:#FFFBF9;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#FFFBF9</div></div>
-      </div>
-      <div class="mdemo" data-m="f"></div>
-      <div class="ft"><a href="../?theme=f">몰 전체 화면으로 보기 →</a><span>가장 화사 · 따뜻함</span></div>
-    </div>
-    <div class="p">
-      <div class="hd">
-        <div class="nm">Ｇ. 스카이 · 피치 </div>
-        <div class="ds"><b>하늘색 + 피치.</b> 맑고 상쾌합니다. 깨끗한 이미지(위생·생활용품)와 잘 맞습니다.</div>
-        <div class="lo">🎯 <b>로고 궁합</b> — 로고 청록이 스카이와 이어지고, 주황은 피치와 붙습니다. 무난합니다.</div>
-        <div class="sw"><div style="background:#1F3A5F;color:#fff"><span class="t">주색</span>#1F3A5F</div><div style="background:#2BA6C9;color:#fff"><span class="t">보조</span>#2BA6C9</div><div style="background:#FF7A59;color:#fff"><span class="t">강조</span>#FF7A59</div><div style="background:#F7FBFD;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#F7FBFD</div></div>
-      </div>
-      <div class="mdemo" data-m="g"></div>
-      <div class="ft"><a href="../?theme=g">몰 전체 화면으로 보기 →</a><span>맑고 상쾌</span></div>
-    </div>
-    <div class="p">
-      <div class="hd">
-        <div class="nm">Ｈ. 프레시그린 · 옐로 </div>
-        <div class="ds"><b>신선한 초록 + 노랑.</b> 산지직송·농식품 느낌이 강합니다. "성남이 만든 진짜"와 직결.</div>
-        <div class="lo">🎯 <b>로고 궁합</b> — 로고 청록과 같은 초록 계열이라 <b>로고가 다소 묻힙니다.</b></div>
-        <div class="sw"><div style="background:#14361F;color:#fff"><span class="t">주색</span>#14361F</div><div style="background:#2E9E53;color:#fff"><span class="t">보조</span>#2E9E53</div><div style="background:#F5A623;color:#3a2a00"><span class="t">강조</span>#F5A623</div><div style="background:#F7FBF6;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#F7FBF6</div></div>
-      </div>
-      <div class="mdemo" data-m="h"></div>
-      <div class="ft"><a href="../?theme=h">몰 전체 화면으로 보기 →</a><span>신선식품 느낌</span></div>
-    </div>
-    <div class="p">
-      <div class="hd">
-        <div class="nm">Ｃ. 코발트 · 선샤인 </div>
-        <div class="ds"><b>선명한 파랑 + 노랑.</b> 젊고 활기찹니다. 라이브 방송 쪽 에너지.</div>
-        <div class="lo">🎯 <b>로고 궁합</b> — 로고 남색과 같은 계열이라 로고가 묻히는 편입니다.</div>
-        <div class="sw"><div style="background:#1D4ED8;color:#fff"><span class="t">주색</span>#1D4ED8</div><div style="background:#0891B2;color:#fff"><span class="t">보조</span>#0891B2</div><div style="background:#EAB308;color:#3a2f00"><span class="t">강조</span>#EAB308</div><div style="background:#F5F7FD;color:#5a6570;border:1px solid #e0e0e0"><span class="t">배경</span>#F5F7FD</div></div>
-      </div>
-      <div class="mdemo" data-m="c"></div>
-      <div class="ft"><a href="../?theme=c">몰 전체 화면으로 보기 →</a><span>젊고 활기참</span></div>
     </div>
     </div>
   </div>
@@ -304,9 +296,8 @@ h1{font-size:23px;color:#17191C;letter-spacing:-.4px}
     <p>③ <b>고객이 보는 몰과 직원이 보는 OS는 색이 달라도 됩니다.</b>
     몰은 Ａ(바이올렛)나 Ｂ(와인)처럼 화사하게, OS는 Ｄ(모노크롬)처럼 차분하게 — 이 조합도 가능합니다.</p>
     <p style="margin-top:14px;background:#f3f4f6;border-radius:10px;padding:13px 15px">
-    ✅ <b>Ｄ(모노크롬·시그널레드)로 결정 — OS에 적용 완료.</b><br>
-    몰은 아직 예전 색입니다. 위 <b>몰로 보기</b> 버튼으로 각 색을 입혀본 뒤 정하시면 됩니다.
-    몰까지 Ｄ로 갈지, 몰만 다른 색(Ａ·Ｂ·Ｅ)으로 갈지는 <b>따로 정해도 됩니다.</b></p>
+    ✅ <b>OS는 Ｄ(모노크롬·시그널레드)로 결정 — 적용 완료.</b><br>
+    몰은 <b>위의 「몰 전용 — 큰 커머스 기준」 섹션</b>에서 고릅니다. 추천은 <b>Ｉ(모노·미니멀)</b>.</p>
   </div>
 </div>
 
@@ -332,6 +323,13 @@ var DEMO = ''
 + '</div>';
 document.querySelectorAll('.demo').forEach(function(d){ d.innerHTML = DEMO; });
 
+function pc(co,nm,dc,pr,rt,rv){
+  return '<div class="pc"><div class="im"></div><div class="in">'
+    +'<div class="co">'+co+'</div><div class="nm2">'+nm+'</div>'
+    +'<div class="pr"><span class="dc">'+dc+'</span>'+pr+'<span class="ct"></span></div>'
+    +'<div class="mt2"><b>무료배송</b><span class="rt">★ <b>'+rt+'</b> ('+rv+')</span></div>'
+    +'</div></div>';
+}
 var MALL = ''
 + '<div class="mt"><img src="../icon-192.png" alt=""><b>SN LIVE</b><span class="sr">성남이 만든 우수 제품을 검색하세요</span></div>'
 + '<div class="hero"><span class="bd">SEONGNAM MADE · 산단 직거래</span>'
@@ -340,9 +338,9 @@ var MALL = ''
 +   '<span class="cta">이번주 기획전 보기 →</span></div>'
 + '<div class="cats"><i class="on">전체</i><i>식품</i><i>생활·위생</i><i>화장품·바이오</i><i>패션·잡화</i></div>'
 + '<div class="ps">'
-+   '<div class="pc"><div class="im"></div><div class="in"><div class="co">위생기업사</div><div class="nm2">친환경 주방세제 리필 2L</div><div class="pr"><span class="dc">28%</span>9,900원</div><span class="bu">담기</span></div></div>'
-+   '<div class="pc"><div class="im"></div><div class="in"><div class="co">크린텍</div><div class="nm2">3겹 프리미엄 화장지 30롤</div><div class="pr"><span class="dc">15%</span>14,000원</div><span class="bu">담기</span></div></div>'
-+   '<div class="pc"><div class="im"></div><div class="in"><div class="co">그린명품제약</div><div class="nm2">홍삼 스틱 프리미엄 60포</div><div class="pr"><span class="dc">20%</span>39,000원</div><span class="bu">담기</span></div></div>'
++   pc('위생기업사','친환경 주방세제 리필 2L','28%','9,900원','4.8','1,240')
++   pc('크린텍','3겹 프리미엄 화장지 30롤','15%','14,000원','4.7','3,802')
++   pc('그린명품제약','홍삼 스틱 프리미엄 60포','20%','39,000원','4.8','2,141')
 + '</div>';
 document.querySelectorAll('.mdemo').forEach(function(d){ d.innerHTML = MALL; });
 </script>
