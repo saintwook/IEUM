@@ -27,6 +27,7 @@
 :root{
   --navy:#1F356B; --green:#187474; --greenL:#e3f0eb; --coral:#EF701E; --coralL:#fff0ea;
   --sand:#f4f1ec; --ink:#20272e; --muted:#7a848d; --line:#e6e9ec; --bg:#f7f8f9; --card:#fff;
+  --heroA:#0f5c4a; --heroB:#187474; --heroC:#1f8f74;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
@@ -43,6 +44,10 @@ a{color:inherit}
 .rolebar .to{margin-left:auto;color:#fff;background:rgba(255,255,255,.14);border-radius:16px;padding:5px 13px;text-decoration:none;font-weight:700;white-space:nowrap}
 .rolebar .to:hover{background:rgba(255,255,255,.26)}
 @media(max-width:620px){.rolebar{font-size:12px}.rolebar .to{margin-left:0}}
+.themebar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:200;background:#17191C;color:#fff;
+  font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.28);
+  display:flex;gap:12px;align-items:center;white-space:nowrap;max-width:92vw;overflow-x:auto}
+.themebar a{text-decoration:none}
 .protobar{position:sticky;top:0;z-index:50;background:var(--navy);color:#fff;display:flex;align-items:center;gap:8px;padding:9px 16px;flex-wrap:wrap}
 .protobar .lbl{font-size:12.5px;color:#b9c9d8;font-weight:600;letter-spacing:.3px;margin-right:8px}
 .protobar button{background:#24384f;color:#cdd8e2;border-radius:20px;padding:6px 15px;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
@@ -66,7 +71,7 @@ a{color:inherit}
 .icobtn{background:var(--bg);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;position:relative}
 .cartbadge{position:absolute;top:-3px;right:-3px;background:var(--coral);color:#fff;font-size:10px;font-weight:800;min-width:17px;height:17px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px}
 
-.hero{background:linear-gradient(120deg,#0f5c4a,#187474 55%,#1f8f74);color:#fff;border-radius:18px;padding:34px 32px;position:relative;overflow:hidden}
+.hero{background:linear-gradient(120deg,var(--heroA),var(--heroB) 55%,var(--heroC));color:#fff;border-radius:18px;padding:34px 32px;position:relative;overflow:hidden}
 .hero .tag{display:inline-block;background:rgba(255,255,255,.16);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-bottom:12px}
 .hero h1{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.25}
 .hero p{margin-top:8px;color:#d5ede5;font-size:14px}
@@ -611,6 +616,26 @@ function renderCart(){
 function rmCart(i){cart.splice(i,1);updateCart();renderCart();}
 function selPay(el){el.parentNode.querySelectorAll('label').forEach(function(l){l.classList.remove('sel');});el.classList.add('sel');payMethod=el.textContent;}
 function checkout(){if(!cart.length){toast('장바구니가 비어 있습니다');return;}cart=[];updateCart();sw('done',null);toast(payMethod+'로 결제되었습니다');}
+
+// 색감 시안 미리보기 — 주소 뒤 ?theme=a|b|c|d|e
+var THEMES={
+ a:{'--navy':'#4C3BCF','--green':'#0EA47A','--greenL':'#E2F5EE','--coral':'#E5484D','--coralL':'#FDECEC','--sand':'#F3F2FA','--ink':'#1A1830','--muted':'#6E6B88','--line':'#E6E5F0','--bg':'#F7F7FC','--heroA':'#3A2CA8','--heroB':'#4C3BCF','--heroC':'#6D5CF0'},
+ b:{'--navy':'#7C1D3F','--green':'#3F7D58','--greenL':'#E9F1EC','--coral':'#C08417','--coralL':'#FBF2DF','--sand':'#F6EFF1','--ink':'#241A1E','--muted':'#7A6B72','--line':'#EDE3E7','--bg':'#FAF7F8','--heroA':'#5C1430','--heroB':'#7C1D3F','--heroC':'#9E2F55'},
+ c:{'--navy':'#1D4ED8','--green':'#0891B2','--greenL':'#E0F3F8','--coral':'#EAB308','--coralL':'#FEF6D9','--sand':'#EEF2FB','--ink':'#15203A','--muted':'#66708F','--line':'#E1E7F4','--bg':'#F5F7FD','--heroA':'#1439A8','--heroB':'#1D4ED8','--heroC':'#3B6FF0'},
+ d:{'--navy':'#17191C','--green':'#4A5056','--greenL':'#ECEDEF','--coral':'#DC2626','--coralL':'#FDEAEA','--sand':'#F2F2F3','--ink':'#121417','--muted':'#70747A','--line':'#E3E4E6','--bg':'#F6F6F7','--heroA':'#17191C','--heroB':'#24282D','--heroC':'#3C4249'},
+ e:{'--navy':'#3E4A2C','--green':'#6B8E4E','--greenL':'#EDF2E5','--coral':'#B4532A','--coralL':'#F8E9E2','--sand':'#F1EFE4','--ink':'#232619','--muted':'#74776A','--line':'#E8E6D9','--bg':'#F8F7F1','--heroA':'#2C3520','--heroB':'#3E4A2C','--heroC':'#576B3C'}
+};
+var NAMES={a:'\uff21 바이올렛·민트',b:'\uff22 로즈·와인',c:'\uff23 코발트·선샤인',d:'\uff24 모노크롬·시그널레드',e:'\uff25 올리브·클레이'};
+(function(){
+  var t=(location.search.match(/[?&]theme=([a-e])/)||[])[1];
+  if(!t)return;
+  var v=THEMES[t]; for(var k in v) document.documentElement.style.setProperty(k,v[k]);
+  var bar=document.createElement('div');
+  bar.className='themebar';
+  bar.innerHTML='몰 색감 시안 '+NAMES[t]+' <a href="theme/" style="color:#9fc7ff">다른 시안 보기</a>'
+    +'<a href="./" style="color:#cbd6e4">원래 색</a>';
+  document.body.appendChild(bar);
+})();
 
 var t;
 function toast(m){var e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(t);t=setTimeout(function(){e.classList.remove('show');},2200);}

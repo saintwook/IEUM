@@ -15,7 +15,7 @@
 <meta name="twitter:card" content="summary_large_image">
 
 <style>
-:root{--navy:#1F356B;--green:#187474;--greenL:#e8f3ef;--greenL2:#f2f9f6;--coral:#EF701E;--coralL:#fff0ea;--ink:#20272e;--muted:#7a848d;--line:#e6e9ec;--bg:#f5f7f8}
+:root{--navy:#17191C;--green:#4A5056;--greenL:#ECEDEF;--greenL2:#F4F4F5;--coral:#DC2626;--coralL:#FDEAEA;--ink:#121417;--muted:#70747A;--line:#E3E4E6;--bg:#F6F6F7}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
 button{font-family:inherit;cursor:pointer;border:none}
@@ -579,21 +579,22 @@ function issue(b){b.outerHTML='<span class="st ok">발행완료</span>';toast('�
 function issueAll(){document.querySelectorAll('#settle .rowbtn').forEach(function(b){if(b.textContent==='발행')b.outerHTML='<span class="st ok">발행완료</span>';});toast('세금계산서 일괄 발행 완료 (국세청 연동)');}
 // 색감 시안 미리보기 — 주소 뒤 ?theme=a|b|c|d 를 붙이면 그 색으로 보입니다
 var THEMES={
+  now:{'--navy':'#1F356B','--green':'#187474','--greenL':'#e8f3ef','--greenL2':'#f2f9f6','--coral':'#EF701E','--coralL':'#fff0ea','--ink':'#20272e','--muted':'#7a848d','--line':'#e6e9ec','--bg':'#f5f7f8'},
   a:{'--navy':'#4C3BCF','--green':'#0EA47A','--greenL':'#E2F5EE','--greenL2':'#F2FBF8','--coral':'#E5484D','--coralL':'#FDECEC','--ink':'#1A1830','--muted':'#6E6B88','--line':'#E6E5F0','--bg':'#F7F7FC'},
   b:{'--navy':'#7C1D3F','--green':'#3F7D58','--greenL':'#E9F1EC','--greenL2':'#F5F9F6','--coral':'#C08417','--coralL':'#FBF2DF','--ink':'#241A1E','--muted':'#7A6B72','--line':'#EDE3E7','--bg':'#FAF7F8'},
   c:{'--navy':'#1D4ED8','--green':'#0891B2','--greenL':'#E0F3F8','--greenL2':'#F1FAFC','--coral':'#EAB308','--coralL':'#FEF6D9','--ink':'#15203A','--muted':'#66708F','--line':'#E1E7F4','--bg':'#F5F7FD'},
   d:{'--navy':'#17191C','--green':'#4A5056','--greenL':'#ECEDEF','--greenL2':'#F4F4F5','--coral':'#DC2626','--coralL':'#FDEAEA','--ink':'#121417','--muted':'#70747A','--line':'#E3E4E6','--bg':'#F6F6F7'},
   e:{'--navy':'#3E4A2C','--green':'#6B8E4E','--greenL':'#EDF2E5','--greenL2':'#F6F9F1','--coral':'#B4532A','--coralL':'#F8E9E2','--ink':'#232619','--muted':'#74776A','--line':'#E8E6D9','--bg':'#F8F7F1'}
 };
-var NAMES={a:'Ａ 바이올렛·민트',b:'Ｂ 로즈·와인',c:'Ｃ 코발트·선샤인',d:'Ｄ 모노크롬·시그널레드',e:'Ｅ 올리브·클레이'};
+var NAMES={now:'０ 예전 색(조합 CI)',a:'Ａ 바이올렛·민트',b:'Ｂ 로즈·와인',c:'Ｃ 코발트·선샤인',d:'Ｄ 모노크롬·시그널레드',e:'Ｅ 올리브·클레이'};
 (function(){
-  var t=(location.search.match(/[?&]theme=([a-e])/)||[])[1];
+  var t=(location.search.match(/[?&]theme=(now|[a-e])/)||[])[1];
   if(!t)return;
   var v=THEMES[t]; for(var k in v) document.documentElement.style.setProperty(k,v[k]);
   var bar=document.createElement('div');
   bar.className='themebar';
   bar.innerHTML='색감 시안 '+NAMES[t]+' <a href="../theme/" style="color:#9fc7ff;text-decoration:none">다른 시안 보기</a>'
-    +'<a href="./" style="color:#cbd6e4;text-decoration:none">원래 색</a>';
+    +'<a href="./" style="color:#cbd6e4;text-decoration:none">적용된 색(Ｄ)</a>';
   document.body.appendChild(bar);
 })();
 
