@@ -74,7 +74,7 @@ td.r{text-align:right}
 .chip.c{background:var(--coralL);color:var(--coral)}
 .rowbtn{background:var(--navy);color:#fff;font-size:11px;font-weight:700;padding:5px 11px;border-radius:7px}
 .bars{display:flex;align-items:flex-end;gap:12px;height:120px;padding-top:8px}
-.bars .b{flex:1;background:linear-gradient(var(--green),#43b596);border-radius:6px 6px 0 0;position:relative}
+.bars .b{flex:1;background:var(--green);opacity:.88;border-radius:6px 6px 0 0;position:relative}
 .bars .b span{position:absolute;bottom:-20px;left:0;right:0;text-align:center;font-size:11px;color:var(--muted)}
 .list .it{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line);font-size:13px}
 .list .it:last-child{border:0}
@@ -579,14 +579,15 @@ function issue(b){b.outerHTML='<span class="st ok">발행완료</span>';toast('�
 function issueAll(){document.querySelectorAll('#settle .rowbtn').forEach(function(b){if(b.textContent==='발행')b.outerHTML='<span class="st ok">발행완료</span>';});toast('세금계산서 일괄 발행 완료 (국세청 연동)');}
 // 색감 시안 미리보기 — 주소 뒤 ?theme=a|b|c|d 를 붙이면 그 색으로 보입니다
 var THEMES={
-  a:{'--navy':'#1E293B','--green':'#0F766E','--greenL':'#E0F2F0','--greenL2':'#F1F8F7','--coral':'#D97706','--coralL':'#FEF3E2','--ink':'#1B222B','--muted':'#6B7684','--line':'#E3E8ED','--bg':'#F5F7F9'},
-  b:{'--navy':'#14342B','--green':'#1F7A5C','--greenL':'#E4F1EC','--greenL2':'#F2F9F6','--coral':'#B4801F','--coralL':'#FBF2DF','--ink':'#1D2622','--muted':'#6E7A74','--line':'#E4E8E4','--bg':'#F6F7F5'},
-  c:{'--navy':'#16233D','--green':'#157A63','--greenL':'#E4F1EC','--greenL2':'#F2F9F6','--coral':'#E35D3B','--coralL':'#FDECE7','--ink':'#1A2330','--muted':'#6C7684','--line':'#E3E7EC','--bg':'#F6F8FA'},
-  d:{'--navy':'#2B2723','--green':'#4F7A5B','--greenL':'#E8F0E9','--greenL2':'#F4F8F4','--coral':'#C35A3A','--coralL':'#FAEBE4','--ink':'#241F1B','--muted':'#7A7169','--line':'#E9E3DB','--bg':'#F8F5F1'}
+  a:{'--navy':'#4C3BCF','--green':'#0EA47A','--greenL':'#E2F5EE','--greenL2':'#F2FBF8','--coral':'#E5484D','--coralL':'#FDECEC','--ink':'#1A1830','--muted':'#6E6B88','--line':'#E6E5F0','--bg':'#F7F7FC'},
+  b:{'--navy':'#7C1D3F','--green':'#3F7D58','--greenL':'#E9F1EC','--greenL2':'#F5F9F6','--coral':'#C08417','--coralL':'#FBF2DF','--ink':'#241A1E','--muted':'#7A6B72','--line':'#EDE3E7','--bg':'#FAF7F8'},
+  c:{'--navy':'#1D4ED8','--green':'#0891B2','--greenL':'#E0F3F8','--greenL2':'#F1FAFC','--coral':'#EAB308','--coralL':'#FEF6D9','--ink':'#15203A','--muted':'#66708F','--line':'#E1E7F4','--bg':'#F5F7FD'},
+  d:{'--navy':'#17191C','--green':'#4A5056','--greenL':'#ECEDEF','--greenL2':'#F4F4F5','--coral':'#DC2626','--coralL':'#FDEAEA','--ink':'#121417','--muted':'#70747A','--line':'#E3E4E6','--bg':'#F6F6F7'},
+  e:{'--navy':'#3E4A2C','--green':'#6B8E4E','--greenL':'#EDF2E5','--greenL2':'#F6F9F1','--coral':'#B4532A','--coralL':'#F8E9E2','--ink':'#232619','--muted':'#74776A','--line':'#E8E6D9','--bg':'#F8F7F1'}
 };
-var NAMES={a:'Ａ 슬레이트·앰버',b:'Ｂ 딥 포레스트·머스터드',c:'Ｃ 잉크·코랄',d:'Ｄ 웜샌드·테라코타'};
+var NAMES={a:'Ａ 바이올렛·민트',b:'Ｂ 로즈·와인',c:'Ｃ 코발트·선샤인',d:'Ｄ 모노크롬·시그널레드',e:'Ｅ 올리브·클레이'};
 (function(){
-  var t=(location.search.match(/[?&]theme=([a-d])/)||[])[1];
+  var t=(location.search.match(/[?&]theme=([a-e])/)||[])[1];
   if(!t)return;
   var v=THEMES[t]; for(var k in v) document.documentElement.style.setProperty(k,v[k]);
   var bar=document.createElement('div');
