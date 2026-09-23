@@ -233,7 +233,7 @@ tr.clk:hover{background:var(--greenL2)}
   <!-- 사이드바 (모바일에서는 서랍) -->
   <nav class="side">
     <div class="lg"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>SN LIVE OS</div>
-    <div class="os">스튜디오·폐쇄몰 운영</div>
+    <div class="os">스튜디오 · 주문 · 정산 운영</div>
     <div class="grp">운영</div>
     <a class="on" data-v="dash" onclick="go('dash',this)"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>대시보드</a>
     <a data-v="order" onclick="go('order',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>주문</a>
@@ -249,6 +249,7 @@ tr.clk:hover{background:var(--greenL2)}
     <a data-v="config" onclick="go('config',this)"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6h.09A1.65 1.65 0 0 0 10 3.09V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>설정</a>
     <div class="grp">2단계 예정</div>
     <a class="off" onclick="toast('직원·근태는 2단계 기능입니다 — 1단계 범위 아님')"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg>직원·근태<span class="later">2단계</span></a>
+    <a class="off" onclick="toast('몰 운영(기획전·배너·상세페이지·임직원가)은 임직원몰과 함께 2단계입니다')"><svg class="ic" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>몰 운영<span class="later">2단계</span></a>
     <a class="off" onclick="toast('재고·물류는 2단계 기능입니다 — 1단계 범위 아님')"><svg class="ic" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>재고·물류<span class="later">2단계</span></a>
   </nav>
 
@@ -320,7 +321,8 @@ tr.clk:hover{background:var(--greenL2)}
         <div class="panel" style="margin-top:0">
           <h3>채널별 주문 수집 방식 <span class="more">1단계 기준</span></h3>
           <span class="chip">그립 · 엑셀</span><span class="chip">네이버 쇼핑라이브 · 엑셀</span><span class="chip">클릭메이트 · 엑셀</span><span class="chip">삼아 폐쇄몰 · 엑셀</span><span class="chip">팝업 POS · 엑셀</span>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 영상 송출은 각 플랫폼을 그대로 씁니다(자체 개발 없음). <b>주문은 1단계에서 채널별 엑셀로 받습니다</b> — 사방넷·API 자동 연동은 2단계.</div>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 영상 송출은 각 플랫폼을 그대로 씁니다(자체 개발 없음). <b>주문은 1단계에서 채널별 엑셀로 받습니다</b> — 사방넷·API 자동 연동은 2단계.<br>
+          ＊ <b>그립·네이버 라이브는 누구나 보는 공개 방송</b>입니다. 임직원 전용 방송이 아닙니다. 임직원가는 <b>임직원몰</b>(2단계)에서 적용됩니다.</div>
         </div>
         <div class="panel">
           <h3>방송 실적 <span class="more">기간 2026.09</span></h3>
@@ -348,8 +350,8 @@ tr.clk:hover{background:var(--greenL2)}
           <button class="btn gho" style="padding:8px 16px;font-size:13px" onclick="openProdForm('')">＋ 상품 하나 등록</button>
           <span style="font-size:12px;color:var(--muted)">상품 이름을 누르면 수정할 수 있습니다</span></div>
           <table><thead><tr><th>상품</th><th>업체</th><th>SKU</th><th>샘플</th><th>촬영</th><th>채널</th><th class="r">재고</th></tr></thead><tbody>
-            <tr class="clk" onclick="openProdForm('친환경 주방세제 2L')"><td>친환경 주방세제 2L</td><td>위생기업사</td><td>WS-1021</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span><span class="chip">폐쇄몰</span></td><td class="r">320</td></tr>
-            <tr class="clk" onclick="openProdForm('홀가먼트 니트')"><td>홀가먼트 니트</td><td>한보텍스타일</td><td>HB-3390</td><td><span class="st ok">입고</span></td><td><span class="st wait">대기</span></td><td><span class="chip">폐쇄몰</span></td><td class="r">54</td></tr>
+            <tr class="clk" onclick="openProdForm('친환경 주방세제 2L')"><td>친환경 주방세제 2L</td><td>위생기업사</td><td>WS-1021</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span><span class="chip">삼아 폐쇄몰</span><span class="chip" style="opacity:.45">임직원몰 2단계</span></td><td class="r">320</td></tr>
+            <tr class="clk" onclick="openProdForm('홀가먼트 니트')"><td>홀가먼트 니트</td><td>한보텍스타일</td><td>HB-3390</td><td><span class="st ok">입고</span></td><td><span class="st wait">대기</span></td><td><span class="chip">삼아 폐쇄몰</span></td><td class="r">54</td></tr>
             <tr class="clk" onclick="openProdForm('홍삼 스틱 60포')"><td>홍삼 스틱 60포</td><td>그린명품제약</td><td>GM-7742</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span></td><td class="r">140</td></tr>
             <tr class="clk" onclick="openProdForm('천연 비누 세트')"><td>천연 비누 세트</td><td>위생기업사</td><td>WS-1088</td><td><span class="st wait">미입고</span></td><td><span class="st mut">-</span></td><td><span class="st mut">-</span></td><td class="r">8</td></tr>
           </tbody></table>
@@ -491,9 +493,9 @@ tr.clk:hover{background:var(--greenL2)}
           <h3>입점업체 목록</h3>
           <div class="sel"><button class="btn" style="padding:8px 16px;font-size:13px" onclick="openPartnerForm('')">＋ 업체 등록</button><span style="font-size:12px;color:var(--muted)">업체 이름을 누르면 수정·수수료율 지정</span></div>
           <table><thead><tr><th>업체</th><th>주요 품목</th><th>채널</th><th>계약</th><th>상태</th></tr></thead><tbody>
-            <tr class="clk" onclick="openPartnerForm('위생기업사')"><td>위생기업사</td><td>생활·위생용품</td><td><span class="chip g">라이브</span><span class="chip">폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
+            <tr class="clk" onclick="openPartnerForm('위생기업사')"><td>위생기업사</td><td>생활·위생용품</td><td><span class="chip g">라이브</span><span class="chip">삼아 폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
             <tr class="clk" onclick="openPartnerForm('한보텍스타일')"><td>한보텍스타일</td><td>니트·의류</td><td><span class="chip g">라이브</span></td><td>판매대행</td><td><span class="st ok">운영중</span></td></tr>
-            <tr class="clk" onclick="openPartnerForm('그린명품제약')"><td>그린명품제약</td><td>건강기능식품</td><td><span class="chip">폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
+            <tr class="clk" onclick="openPartnerForm('그린명품제약')"><td>그린명품제약</td><td>건강기능식품</td><td><span class="chip">삼아 폐쇄몰</span></td><td>위탁판매</td><td><span class="st ok">운영중</span></td></tr>
             <tr class="clk" onclick="openPartnerForm('신규업체 A')"><td>신규업체 A</td><td>주방가전</td><td><span class="st mut">-</span></td><td>-</td><td><span class="st wait">심사중</span></td></tr>
           </tbody></table>
         </div>
