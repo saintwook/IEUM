@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SN LIVE OS — 시연 대본 (발표자용)</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#17191C">
+<style>
+:root{--ink:#17191C;--muted:#70747A;--line:#E3E4E6;--bg:#F6F6F7;--red:#DC2626;--redL:#FDEAEA;--ok:#4A5056;--okL:#ECEDEF}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.6;padding-bottom:70px}
+.wrap{max-width:720px;margin:0 auto;padding:0 14px}
+
+.top{background:var(--ink);color:#fff;padding:18px 16px calc(16px + env(safe-area-inset-top));position:sticky;top:0;z-index:20}
+.top .in{max-width:720px;margin:0 auto}
+.top h1{font-size:17px;font-weight:800;letter-spacing:-.2px}
+.top p{font-size:12px;color:#aeb3ba;margin-top:3px}
+.top .links{display:flex;gap:7px;margin-top:11px;flex-wrap:wrap}
+.top a{background:rgba(255,255,255,.14);color:#fff;text-decoration:none;font-size:12.5px;font-weight:700;padding:7px 13px;border-radius:8px}
+.top a.main{background:#fff;color:var(--ink)}
+
+.oneline{background:#fff;border:1px solid var(--line);border-left:4px solid var(--ink);border-radius:10px;padding:14px 15px;margin-top:14px}
+.oneline b{font-size:14.5px}
+.oneline span{display:block;font-size:12px;color:var(--muted);margin-bottom:5px;font-weight:700}
+
+.step{background:#fff;border:1px solid var(--line);border-radius:12px;margin-top:11px;overflow:hidden}
+.step.done{opacity:.5}
+.step .h{display:flex;align-items:center;gap:10px;padding:13px 14px;cursor:pointer}
+.step .n{width:26px;height:26px;border-radius:50%;background:var(--okL);color:var(--ok);font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.step.done .n{background:var(--ink);color:#fff}
+.step .t{font-size:14.5px;font-weight:800;flex:1;min-width:0}
+.step .m{font-size:11.5px;color:var(--muted);font-weight:700;flex:none}
+.step .b{padding:0 14px 14px;display:none}
+.step.open .b{display:block}
+.step .star{color:var(--red)}
+
+.click{background:var(--bg);border-radius:8px;padding:9px 11px;font-size:12.5px;font-weight:700;margin-bottom:9px}
+.click em{font-style:normal;color:var(--muted);font-weight:600}
+.say{border-left:3px solid var(--line);padding:2px 0 2px 11px;font-size:14px;margin:9px 0}
+.say b{background:linear-gradient(transparent 62%, #ffe08a 62%)}
+.key{background:var(--redL);border:1px solid #f6c9c9;border-radius:9px;padding:11px 12px;margin:10px 0;font-size:13.5px}
+.key .lb{display:block;font-size:10.5px;font-weight:800;color:var(--red);letter-spacing:.3px;margin-bottom:4px}
+
+h2{font-size:15px;margin:26px 0 2px;display:flex;align-items:center;gap:7px}
+h2 .c{font-size:11px;color:var(--muted);font-weight:600}
+
+.qa{background:#fff;border:1px solid var(--line);border-radius:10px;margin-top:8px;overflow:hidden}
+.qa .q{padding:12px 14px;font-size:13.5px;font-weight:700;cursor:pointer;display:flex;gap:8px}
+.qa .q:before{content:"Q";color:var(--muted);font-weight:800;flex:none}
+.qa .a{display:none;padding:0 14px 13px 30px;font-size:13.5px;color:#3d4348}
+.qa.open .a{display:block}
+.qa .a b{color:var(--ink)}
+
+.dont{background:#fff;border:1px solid #f6c9c9;border-radius:10px;padding:13px 14px;margin-top:8px}
+.dont li{font-size:13.5px;margin:7px 0 7px 17px}
+.dont li b{color:var(--red)}
+
+.get{background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;margin-top:8px}
+.get label{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;padding:7px 0;cursor:pointer}
+.get input{margin-top:3px;flex:none;width:17px;height:17px;accent-color:var(--ink)}
+.get label.on{color:var(--muted);text-decoration:line-through}
+
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);
+     padding:9px 14px calc(9px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:10px}
+.bar .pg{flex:1;height:6px;background:var(--bg);border-radius:4px;overflow:hidden}
+.bar .pg i{display:block;height:100%;background:var(--ink);width:0;transition:.3s}
+.bar .txt{font-size:12px;font-weight:800;color:var(--muted);white-space:nowrap}
+.bar button{background:var(--bg);color:var(--ink);border:none;font-size:12px;font-weight:800;padding:8px 12px;border-radius:8px;font-family:inherit}
+.foot{font-size:11.5px;color:var(--muted);text-align:center;margin:22px 0 10px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<div class="top"><div class="in">
+  <h1>SN LIVE OS — 시연 대본</h1>
+  <p>발표자용 · 약 8분 + 질의응답 · 항목을 누르면 펼쳐집니다</p>
+  <div class="links">
+    <a class="main" href="../os/" target="_blank">OS 열기 ↗</a>
+    <a href="../" target="_blank">고객 몰 ↗</a>
+  </div>
+</div></div>
+
+<div class="wrap">
+
+  <div class="oneline"><span>한 줄 정의</span>
+    <b>여러 곳에서 들어오는 주문을 한 곳에 모아, 업체별로 자동 정산한다.</b></div>
+
+  <h2>시연 순서 <span class="c">누르면 대본이 열립니다</span></h2>
+  <div id="steps"></div>
+
+  <h2>예상 질문 <span class="c">누르면 답이 열립니다</span></h2>
+  <div id="qas"></div>
+
+  <h2>⚠️ 하지 말 것</h2>
+  <div class="dont"><ul>
+    <li><b>마진·하청 구조</b> 언급 — 조합 제출용과 내부 검토용은 분리</li>
+    <li><b>날짜 못 박기</b> — "○월 오픈" 금지. 약속불이행 소지</li>
+    <li><b>"자동 연동됩니다"</b> — 1단계는 엑셀입니다. 사실대로</li>
+    <li><b>회색 메뉴 기능 설명</b> — 2단계라고 명확히</li>
+    <li>예시 숫자를 <b>실적처럼</b> 말하기 — 먼저 "예시 데이터"라고 밝히기</li>
+  </ul></div>
+
+  <h2>시연 후 받아올 것</h2>
+  <div class="get" id="get"></div>
+
+  <div class="foot">이 페이지는 발표자용입니다. 조합에 보내는 링크는 <b>OS 주소</b>입니다.<br>
+  saintwook.github.io/IEUM/os/</div>
+</div>
+
+<div class="bar">
+  <span class="txt" id="pgTxt">0 / 7</span>
+  <span class="pg"><i id="pgBar"></i></span>
+  <button onclick="resetAll()">처음부터</button>
+</div>
+
+<script>
+var STEPS=[
+ {t:'여는 말', m:'30초', click:'', say:[
+   '지금 조합은 주문이 <b>그립 · 삼아 폐쇄몰 · 팝업</b> 세 군데로 따로 들어옵니다.',
+   '방송 편성은 카톡, 샘플은 수기 대장, 정산은 월말에 엑셀로 손계산입니다.',
+   '<b>이걸 없애는 화면</b>을 보여드리겠습니다.'], key:''},
+
+ {t:'대시보드', m:'1분', click:'첫 화면 그대로',
+  say:['오늘 방송 4건, 오늘 주문 48건, 정산 대기 4개사, 매칭 필요 3건.',
+       '<b>빨간 것만 손보면 됩니다.</b> 화면이 조용한 이유가 이겁니다 — 색이 많으면 뭘 해야 하는지 안 보입니다.',
+       '스튜디오가 센터엠 427, 공단 503-1·2·3 <b>네 곳으로 흩어져</b> 있습니다. 누가 어디서 뭘 찍는지 여기서 한눈에 봅니다.'], key:''},
+
+ {t:'주문 › 엑셀 업로드 <span class="star">★</span>', m:'2분',
+  click:'왼쪽 <em>주문</em> → 채널 <em>그립</em> → <em>점선 상자 클릭</em>',
+  say:['그립에서 주문 엑셀을 내려받아 여기에 끌어다 놓습니다.',
+       '143줄을 읽었습니다. <b>정상 128건, 중복 12건, 매칭 안 됨 3건</b>, 금액 이상 0건.'],
+  key:'가장 잘 먹히는 지점|같은 파일을 실수로 <b>두 번 올려도 매출이 두 배로 안 잡힙니다.</b> 채널 이름 + 주문번호로 이미 올린 건지 시스템이 압니다.',
+  more:['<b>주황색 «매칭 안 됨 3건» 클릭</b> → 설정 화면으로 넘어갑니다',
+        '그립은 «친환경세제2L(대용량)», 우리 코드는 <b>WS-1021</b>. 채널마다 이름이 다릅니다. <b>한 번만 맞춰두면 다음부터 자동</b>입니다.',
+        '<b>뒤로 → «업로드 이력» 탭</b>',
+        '잘못 올렸으면 <b>그 파일 통째로 되돌립니다.</b> 주문을 한 건씩 지우면 반드시 사고가 납니다.']},
+
+ {t:'주문 › 통합 주문 목록', m:'30초', click:'<em>통합 주문 목록</em> 탭',
+  say:['그립 · 삼아 · 클릭메이트 · 팝업 — <b>어디서 팔렸든 한 목록</b>입니다.',
+       '지금은 엑셀 세 개를 놓고 눈으로 맞추는 일을, 이 화면이 대신합니다.'], key:''},
+
+ {t:'정산 <span class="star">★★</span> 존재 이유', m:'3분',
+  click:'왼쪽 <em>정산·세금계산서</em> → <em>업체 이름 클릭</em>',
+  say:['업체별로 <b>매출 − 수수료 − 환불차감 = 정산액</b>이 자동으로 계산됩니다.',
+       '업체가 <b>«이 숫자 왜 이래요?»</b> 하면 이 화면을 보여주면 됩니다. 주문 <b>한 건까지</b> 나옵니다.',
+       '수수료율은 <b>정산할 때 쓴 값을 그대로 보관</b>합니다. 나중에 요율을 바꿔도 지난 정산은 안 변합니다.'],
+  key:'가장 중요한 한 마디|<b>«월정산 확정»을 누르면 이 달 숫자가 잠깁니다.</b> 나중에 주문을 더 올려도 다음 달로 넘어갑니다. <i>정산 끝냈는데 숫자가 또 바뀌는</i> 일이 없습니다 — 업체 신뢰를 지키는 장치입니다.',
+  more:['<b>«정산서 보기»</b> — 업체에 보낼 정산서. PDF로 내려받습니다.',
+        '<b>확정은 센터장만</b> 할 수 있습니다.']},
+
+ {t:'스튜디오 편성', m:'1분', click:'<em>스튜디오 편성</em> → <em>빈 칸 클릭</em>',
+  say:['네 곳 편성표입니다. 식품은 센터엠 427, 의류·잡화·화장품은 공단 503.',
+       '칸을 누르면 방송을 잡습니다. 여기서 <b>판매 상품을 지정</b>합니다.',
+       '엑셀 주문에는 «어느 방송에서 팔렸다»는 정보가 없습니다. 그래서 <b>지정한 상품 + 방송 시간대</b>로 실적을 잡습니다.'], key:''},
+
+ {t:'휴대폰 + 범위 정리', m:'1분', click:'휴대폰으로 같은 주소 열기',
+  say:['같은 주소를 폰으로 열면 아래 탭 다섯 개로 바뀝니다.',
+       '스튜디오가 네 곳으로 흩어져 있어 <b>현장에서 폰으로</b> 편성표와 주문을 봅니다.'],
+  key:'꼭 하세요|<b>왼쪽 아래 회색 메뉴</b>를 가리키며 — «직원·근태, 재고·물류는 <b>1단계 범위가 아닙니다.</b> 빼놓은 게 아니라 순서를 뒤로 둔 것입니다.»<br>오른쪽 위 <b>«고객이 보는 화면»</b> — «고객이 사는 쇼핑몰은 완전히 다른 화면이고 <b>2단계</b>입니다.»',
+  more:['<b>닫는 말</b>',
+        '1단계 성공 판정 기준은 하나입니다 — <b>«담당 직원이 엑셀을 안 연다.»</b>']}
+];
+
+var QAS=[
+ ['그립·네이버랑 자동으로 연결되나요?',
+  '1단계는 <b>엑셀로 받습니다.</b> 자동 연동은 2단계입니다.<br>다만 <b>엑셀은 «입구»일 뿐</b>이고 그 뒤(저장·매칭·정산·통계)는 한 갈래로 만들었습니다. 나중에 사방넷이나 API로 바꿔도 <b>정산 부분은 다시 안 만듭니다.</b>'],
+ ['수수료율은 정해졌나요?',
+  '아직입니다. 그래서 <b>코드에 박지 않고 설정 화면에</b> 뒀습니다. 정해지면 직원이 직접 입력합니다 — 개발자를 다시 부를 필요가 없습니다.<br>채널별·업체별로 다르게 줄 수 있고, <b>업체값이 채널값보다 우선</b>입니다.'],
+ ['지난달 정산을 다시 계산하면 숫자가 바뀌나요?',
+  '<b>안 바뀝니다.</b> 정산할 때 쓴 수수료율을 그대로 보관하고, 확정하면 잠급니다. 이게 안 되면 업체가 시스템을 못 믿습니다.'],
+ ['세금계산서는 자동 발행되나요?',
+  '1단계는 <b>발행 대장까지</b>입니다. 누구에게 얼마를 발행할지 표로 관리하고 체크합니다.<br>국세청 <b>계정이 확보되면</b> 자동 발행을 붙입니다. 화면은 그대로 씁니다.'],
+ ['상품 712개를 손으로 다 넣나요?',
+  '아닙니다. <b>엑셀로 한 번에</b> 올립니다. (상품·SKU → ＋ 엑셀 일괄등록)<br>과세·면세가 섞여 있어 그것만 확인하면 됩니다.'],
+ ['고객이 사는 쇼핑몰은 언제 만드나요?',
+  '<b>2단계</b>입니다. 지금은 자체 몰이 없어도 그립·삼아·팝업으로 주문이 들어옵니다.<br><b>먼저 그 주문을 모으고 정산하는 게 급합니다.</b> 몰은 그 데이터를 보여주는 곳이라, 데이터가 없으면 껍데기입니다.'],
+ ['복지포인트는요?',
+  '전자금융거래법 대상(선불전자지급수단)이라 <b>법률 검토 후 3단계</b>입니다.<br>성남사랑상품권 결제는 인프라가 이미 있어 <b>2단계</b>에 넣습니다. 순서를 지키는 게 조합 신뢰를 지키는 길입니다.'],
+ ['개인정보는 안전한가요?',
+  '연락처·주소는 <b>암호화</b>하고 <b>정산 계산에는 쓰지 않습니다.</b><br>카드번호·계좌 비밀번호는 <b>아예 저장하지 않고</b> 결제대행사(PG)에 맡깁니다. «잘 지키기»보다 <b>«안 떠안기»</b>가 맞는 설계입니다.'],
+ ['얼마나 걸리나요?',
+  '⚠️ <b>날짜를 못 박지 마세요.</b><br>«개발사와 협의 전이라 <b>확정 일정은 못 드립니다.</b> 브리핑 자료에 드린 구간이 기준이고, 계약 후 확정됩니다.»'],
+ ['직원들이 쓸 수 있을까요?',
+  '판정 기준을 하나로 잡았습니다 — <b>«담당 직원이 엑셀을 안 연다.»</b><br>그래서 화면을 최대한 줄였습니다. 1단계는 메뉴 9개뿐입니다.'],
+ ['이 화면이 지금 실제로 도는 건가요?',
+  '<b>화면만</b> 도는 시안이고 숫자는 예시입니다.<br>다만 그림이 아니라 <b>실제로 눌러지는 화면</b>이라, 이 코드를 그대로 이어서 만듭니다.']
+];
+
+var GET=['빠졌다고 지적받은 기능 (그 자리에서 메모)',
+ '<b>채널별 주문 엑셀 실물</b> — 그립 / 클릭메이트 / 삼아 각 1개',
+ '수수료율 · 정산주기 결정 일정',
+ '국세청 전자세금계산서 계정 보유 여부',
+ '712 SKU 기초 데이터 전달 시점'];
+
+// ── 렌더 ──
+var sc=document.getElementById('steps');
+STEPS.forEach(function(s,i){
+  var d=document.createElement('div'); d.className='step';
+  var body='';
+  if(s.click) body+='<div class="click">👆 '+s.click+'</div>';
+  s.say.forEach(function(t){ body+='<div class="say">'+t+'</div>'; });
+  if(s.key){ var p=s.key.split('|'); body+='<div class="key"><span class="lb">'+p[0]+'</span>'+p[1]+'</div>'; }
+  if(s.more) s.more.forEach(function(t){ body+='<div class="say">'+t+'</div>'; });
+  d.innerHTML='<div class="h"><span class="n">'+(i+1)+'</span><span class="t">'+s.t+'</span><span class="m">'+s.m+'</span></div><div class="b">'+body+'</div>';
+  d.querySelector('.h').onclick=function(){
+    d.classList.toggle('open');
+    if(d.classList.contains('open')) d.classList.add('done');
+    prog();
+  };
+  sc.appendChild(d);
+});
+var qc=document.getElementById('qas');
+QAS.forEach(function(q){
+  var d=document.createElement('div'); d.className='qa';
+  d.innerHTML='<div class="q">'+q[0]+'</div><div class="a">'+q[1]+'</div>';
+  d.querySelector('.q').onclick=function(){ d.classList.toggle('open'); };
+  qc.appendChild(d);
+});
+var gc=document.getElementById('get');
+GET.forEach(function(t){
+  var l=document.createElement('label');
+  l.innerHTML='<input type="checkbox"><span>'+t+'</span>';
+  l.querySelector('input').onchange=function(){ l.classList.toggle('on',this.checked); };
+  gc.appendChild(l);
+});
+function prog(){
+  var done=document.querySelectorAll('.step.done').length, all=STEPS.length;
+  document.getElementById('pgTxt').textContent=done+' / '+all;
+  document.getElementById('pgBar').style.width=(done/all*100)+'%';
+}
+function resetAll(){
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('done','open'); });
+  document.querySelectorAll('.qa').forEach(function(q){ q.classList.remove('open'); });
+  document.querySelectorAll('#get input').forEach(function(i){ i.checked=false; i.parentNode.classList.remove('on'); });
+  prog(); window.scrollTo(0,0);
+}
+prog();
+</script>
+</body>
+</html>
