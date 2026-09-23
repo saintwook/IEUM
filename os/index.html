@@ -100,6 +100,38 @@ td.r{text-align:right}
 .kcard .who{font-size:11px;color:var(--muted);margin-top:5px}
 .pill{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:8px}
 .stub{background:#fff;border:1px dashed #cdd6d1;border-radius:12px;padding:40px;text-align:center;color:var(--muted);margin-top:16px}
+/* 2단계로 미룬 메뉴 — 회색 비활성 */
+.side a.off{color:#b6bec6;cursor:default}
+.side a.off:hover{background:none}
+.side a.off .ic{opacity:.45}
+.side .later{font-size:9.5px;font-weight:800;background:#eef1f4;color:#93a0ab;border-radius:8px;padding:1px 6px;margin-left:auto}
+/* 화면 안 탭 */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:2px}
+.tabs button{background:#eef1f4;color:#5a6570;font-size:13px;font-weight:700;padding:8px 16px;border-radius:18px}
+.tabs button.on{background:var(--navy);color:#fff}
+.tabpane{display:none}.tabpane.on{display:block}
+/* 엑셀 업로드 마법사 */
+.wiz{display:flex;gap:8px;align-items:center;margin:2px 0 16px;flex-wrap:wrap}
+.wiz .s{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#93a0ab;font-weight:700}
+.wiz .s .n{width:22px;height:22px;border-radius:50%;background:#eef1f4;color:#93a0ab;display:flex;align-items:center;justify-content:center;font-size:11px}
+.wiz .s.on{color:var(--navy)}.wiz .s.on .n{background:var(--navy);color:#fff}
+.wiz .s.done{color:var(--green)}.wiz .s.done .n{background:var(--greenL);color:var(--green)}
+.wiz .ar{color:#cdd6dd}
+.drop{border:2px dashed #c6d0d8;border-radius:12px;background:#fafbfc;padding:34px 20px;text-align:center;color:var(--muted);font-size:13px}
+.drop b{display:block;color:var(--navy);font-size:15px;margin-bottom:6px}
+.sel{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+.sel select{font-family:inherit;font-size:13px;padding:8px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink)}
+.chk{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.chk .c{border:1px solid var(--line);border-radius:10px;padding:13px;background:#fff}
+.chk .c .l{font-size:12px;color:var(--muted)}
+.chk .c .v{font-size:21px;font-weight:800;margin-top:5px}
+.chk .c.ok .v{color:var(--green)}.chk .c.skip .v{color:#93a0ab}
+.chk .c.bad{background:var(--coralL);border-color:#f3c7ba}.chk .c.bad .v,.chk .c.bad .l{color:var(--coral)}
+.chk .c.bad{cursor:pointer}
+.btn{background:var(--navy);color:#fff;font-size:13.5px;font-weight:700;padding:11px 22px;border-radius:9px}
+.btn.cor{background:var(--coral)}
+.btn.gho{background:#eef1f4;color:#5a6570}
+@media(max-width:700px){.chk{grid-template-columns:repeat(2,1fr)}}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:860px){.app{grid-template-columns:minmax(0,1fr)}.main{padding:18px 14px}.side{position:static;height:auto;display:flex;flex-wrap:wrap;gap:2px}.side .lg,.side .os,.side .grp{width:100%}.side a{border-left:0;border-radius:16px;padding:7px 12px}.side a.on{border-left:0}.kpis{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.kanban{grid-template-columns:1fr}}
@@ -119,17 +151,20 @@ td.r{text-align:right}
     <div class="os">스튜디오·폐쇄몰 운영</div>
     <div class="grp">운영</div>
     <a class="on" data-v="dash" onclick="go('dash',this)"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>대시보드</a>
-    <a data-v="studio" onclick="go('studio',this)"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>스튜디오 편성</a>
-    <a data-v="live" onclick="go('live',this)"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M5 8a10 10 0 0 0 0 8M19 8a10 10 0 0 1 0 8"/></svg>라이브 방송</a>
-    <a data-v="prod" onclick="go('prod',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>상품·샘플</a>
-    <a data-v="mall" onclick="go('mall',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>폐쇄몰 주문</a>
+    <a data-v="order" onclick="go('order',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>주문</a>
     <div class="grp">정산·업체</div>
     <a data-v="settle" onclick="go('settle',this)"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 14h6"/></svg>정산·세금계산서</a>
+    <a data-v="prod" onclick="go('prod',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4z"/><path d="M3 7l9 4 9-4M12 11v10"/></svg>상품·SKU</a>
     <a data-v="partner" onclick="go('partner',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>입점업체</a>
-    <div class="grp">조직</div>
-    <a data-v="staff" onclick="go('staff',this)"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg>직원·근태</a>
-    <a data-v="stock" onclick="go('stock',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>재고·물류</a>
+    <div class="grp">방송</div>
+    <a data-v="studio" onclick="go('studio',this)"><svg class="ic" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>스튜디오 편성</a>
+    <a data-v="live" onclick="go('live',this)"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M5 8a10 10 0 0 0 0 8M19 8a10 10 0 0 1 0 8"/></svg>라이브 방송</a>
+    <div class="grp">관리</div>
     <a data-v="report" onclick="go('report',this)"><svg class="ic" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>리포트</a>
+    <a data-v="config" onclick="go('config',this)"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6h.09A1.65 1.65 0 0 0 10 3.09V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9v.09a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>설정</a>
+    <div class="grp">2단계 예정</div>
+    <a class="off" onclick="toast('직원·근태는 2단계 기능입니다 — 1단계 범위 아님')"><svg class="ic" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 12 0v1"/></svg>직원·근태<span class="later">2단계</span></a>
+    <a class="off" onclick="toast('재고·물류는 2단계 기능입니다 — 1단계 범위 아님')"><svg class="ic" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>재고·물류<span class="later">2단계</span></a>
   </nav>
 
   <!-- 본문 -->
@@ -149,7 +184,7 @@ td.r{text-align:right}
           <div class="kpi"><div class="l">오늘 방송 편성</div><div class="v">4건</div><div class="d">식품 · 의류 · 잡화 · 화장품</div></div>
           <div class="kpi"><div class="l">오늘 주문</div><div class="v">312건</div><div class="d">▲ 어제比 +18%</div></div>
           <div class="kpi warn"><div class="l">정산 대기</div><div class="v">18건</div><div class="d" style="color:var(--coral)">확인 필요</div></div>
-          <div class="kpi"><div class="l">샘플 촬영 대기</div><div class="v">24개</div><div class="d">쇼룸 입고</div></div>
+          <div class="kpi"><div class="l">매칭 필요 주문</div><div class="v">3건</div><div class="d" style="color:var(--coral)">설정 &gt; 상품 매칭</div></div>
         </div>
         <div class="row2">
           <div class="panel" style="margin-top:0">
@@ -197,8 +232,9 @@ td.r{text-align:right}
       <section id="live" class="view">
         <div class="crumb">홈 / 라이브 방송 관리</div>
         <div class="panel" style="margin-top:0">
-          <h3>송출 채널 연동</h3>
-          <span class="chip g">그립 연결됨</span><span class="chip g">네이버 쇼핑라이브 연결됨</span><span class="chip g">클릭메이트 연결됨</span><span class="chip">중국 한두이셔 준비중</span>
+          <h3>채널별 주문 수집 방식 <span class="more">1단계 기준</span></h3>
+          <span class="chip">그립 · 엑셀</span><span class="chip">네이버 쇼핑라이브 · 엑셀</span><span class="chip">클릭메이트 · 엑셀</span><span class="chip">삼아 폐쇄몰 · 엑셀</span><span class="chip">팝업 POS · 엑셀</span>
+          <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 영상 송출은 각 플랫폼을 그대로 씁니다(자체 개발 없음). <b>주문은 1단계에서 채널별 엑셀로 받습니다</b> — 사방넷·API 자동 연동은 2단계.</div>
         </div>
         <div class="panel">
           <h3>방송 실적 <span class="more">기간 2026.07</span></h3>
@@ -213,7 +249,7 @@ td.r{text-align:right}
 
       <!-- 상품·샘플 -->
       <section id="prod" class="view">
-        <div class="crumb">홈 / 상품·샘플 관리</div>
+        <div class="crumb">홈 / 상품 · SKU</div>
         <div class="kpis">
           <div class="kpi"><div class="l">등록 SKU</div><div class="v">312</div></div>
           <div class="kpi"><div class="l">촬영 대기</div><div class="v">24</div></div>
@@ -221,7 +257,8 @@ td.r{text-align:right}
           <div class="kpi warn"><div class="l">재고 부족</div><div class="v">7</div></div>
         </div>
         <div class="panel">
-          <h3>샘플·상품 목록 <span class="more">3,700업체 품목</span></h3>
+          <h3>상품 목록 <span class="more">착수 기준 33개사 · 712 SKU</span></h3>
+          <div class="sel"><button class="btn" style="padding:8px 16px;font-size:13px" onclick="toast('엑셀 일괄등록 — 712개를 한 번에 올립니다')">＋ 엑셀 일괄등록</button><span style="font-size:12px;color:var(--muted)">712개를 손으로 넣지 않습니다</span></div>
           <table><thead><tr><th>상품</th><th>업체</th><th>SKU</th><th>샘플</th><th>촬영</th><th>채널</th><th class="r">재고</th></tr></thead><tbody>
             <tr><td>친환경 주방세제 2L</td><td>위생기업사</td><td>WS-1021</td><td><span class="st ok">입고</span></td><td><span class="st ok">완료</span></td><td><span class="chip g">라이브</span><span class="chip">폐쇄몰</span></td><td class="r">320</td></tr>
             <tr><td>홀가먼트 니트</td><td>한보텍스타일</td><td>HB-3390</td><td><span class="st ok">입고</span></td><td><span class="st wait">대기</span></td><td><span class="chip">폐쇄몰</span></td><td class="r">54</td></tr>
@@ -231,24 +268,103 @@ td.r{text-align:right}
         </div>
       </section>
 
-      <!-- 폐쇄몰 주문 -->
-      <section id="mall" class="view">
-        <div class="crumb">홈 / 폐쇄몰 주문</div>
-        <div class="kpis">
-          <div class="kpi"><div class="l">오늘 주문</div><div class="v">312</div></div>
-          <div class="kpi"><div class="l">상품권 결제</div><div class="v">41%</div><div class="d">성남사랑상품권</div></div>
-          <div class="kpi"><div class="l">배송 준비</div><div class="v">96</div></div>
-          <div class="kpi warn"><div class="l">CS 접수</div><div class="v">5</div></div>
+      <!-- 주문 -->
+      <section id="order" class="view">
+        <div class="crumb">홈 / 주문</div>
+        <div class="tabs">
+          <button class="on" onclick="tab(this,'ordUp')">엑셀 업로드</button>
+          <button onclick="tab(this,'ordLog')">업로드 이력</button>
+          <button onclick="tab(this,'ordList')">통합 주문 목록</button>
         </div>
-        <div class="panel">
-          <h3>주문 내역</h3>
-          <table><thead><tr><th>주문번호</th><th>상품</th><th>결제수단</th><th class="r">금액</th><th>상태</th></tr></thead><tbody>
-            <tr><td>SNL-000312</td><td>주방세제 2L 외 1</td><td><span class="chip c">성남사랑상품권</span></td><td class="r">21,800</td><td><span class="st ok">결제완료</span></td></tr>
-            <tr><td>SNL-000311</td><td>홍삼 스틱 60포</td><td><span class="chip">카드</span></td><td class="r">39,000</td><td><span class="st mut">배송준비</span></td></tr>
-            <tr><td>SNL-000310</td><td>유산균 30포</td><td><span class="chip g">복지포인트</span></td><td class="r">24,900</td><td><span class="st ok">결제완료</span></td></tr>
-            <tr><td>SNL-000309</td><td>니트 신상</td><td><span class="chip c">성남사랑상품권</span></td><td class="r">58,000</td><td><span class="st ok">배송중</span></td></tr>
-          </tbody></table>
-          <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 복지포인트는 전자금융 법률검토 후 3단계 정식 오픈 예정 (현재 시범).</div>
+
+        <!-- 탭1 : 엑셀 업로드 -->
+        <div id="ordUp" class="tabpane on">
+          <div class="panel">
+            <h3>주문 엑셀 업로드 <span class="more">1단계는 채널별 엑셀로 받습니다</span></h3>
+            <div class="wiz">
+              <span class="s on" id="w1"><span class="n">1</span>파일 고르기</span><span class="ar">›</span>
+              <span class="s" id="w2"><span class="n">2</span>확인</span><span class="ar">›</span>
+              <span class="s" id="w3"><span class="n">3</span>저장</span>
+            </div>
+
+            <div id="uz1">
+              <div class="sel">
+                <span style="font-size:13px;font-weight:700;color:var(--navy)">채널</span>
+                <select id="upCh"><option>그립</option><option>클릭메이트</option><option>네이버 쇼핑라이브</option><option>삼아 폐쇄몰</option><option>팝업 POS</option></select>
+                <span style="font-size:12px;color:var(--muted)">＊채널마다 엑셀 양식이 달라 한 번 맞춰두면 다음부터 자동입니다</span>
+              </div>
+              <div class="drop" onclick="upStep(2)">
+                <b>엑셀 파일을 끌어다 놓으세요</b>
+                .xlsx · .xls · .csv &nbsp;|&nbsp; 눌러서 시범 실행
+              </div>
+            </div>
+
+            <div id="uz2" style="display:none">
+              <div class="sel"><b style="color:var(--navy)">grip_orders_2026-09.xlsx</b><span class="chip g">그립</span><span style="font-size:12px;color:var(--muted)">143행 읽음</span></div>
+              <div class="chk">
+                <div class="c ok"><div class="l">정상</div><div class="v">128건</div></div>
+                <div class="c skip"><div class="l">중복 (이미 올림)</div><div class="v">12건</div></div>
+                <div class="c bad" onclick="go('config',null);tab(document.querySelectorAll('#config .tabs button')[2],'cfMatch')"><div class="l">상품 매칭 안 됨</div><div class="v">3건 ›</div></div>
+                <div class="c skip"><div class="l">금액 이상</div><div class="v">0건</div></div>
+              </div>
+              <table><thead><tr><th>주문번호</th><th>주문일시</th><th>채널 상품명</th><th>매칭 SKU</th><th class="r">수량</th><th class="r">금액</th><th>판정</th></tr></thead><tbody>
+                <tr><td>G-20260921-0455</td><td>09-21 11:24</td><td>친환경세제2L(대용량)</td><td>WS-1021 · 위생기업사</td><td class="r">2</td><td class="r">19,800</td><td><span class="st ok">정상</span></td></tr>
+                <tr><td>G-20260921-0456</td><td>09-21 11:31</td><td>홍삼스틱 60포</td><td>GM-7742 · 그린명품제약</td><td class="r">1</td><td class="r">39,000</td><td><span class="st ok">정상</span></td></tr>
+                <tr><td>G-20260921-0401</td><td>09-21 10:02</td><td>천연비누 6입세트</td><td>WS-1088 · 위생기업사</td><td class="r">1</td><td class="r">18,000</td><td><span class="st mut">중복</span></td></tr>
+                <tr><td>G-20260921-0470</td><td>09-21 13:18</td><td>가을니트 [블랙/M]</td><td><span style="color:var(--coral);font-weight:700">? 매칭 필요</span></td><td class="r">1</td><td class="r">58,000</td><td><span class="st wait">미매칭</span></td></tr>
+              </tbody></table>
+              <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+                <button class="btn" onclick="upStep(3)">정상 128건 저장</button>
+                <button class="btn gho" onclick="upStep(1)">취소</button>
+                <span style="font-size:12px;color:var(--muted);align-self:center">중복 12건은 저장하지 않습니다 · 미매칭 3건은 매칭 후 다시 올리면 됩니다</span>
+              </div>
+            </div>
+
+            <div id="uz3" style="display:none">
+              <div class="drop" style="border-color:#a9cfc3;background:var(--greenL2)">
+                <b style="color:var(--green)">저장 완료 — 정상 128건</b>
+                통합 주문 목록과 정산에 반영되었습니다.
+              </div>
+              <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
+                <button class="btn" onclick="tab(document.querySelectorAll('#order .tabs button')[2],'ordList')">통합 주문 목록 보기</button>
+                <button class="btn gho" onclick="upStep(1)">다른 채널 올리기</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 탭2 : 업로드 이력 -->
+        <div id="ordLog" class="tabpane">
+          <div class="panel">
+            <h3>업로드 이력 <span class="more">잘못 올렸으면 묶음 통째로 되돌립니다</span></h3>
+            <table><thead><tr><th>올린 때</th><th>채널</th><th>파일</th><th class="r">저장</th><th class="r">중복</th><th class="r">미매칭</th><th>올린 사람</th><th></th></tr></thead><tbody>
+              <tr><td>09-22 09:12</td><td><span class="chip g">그립</span></td><td>grip_orders_2026-09.xlsx</td><td class="r"><b>128</b></td><td class="r">12</td><td class="r">3</td><td>박운영</td><td><button class="rowbtn" style="background:#eef1f4;color:#5a6570" onclick="toast('이 묶음 128건을 되돌렸습니다')">되돌리기</button></td></tr>
+              <tr><td>09-22 09:05</td><td><span class="chip">삼아 폐쇄몰</span></td><td>samah_2026-09-21.xlsx</td><td class="r"><b>64</b></td><td class="r">0</td><td class="r">1</td><td>박운영</td><td><button class="rowbtn" style="background:#eef1f4;color:#5a6570" onclick="toast('이 묶음 64건을 되돌렸습니다')">되돌리기</button></td></tr>
+              <tr><td>09-21 18:40</td><td><span class="chip" style="background:#eaf1fb;color:#2f6bc0">클릭메이트</span></td><td>clickmate_0921.csv</td><td class="r"><b>37</b></td><td class="r">2</td><td class="r">0</td><td>박운영</td><td><button class="rowbtn" style="background:#eef1f4;color:#5a6570" onclick="toast('이 묶음 37건을 되돌렸습니다')">되돌리기</button></td></tr>
+            </tbody></table>
+            <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ 주문을 한 건씩 지우지 않습니다. 올린 묶음 단위로 되돌려야 숫자가 안 꼬입니다.</div>
+          </div>
+        </div>
+
+        <!-- 탭3 : 통합 주문 목록 -->
+        <div id="ordList" class="tabpane">
+          <div class="kpis">
+            <div class="kpi"><div class="l">이달 주문</div><div class="v">312</div><div class="d">4개 채널 합계</div></div>
+            <div class="kpi"><div class="l">이달 매출</div><div class="v">2.1억</div></div>
+            <div class="kpi"><div class="l">환불·취소</div><div class="v">7</div></div>
+            <div class="kpi warn"><div class="l">미매칭</div><div class="v">3</div><div class="d" style="color:var(--coral)">매칭 필요</div></div>
+          </div>
+          <div class="panel">
+            <h3>통합 주문 목록 <span class="more">어디서 팔렸든 한 목록</span></h3>
+            <div class="sel"><span class="chip">기간 2026.09 ▾</span><span class="chip">채널 전체 ▾</span><span class="chip">업체 전체 ▾</span><span class="chip">상태 전체 ▾</span></div>
+            <table><thead><tr><th>주문번호</th><th>채널</th><th>상품</th><th>업체</th><th class="r">금액</th><th>상태</th></tr></thead><tbody>
+              <tr><td>G-20260921-0455</td><td><span class="chip g">그립</span></td><td>친환경 주방세제 2L</td><td>위생기업사</td><td class="r">19,800</td><td><span class="st ok">결제완료</span></td></tr>
+              <tr><td>SA-0921-1187</td><td><span class="chip">삼아 폐쇄몰</span></td><td>홍삼 스틱 60포</td><td>그린명품제약</td><td class="r">39,000</td><td><span class="st mut">배송준비</span></td></tr>
+              <tr><td>CM-0921-0733</td><td><span class="chip" style="background:#eaf1fb;color:#2f6bc0">클릭메이트</span></td><td>유산균 이너케어 30포</td><td>한솔생명과학</td><td class="r">24,900</td><td><span class="st ok">결제완료</span></td></tr>
+              <tr><td>POS-0920-018</td><td><span class="chip c">팝업 POS</span></td><td>니트릴 안전장갑 100매</td><td>크린텍</td><td class="r">11,700</td><td><span class="st ok">현장수령</span></td></tr>
+              <tr><td>G-20260920-0388</td><td><span class="chip g">그립</span></td><td>천연 비누 선물세트</td><td>위생기업사</td><td class="r">18,000</td><td><span class="st wait">환불</span></td></tr>
+            </tbody></table>
+          </div>
         </div>
       </section>
 
@@ -287,48 +403,86 @@ td.r{text-align:right}
         </div>
       </section>
 
-      <!-- 직원·근태 -->
-      <section id="staff" class="view">
-        <div class="crumb">홈 / 직원 · 근태</div>
-        <div class="panel" style="margin-top:0">
-          <h3>직원 · 오늘 배정</h3>
-          <table><thead><tr><th>이름</th><th>역할</th><th>오늘 배정</th><th>근태</th></tr></thead><tbody>
-            <tr><td>성동욱</td><td>센터장</td><td>운영 총괄</td><td><span class="st ok">출근</span></td></tr>
-            <tr><td>김MD</td><td>MD(상품·입점)</td><td>샘플 촬영 준비</td><td><span class="st ok">출근</span></td></tr>
-            <tr><td>김PD</td><td>라이브 PD</td><td>식품 스튜디오 11시</td><td><span class="st live">방송중</span></td></tr>
-            <tr><td>이호스트</td><td>라이브 진행</td><td>의류 스튜디오 14시</td><td><span class="st ok">출근</span></td></tr>
-            <tr><td>박운영</td><td>온라인 운영</td><td>폐쇄몰 주문·CS</td><td><span class="st ok">출근</span></td></tr>
-          </tbody></table>
+      
+
+      
+      <!-- 설정 -->
+      <section id="config" class="view">
+        <div class="crumb">홈 / 설정</div>
+        <div class="tabs">
+          <button class="on" onclick="tab(this,'cfCh')">채널</button>
+          <button onclick="tab(this,'cfFee')">수수료 · 정산규칙</button>
+          <button onclick="tab(this,'cfMatch')">상품 매칭</button>
+          <button onclick="tab(this,'cfUser')">사용자 · 권한</button>
         </div>
-        <div class="panel">
-          <h3>업무 보드</h3>
-          <div class="kanban">
-            <div class="kcol"><h4>할 일 <span>3</span></h4>
-              <div class="kcard">신규업체 A 입점 심사<div class="who">담당 김MD</div></div>
-              <div class="kcard">화장품 스튜디오 조명 점검<div class="who">담당 김PD</div></div>
-              <div class="kcard">8월 기획전 상품 선정<div class="who">담당 성동욱</div></div>
-            </div>
-            <div class="kcol"><h4>진행중 <span>2</span></h4>
-              <div class="kcard">위생기업사 라이브 진행<div class="who">담당 김PD · 이호스트</div></div>
-              <div class="kcard">7월 정산 마감<div class="who">담당 정산팀</div></div>
-            </div>
-            <div class="kcol"><h4>완료 <span>2</span></h4>
-              <div class="kcard">한보텍 니트 촬영<div class="who">담당 김MD</div></div>
-              <div class="kcard">상품권 결제 연동 테스트<div class="who">담당 박운영</div></div>
-            </div>
+
+        <div id="cfCh" class="tabpane on">
+          <div class="panel">
+            <h3>채널 관리</h3>
+            <table><thead><tr><th>채널</th><th>주문 수집</th><th>엑셀 양식</th><th class="r">기본 수수료</th><th>금액 기준</th><th>상태</th></tr></thead><tbody>
+              <tr><td>그립</td><td><span class="chip">엑셀</span></td><td><span class="st ok">양식 저장됨</span></td><td class="r">10%</td><td>부가세 포함</td><td><span class="st ok">사용</span></td></tr>
+              <tr><td>클릭메이트</td><td><span class="chip">엑셀</span></td><td><span class="st ok">양식 저장됨</span></td><td class="r">10%</td><td>부가세 포함</td><td><span class="st ok">사용</span></td></tr>
+              <tr><td>네이버 쇼핑라이브</td><td><span class="chip">엑셀</span></td><td><span class="st wait">미설정</span></td><td class="r">10%</td><td>—</td><td><span class="st ok">사용</span></td></tr>
+              <tr><td>삼아 폐쇄몰</td><td><span class="chip">엑셀</span></td><td><span class="st ok">양식 저장됨</span></td><td class="r">2%</td><td>부가세 별도</td><td><span class="st ok">사용</span></td></tr>
+              <tr><td>팝업 POS</td><td><span class="chip">엑셀</span></td><td><span class="st wait">미설정</span></td><td class="r">—</td><td>—</td><td><span class="st ok">사용</span></td></tr>
+            </tbody></table>
+            <div style="font-size:11.5px;color:var(--muted);margin-top:10px">＊ <b>엑셀 양식</b>을 한 번 맞춰두면 다음 업로드부터 열 위치를 자동으로 읽습니다. <b>금액 기준</b>(부가세 포함/별도)이 채널마다 다르면 정산액이 달라지므로 반드시 지정합니다.</div>
+          </div>
+        </div>
+
+        <div id="cfFee" class="tabpane">
+          <div class="panel">
+            <h3>수수료 · 정산 규칙 <span class="more">아직 미확정 — 정해지면 여기서 입력</span></h3>
+            <table><thead><tr><th>구분</th><th>적용 대상</th><th class="r">값</th><th>비고</th></tr></thead><tbody>
+              <tr><td>채널 수수료</td><td>그립 · 클릭메이트 · 네이버</td><td class="r"><b>10%</b></td><td>채널별로 다르게 지정 가능</td></tr>
+              <tr><td>채널 수수료</td><td>삼아 폐쇄몰</td><td class="r"><b>2%</b></td><td>조합 수수료</td></tr>
+              <tr><td>업체별 수수료</td><td>개별 계약 업체</td><td class="r">업체 화면에서 지정</td><td>채널값보다 우선 적용</td></tr>
+              <tr><td>환불차감</td><td>전 채널</td><td class="r">환불 금액 전액</td><td>환불 발생 월에서 차감</td></tr>
+              <tr><td>정산 주기</td><td>전 업체</td><td class="r">월 1회</td><td>말일 마감 · 익월 지급</td></tr>
+              <tr><td>정산 확정 권한</td><td>—</td><td class="r">센터장</td><td>확정 후 숫자 잠김</td></tr>
+            </tbody></table>
+            <div style="font-size:11.5px;color:var(--coral);margin-top:10px;font-weight:700">⚠ 위 값은 아직 조합과 확정 전입니다. 확정되면 이 화면에서 직원이 직접 바꿉니다 — 개발자를 부르지 않습니다.</div>
+          </div>
+        </div>
+
+        <div id="cfMatch" class="tabpane">
+          <div class="kpis">
+            <div class="kpi"><div class="l">등록 SKU</div><div class="v">712</div></div>
+            <div class="kpi"><div class="l">매칭 완료</div><div class="v">709</div></div>
+            <div class="kpi warn"><div class="l">매칭 필요</div><div class="v">3</div></div>
+            <div class="kpi"><div class="l">채널</div><div class="v">5</div></div>
+          </div>
+          <div class="panel">
+            <h3>채널 상품 ↔ 우리 SKU 매칭 <span class="more">한 번 맞추면 다음부터 자동</span></h3>
+            <table><thead><tr><th>채널</th><th>채널에 적힌 상품명</th><th>우리 SKU</th><th>업체</th><th>상태</th></tr></thead><tbody>
+              <tr><td><span class="chip g">그립</span></td><td>친환경세제2L(대용량)</td><td>WS-1021</td><td>위생기업사</td><td><span class="st ok">매칭됨</span></td></tr>
+              <tr><td><span class="chip">삼아</span></td><td>[위생] 주방세제 2리터</td><td>WS-1021</td><td>위생기업사</td><td><span class="st ok">매칭됨</span></td></tr>
+              <tr><td><span class="chip g">그립</span></td><td>가을니트 [블랙/M]</td><td><select><option>— 고르세요 —</option><option>HB-3390 홀가먼트 니트</option><option>HB-3391 가을 니트</option></select></td><td>한보텍스타일</td><td><span class="st wait">매칭 필요</span></td></tr>
+              <tr><td><span class="chip" style="background:#eaf1fb;color:#2f6bc0">클릭메이트</span></td><td>홍삼스틱60포_기획</td><td><select><option>— 고르세요 —</option><option>GM-7742 홍삼 스틱 60포</option></select></td><td>그린명품제약</td><td><span class="st wait">매칭 필요</span></td></tr>
+              <tr><td><span class="chip c">팝업</span></td><td>안전장갑100</td><td><select><option>— 고르세요 —</option><option>CR-2210 니트릴 안전장갑 100매</option></select></td><td>크린텍</td><td><span class="st wait">매칭 필요</span></td></tr>
+            </tbody></table>
+            <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap"><button class="btn" onclick="toast('3건 매칭 저장 — 다음 업로드부터 자동 인식합니다')">매칭 저장</button><span style="font-size:12px;color:var(--muted);align-self:center">채널마다 상품명을 다르게 적기 때문에 이 표가 필요합니다</span></div>
+          </div>
+        </div>
+
+        <div id="cfUser" class="tabpane">
+          <div class="panel">
+            <h3>사용자 · 권한</h3>
+            <table><thead><tr><th>이름</th><th>역할</th><th>볼 수 있는 메뉴</th><th>정산 확정</th></tr></thead><tbody>
+              <tr><td>성동욱</td><td>센터장</td><td>전체</td><td><span class="st ok">가능</span></td></tr>
+              <tr><td>김MD</td><td>MD (상품·입점)</td><td>상품·SKU · 입점업체</td><td><span class="st mut">불가</span></td></tr>
+              <tr><td>김PD</td><td>라이브 PD</td><td>스튜디오 편성 · 라이브 방송</td><td><span class="st mut">불가</span></td></tr>
+              <tr><td>박운영</td><td>온라인 운영</td><td>주문 · 상품·SKU</td><td><span class="st mut">불가</span></td></tr>
+              <tr><td>정산담당</td><td>정산 · 경영지원</td><td>정산·세금계산서 · 리포트</td><td><span class="st mut">불가 (계산만)</span></td></tr>
+            </tbody></table>
           </div>
         </div>
       </section>
 
-      <!-- 재고·물류 -->
-      <section id="stock" class="view">
-        <div class="crumb">홈 / 재고 · 물류</div>
-        <div class="stub">재고·물류 모듈은 <b>3단계(고도화)</b>에서 구축됩니다.<br>창고 재고 · 입출고 · 택배 연동 · 반품 재고를 관리합니다.</div>
-      </section>
       <!-- 리포트 -->
       <section id="report" class="view">
         <div class="crumb">홈 / 데이터 · 리포트</div>
-        <div class="stub">데이터·리포트 모듈은 <b>3단계</b>에서 구축됩니다.<br>채널별·업체별·카테고리별 실적과 경영 리포트를 제공합니다.</div>
+        <div class="stub"><b>1단계는 기본 리포트</b>까지 — 채널별 · 업체별 · 기간별 매출.<br>경영 리포트·카테고리 분석은 2단계에서 확장합니다.</div>
       </section>
 
     </div>
@@ -336,7 +490,27 @@ td.r{text-align:right}
 </div>
 <div id="toast"></div>
 <script>
-var TITLES={dash:'대시보드',studio:'스튜디오 편성',live:'라이브 방송 관리',prod:'상품·샘플 관리',mall:'폐쇄몰 주문',settle:'정산 · 세금계산서',partner:'입점업체 관리',staff:'직원 · 근태',stock:'재고 · 물류',report:'데이터 · 리포트'};
+var TITLES={dash:'대시보드',order:'주문',settle:'정산 · 세금계산서',prod:'상품 · SKU',partner:'입점업체 관리',studio:'스튜디오 편성',live:'라이브 방송 관리',report:'리포트',config:'설정'};
+// 화면 안 탭 전환
+function tab(btn,pane){
+  var wrap=btn.closest('.view');
+  wrap.querySelectorAll('.tabs button').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  wrap.querySelectorAll('.tabpane').forEach(function(p){p.classList.remove('on');});
+  document.getElementById(pane).classList.add('on');
+  window.scrollTo(0,0);
+}
+// 엑셀 업로드 마법사 (1 → 2 → 3)
+function upStep(n){
+  [1,2,3].forEach(function(i){
+    document.getElementById('uz'+i).style.display=(i===n)?'':'none';
+    var w=document.getElementById('w'+i);
+    w.className='s'+(i===n?' on':(i<n?' done':''));
+  });
+  window.scrollTo(0,0);
+  if(n===2)toast('143행을 읽었습니다 — 중복 12건, 미매칭 3건 발견');
+  if(n===3)toast('정상 128건 저장 완료');
+}
 function go(v,el){
   document.querySelectorAll('.view').forEach(function(s){s.classList.remove('on');});
   document.getElementById(v).classList.add('on');
