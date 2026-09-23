@@ -623,11 +623,14 @@ var THEMES={
  b:{'--navy':'#7C1D3F','--green':'#3F7D58','--greenL':'#E9F1EC','--coral':'#C08417','--coralL':'#FBF2DF','--sand':'#F6EFF1','--ink':'#241A1E','--muted':'#7A6B72','--line':'#EDE3E7','--bg':'#FAF7F8','--heroA':'#5C1430','--heroB':'#7C1D3F','--heroC':'#9E2F55'},
  c:{'--navy':'#1D4ED8','--green':'#0891B2','--greenL':'#E0F3F8','--coral':'#EAB308','--coralL':'#FEF6D9','--sand':'#EEF2FB','--ink':'#15203A','--muted':'#66708F','--line':'#E1E7F4','--bg':'#F5F7FD','--heroA':'#1439A8','--heroB':'#1D4ED8','--heroC':'#3B6FF0'},
  d:{'--navy':'#17191C','--green':'#4A5056','--greenL':'#ECEDEF','--coral':'#DC2626','--coralL':'#FDEAEA','--sand':'#F2F2F3','--ink':'#121417','--muted':'#70747A','--line':'#E3E4E6','--bg':'#F6F6F7','--heroA':'#17191C','--heroB':'#24282D','--heroC':'#3C4249'},
+ f:{'--navy':'#223140','--green':'#12A594','--greenL':'#E0F5F2','--coral':'#F2603F','--coralL':'#FFEDE8','--sand':'#FFF6F2','--ink':'#1C2630','--muted':'#6E7A86','--line':'#F0E6E2','--bg':'#FFFBF9','--heroA':'#FF9A6B','--heroB':'#F2603F','--heroC':'#E8407A'},
+ g:{'--navy':'#1F3A5F','--green':'#2BA6C9','--greenL':'#E2F4FA','--coral':'#FF7A59','--coralL':'#FFEDE8','--sand':'#EFF7FB','--ink':'#16283F','--muted':'#6B7C90','--line':'#E2EBF2','--bg':'#F7FBFD','--heroA':'#63CDEE','--heroB':'#2BA6C9','--heroC':'#7ED0B8'},
+ h:{'--navy':'#14361F','--green':'#2E9E53','--greenL':'#E4F4E9','--coral':'#F5A623','--coralL':'#FEF3DE','--sand':'#F1F8EF','--ink':'#16261B','--muted':'#6C7A6F','--line':'#E3EBE2','--bg':'#F7FBF6','--heroA':'#55C06A','--heroB':'#2E9E53','--heroC':'#9ACD3C'},
  e:{'--navy':'#3E4A2C','--green':'#6B8E4E','--greenL':'#EDF2E5','--coral':'#B4532A','--coralL':'#F8E9E2','--sand':'#F1EFE4','--ink':'#232619','--muted':'#74776A','--line':'#E8E6D9','--bg':'#F8F7F1','--heroA':'#2C3520','--heroB':'#3E4A2C','--heroC':'#576B3C'}
 };
-var NAMES={a:'\uff21 바이올렛·민트',b:'\uff22 로즈·와인',c:'\uff23 코발트·선샤인',d:'\uff24 모노크롬·시그널레드',e:'\uff25 올리브·클레이'};
+var NAMES={a:'\uff21 바이올렛·민트',b:'\uff22 로즈·와인',c:'\uff23 코발트·선샤인',d:'\uff24 모노크롬·시그널레드',e:'\uff25 올리브·클레이',f:'\uff26 코랄·민트',g:'\uff27 스카이·피치',h:'\uff28 프레시그린·옐로'};
 (function(){
-  var t=(location.search.match(/[?&]theme=([a-e])/)||[])[1];
+  var t=(location.search.match(/[?&]theme=([a-h])/)||[])[1];
   if(!t)return;
   var v=THEMES[t]; for(var k in v) document.documentElement.style.setProperty(k,v[k]);
   var bar=document.createElement('div');
