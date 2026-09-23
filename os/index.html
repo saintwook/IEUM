@@ -134,7 +134,35 @@ td.r{text-align:right}
 @media(max-width:700px){.chk{grid-template-columns:repeat(2,1fr)}}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(max-width:860px){.app{grid-template-columns:minmax(0,1fr)}.main{padding:18px 14px}.side{position:static;height:auto;display:flex;flex-wrap:wrap;gap:2px}.side .lg,.side .os,.side .grp{width:100%}.side a{border-left:0;border-radius:16px;padding:7px 12px}.side a.on{border-left:0}.kpis{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.kanban{grid-template-columns:1fr}}
+/* 모바일 전용 요소 — 데스크톱에서는 숨김 */
+.ham,.scrim,.btab{display:none}
+@media(max-width:860px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .main{padding:16px 14px 86px}          /* 아래 탭바 자리 확보 */
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .row2{grid-template-columns:1fr}
+  .kanban{grid-template-columns:1fr}
+  /* 사이드바 → 왼쪽에서 밀려나오는 서랍 */
+  .side{position:fixed;top:0;left:0;bottom:0;width:256px;height:100%;z-index:60;
+        transform:translateX(-100%);transition:transform .25s ease;box-shadow:2px 0 24px rgba(15,28,54,.18);padding-top:14px}
+  .side.open{transform:none}
+  .scrim{display:block;position:fixed;inset:0;background:rgba(15,28,54,.45);z-index:55;opacity:0;pointer-events:none;transition:opacity .25s}
+  .scrim.on{opacity:1;pointer-events:auto}
+  /* 상단바: 햄버거 + 제목 + 사용자 */
+  .ham{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:9px;background:#f2f5f7;flex:none}
+  .ham svg{width:19px;height:19px;stroke:var(--navy);stroke-width:2;fill:none}
+  .top{padding:10px 14px;gap:10px}
+  .top .loc{display:none}
+  .top .user span.nm{display:none}
+  /* 하단 탭바 */
+  .btab{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;
+        border-top:1px solid var(--line);padding:6px 4px calc(6px + env(safe-area-inset-bottom))}
+  .btab button{flex:1;background:none;display:flex;flex-direction:column;align-items:center;gap:3px;
+               font-size:10.5px;font-weight:700;color:#93a0ab;padding:5px 2px;position:relative}
+  .btab button svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none}
+  .btab button.on{color:var(--green)}
+  .btab .dot{position:absolute;top:2px;right:calc(50% - 16px);width:7px;height:7px;border-radius:50%;background:var(--coral)}
+}
 </style>
 </head>
 <body>
@@ -144,8 +172,10 @@ td.r{text-align:right}
   <a class="to" href="../">고객이 보는 화면 → SN LIVE 몰</a>
 </div>
 
+<div class="scrim" id="scrim" onclick="drawer(false)"></div>
+
 <div class="app">
-  <!-- 사이드바 -->
+  <!-- 사이드바 (모바일에서는 서랍) -->
   <nav class="side">
     <div class="lg"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>SN LIVE OS</div>
     <div class="os">스튜디오·폐쇄몰 운영</div>
@@ -170,10 +200,11 @@ td.r{text-align:right}
   <!-- 본문 -->
   <div>
     <div class="top">
+      <button class="ham" onclick="drawer(true)" aria-label="전체 메뉴"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
       <h1 id="ttl">대시보드</h1>
       <span class="loc">스튜디오 4세트 · 센터엠 427 · 공단 503-1·2·3</span>
       <span class="sp"></span>
-      <div class="user"><span class="av">성</span>성동욱 · 센터장</div>
+      <div class="user"><span class="av">성</span><span class="nm">성동욱 · 센터장</span></div>
     </div>
     <div class="main">
 
@@ -488,6 +519,15 @@ td.r{text-align:right}
     </div>
   </div>
 </div>
+<!-- 하단 탭바 (모바일 전용) — 자주 쓰는 5개 -->
+<nav class="btab" id="btab">
+  <button class="on" data-b="dash" onclick="go('dash',null)"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>대시보드</button>
+  <button data-b="order" onclick="go('order',null)"><span class="dot"></span><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M12 18v-6M9 15l3 3 3-3"/></svg>주문</button>
+  <button data-b="settle" onclick="go('settle',null)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 14h6"/></svg>정산</button>
+  <button data-b="studio" onclick="go('studio',null)"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/></svg>편성</button>
+  <button onclick="drawer(true)"><svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>전체</button>
+</nav>
+
 <div id="toast"></div>
 <script>
 var TITLES={dash:'대시보드',order:'주문',settle:'정산 · 세금계산서',prod:'상품 · SKU',partner:'입점업체 관리',studio:'스튜디오 편성',live:'라이브 방송 관리',report:'리포트',config:'설정'};
@@ -511,12 +551,21 @@ function upStep(n){
   if(n===2)toast('143행을 읽었습니다 — 중복 12건, 미매칭 3건 발견');
   if(n===3)toast('정상 128건 저장 완료');
 }
+// 모바일 서랍 열고 닫기
+function drawer(open){
+  document.querySelector('.side').classList.toggle('open',open);
+  document.getElementById('scrim').classList.toggle('on',open);
+  document.body.style.overflow=open?'hidden':'';
+}
 function go(v,el){
   document.querySelectorAll('.view').forEach(function(s){s.classList.remove('on');});
   document.getElementById(v).classList.add('on');
   document.querySelectorAll('.side a').forEach(function(a){a.classList.remove('on');});
   (el||document.querySelector('[data-v="'+v+'"]')).classList.add('on');
   document.getElementById('ttl').textContent=TITLES[v]||'';
+  // 하단 탭바도 같이 맞추고, 서랍은 닫는다
+  document.querySelectorAll('#btab button').forEach(function(b){b.classList.toggle('on',b.dataset.b===v);});
+  drawer(false);
   window.scrollTo(0,0);
 }
 var t;function toast(m){var e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(t);t=setTimeout(function(){e.classList.remove('show');},2200);}
