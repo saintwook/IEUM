@@ -134,6 +134,11 @@ td.r{text-align:right}
 @media(max-width:700px){.chk{grid-template-columns:repeat(2,1fr)}}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+/* 색감 시안 안내 바 */
+.themebar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:200;background:#16233D;color:#fff;
+  font-size:12.5px;font-weight:700;padding:9px 16px;border-radius:22px;box-shadow:0 6px 20px rgba(0,0,0,.25);
+  display:flex;gap:12px;align-items:center;white-space:nowrap;max-width:92vw;overflow-x:auto}
+.themebar a{text-decoration:none}
 /* 모바일 전용 요소 — 데스크톱에서는 숨김 */
 .ham,.scrim,.btab{display:none}
 @media(max-width:860px){
@@ -162,6 +167,7 @@ td.r{text-align:right}
   .btab button svg{width:20px;height:20px;stroke:currentColor;stroke-width:1.8;fill:none}
   .btab button.on{color:var(--green)}
   .btab .dot{position:absolute;top:2px;right:calc(50% - 16px);width:7px;height:7px;border-radius:50%;background:var(--coral)}
+  .themebar{bottom:calc(84px + env(safe-area-inset-bottom));font-size:11.5px;padding:8px 13px;gap:9px}
 }
 </style>
 </head>
@@ -571,6 +577,25 @@ function go(v,el){
 var t;function toast(m){var e=document.getElementById('toast');e.textContent=m;e.classList.add('show');clearTimeout(t);t=setTimeout(function(){e.classList.remove('show');},2200);}
 function issue(b){b.outerHTML='<span class="st ok">발행완료</span>';toast('세금계산서 발행 완료');}
 function issueAll(){document.querySelectorAll('#settle .rowbtn').forEach(function(b){if(b.textContent==='발행')b.outerHTML='<span class="st ok">발행완료</span>';});toast('세금계산서 일괄 발행 완료 (국세청 연동)');}
+// 색감 시안 미리보기 — 주소 뒤 ?theme=a|b|c|d 를 붙이면 그 색으로 보입니다
+var THEMES={
+  a:{'--navy':'#1E293B','--green':'#0F766E','--greenL':'#E0F2F0','--greenL2':'#F1F8F7','--coral':'#D97706','--coralL':'#FEF3E2','--ink':'#1B222B','--muted':'#6B7684','--line':'#E3E8ED','--bg':'#F5F7F9'},
+  b:{'--navy':'#14342B','--green':'#1F7A5C','--greenL':'#E4F1EC','--greenL2':'#F2F9F6','--coral':'#B4801F','--coralL':'#FBF2DF','--ink':'#1D2622','--muted':'#6E7A74','--line':'#E4E8E4','--bg':'#F6F7F5'},
+  c:{'--navy':'#16233D','--green':'#157A63','--greenL':'#E4F1EC','--greenL2':'#F2F9F6','--coral':'#E35D3B','--coralL':'#FDECE7','--ink':'#1A2330','--muted':'#6C7684','--line':'#E3E7EC','--bg':'#F6F8FA'},
+  d:{'--navy':'#2B2723','--green':'#4F7A5B','--greenL':'#E8F0E9','--greenL2':'#F4F8F4','--coral':'#C35A3A','--coralL':'#FAEBE4','--ink':'#241F1B','--muted':'#7A7169','--line':'#E9E3DB','--bg':'#F8F5F1'}
+};
+var NAMES={a:'Ａ 슬레이트·앰버',b:'Ｂ 딥 포레스트·머스터드',c:'Ｃ 잉크·코랄',d:'Ｄ 웜샌드·테라코타'};
+(function(){
+  var t=(location.search.match(/[?&]theme=([a-d])/)||[])[1];
+  if(!t)return;
+  var v=THEMES[t]; for(var k in v) document.documentElement.style.setProperty(k,v[k]);
+  var bar=document.createElement('div');
+  bar.className='themebar';
+  bar.innerHTML='색감 시안 '+NAMES[t]+' <a href="../theme/" style="color:#9fc7ff;text-decoration:none">다른 시안 보기</a>'
+    +'<a href="./" style="color:#cbd6e4;text-decoration:none">원래 색</a>';
+  document.body.appendChild(bar);
+})();
+
 // 대시보드 날짜는 여는 날 기준으로 표시 (하드코딩 제거)
 (function(){
   var d=new Date(), w='일월화수목금토'[d.getDay()];
