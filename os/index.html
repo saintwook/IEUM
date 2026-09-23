@@ -25,7 +25,9 @@ button{font-family:inherit;cursor:pointer;border:none}
 .rolebar .to{margin-left:auto;color:#fff;background:rgba(255,255,255,.14);border-radius:16px;padding:5px 13px;text-decoration:none;font-weight:700;white-space:nowrap}
 .rolebar .to:hover{background:rgba(255,255,255,.26)}
 @media(max-width:620px){.rolebar{font-size:12px}.rolebar .to{margin-left:0}}
-.app{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
+.app{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:100vh}
+/* 그리드 칸이 안쪽 표 너비에 밀려 늘어나는 것 방지 — 모바일 가로 넘침의 원인 */
+.app>*{min-width:0}
 /* 사이드바 (밝게) */
 .side{background:#fff;border-right:1px solid var(--line);padding:16px 0;position:sticky;top:0;height:100vh;overflow-y:auto}
 .side .lg{display:flex;align-items:center;font-size:21px;font-weight:800;letter-spacing:.4px;color:var(--navy);padding:4px 18px 4px}
@@ -99,7 +101,7 @@ td.r{text-align:right}
 .stub{background:#fff;border:1px dashed #cdd6d1;border-radius:12px;padding:40px;text-align:center;color:var(--muted);margin-top:16px}
 #toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(30px);background:var(--navy);color:#fff;padding:12px 22px;border-radius:26px;font-size:14px;font-weight:600;opacity:0;transition:.3s;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(max-width:860px){.app{grid-template-columns:1fr}.side{position:static;height:auto;display:flex;flex-wrap:wrap;gap:2px}.side .lg,.side .os,.side .grp{width:100%}.side a{border-left:0;border-radius:16px;padding:7px 12px}.side a.on{border-left:0}.kpis{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.kanban{grid-template-columns:1fr}}
+@media(max-width:860px){.app{grid-template-columns:minmax(0,1fr)}.main{padding:18px 14px}.side{position:static;height:auto;display:flex;flex-wrap:wrap;gap:2px}.side .lg,.side .os,.side .grp{width:100%}.side a{border-left:0;border-radius:16px;padding:7px 12px}.side a.on{border-left:0}.kpis{grid-template-columns:repeat(2,1fr)}.row2{grid-template-columns:1fr}.kanban{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
