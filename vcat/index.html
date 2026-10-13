@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>버추얼 캐릭터</title>
+<style>
+  :root{
+    --bg1:#1a1030; --bg2:#2a123f; --panel:rgba(30,20,50,.78); --ink:#f3ecff; --muted:#c3b3e6;
+    --pink:#ff5fa2; --purple:#9a6cff; --line:rgba(180,150,230,.22);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;overflow:hidden;font-family:"Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;color:var(--ink);}
+  body{background:radial-gradient(130% 100% at 50% 0%,var(--bg2),var(--bg1));}
+  #stage{position:fixed;inset:0;display:grid;place-items:center;}
+  /* 캐릭터 */
+  #charWrap{position:relative;will-change:transform;transition:none;}
+  #char{display:block;max-height:86vh;max-width:92vw;filter:drop-shadow(0 20px 50px rgba(0,0,0,.5));user-select:none;-webkit-user-drag:none;}
+  .overlay{position:absolute;pointer-events:none;}
+  #mouth{border-radius:50%;background:#5a1430;}
+  .eyelid{background:transparent;border-radius:50%;}
+
+  /* 상단 타이틀 */
+  #title{position:absolute;top:12px;left:50%;transform:translateX(-50%);z-index:5;
+    font-weight:800;font-size:16px;text-shadow:0 2px 10px rgba(0,0,0,.6);pointer-events:none;opacity:.9;}
+
+  /* 웹캠 미리보기 */
+  #camBox{position:absolute;right:12px;top:12px;width:150px;z-index:6;border-radius:14px;overflow:hidden;
+    border:2px solid var(--line);box-shadow:0 8px 24px rgba(0,0,0,.4);background:#000;}
+  #cam{width:100%;display:block;transform:scaleX(-1);}
+  #camBox.off{display:none;}
+
+  /* 하단 패널 */
+  #panel{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:7;
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;align-items:center;max-width:94vw;
+    background:var(--panel);backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:18px;padding:10px 12px;}
+  button{font-family:inherit;font-weight:700;font-size:13px;border:none;cursor:pointer;color:#fff;
+    background:var(--purple);border-radius:12px;padding:10px 13px;transition:transform .08s,filter .15s;}
+  button:hover{filter:brightness(1.08);} button:active{transform:scale(.95);}
+  button.pink{background:var(--pink);} button.ghost{background:rgba(255,255,255,.1);}
+  button.on{outline:3px solid #fff5;}
+  .sld{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--muted);}
+  input[type=range]{width:90px;accent-color:var(--pink);}
+  #msg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:4;text-align:center;
+    font-size:15px;font-weight:700;color:var(--muted);background:var(--panel);padding:16px 22px;border-radius:16px;
+    border:1px solid var(--line);max-width:80vw;line-height:1.6;}
+  #msg.hidden{display:none;}
+  #hint{position:absolute;left:12px;top:12px;z-index:6;font-size:12px;color:var(--muted);
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:6px 10px;max-width:200px;display:none;}
+  #hint.show{display:block;}
+  @media(max-width:480px){ #camBox{width:108px;} #title{font-size:14px;} button{padding:9px 10px;font-size:12px;} }
+</style>
+</head>
+<body>
+  <div id="title">💜 내 얼굴을 따라하는 버추얼 캐릭터</div>
+
+  <div id="stage">
+    <div id="charWrap">
+      <img id="char" alt="캐릭터" crossorigin="anonymous" />
+      <div id="eyeL" class="overlay eyelid"></div>
+      <div id="eyeR" class="overlay eyelid"></div>
+      <div id="mouth" class="overlay"></div>
+    </div>
+  </div>
+
+  <div id="camBox" class="off"><video id="cam" autoplay playsinline muted></video></div>
+  <div id="hint">👆 캐릭터의 <b>왼쪽 눈 → 오른쪽 눈 → 입</b> 순서로 콕콕 눌러주세요</div>
+
+  <div id="msg">📷 아래 <b>「카메라 시작」</b>을 누르면<br>캐릭터가 내 얼굴을 따라 움직여요<br><span style="font-size:12.5px;opacity:.8">카메라 영상은 이 컴퓨터 안에서만 쓰이고<br>어디에도 저장·전송되지 않아요</span></div>
+
+  <div id="panel">
+    <button id="start" class="pink">📷 카메라 시작</button>
+    <button id="setParts" class="ghost">🎯 눈·입 위치 맞추기</button>
+    <button id="upload" class="ghost">🖼️ 다른 그림</button>
+    <div class="sld">움직임 <input id="gain" type="range" min="0.3" max="2.2" step="0.1" value="1.1"></div>
+    <button id="mirror" class="ghost on">🪞 거울</button>
+  </div>
+  <input id="file" type="file" accept="image/*" style="display:none">
+
+<script type="module">
+import { FaceLandmarker, FilesetResolver } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18/vision_bundle.mjs";
+
+const $ = id => document.getElementById(id);
+const charImg = $('char'), wrap = $('charWrap');
+const eyeL = $('eyeL'), eyeR = $('eyeR'), mouth = $('mouth');
+
+// 캐릭터 이미지 로드 (같은 폴더의 참고 이미지 기본값)
+let imgNaturalW = 1, imgNaturalH = 1;
+function loadChar(src){
+  charImg.onload = ()=>{
+    imgNaturalW = charImg.naturalWidth; imgNaturalH = charImg.naturalHeight;
+    requestAnimationFrame(autoPlaceParts);
+    sampleSkin();
+  };
+  charImg.src = src;
+}
+loadChar('char.webp');
+
+// ── 부위(눈·입) 위치: 이미지 자연좌표 비율(0~1) ──
+let parts = { eyeL:{x:0.40,y:0.33}, eyeR:{x:0.60,y:0.33}, mouth:{x:0.50,y:0.52} };
+let skinColor = '#e9c9b0';
+
+function charRect(){ return charImg.getBoundingClientRect(); }
+function placeOverlays(){
+  const r = charRect(), W = r.width, H = r.height;
+  const eyeW = W*0.11, eyeH = H*0.045, mW = W*0.10;
+  for(const [el,p] of [[eyeL,parts.eyeL],[eyeR,parts.eyeR]]){
+    el.style.width = eyeW+'px';
+    el.style.left = (p.x*W - eyeW/2)+'px';
+    el.style.top  = (p.y*H - eyeH/2)+'px';
+    el.style.height = '0px';            // 평소엔 안 보임(깜빡일 때만 높이 생김)
+    el.style.background = skinColor;
+    el.dataset.maxh = eyeH;
+  }
+  mouth.style.width = mW+'px';
+  mouth.style.left = (parts.mouth.x*W - mW/2)+'px';
+  mouth.style.top  = (parts.mouth.y*H)+'px';
+  mouth.dataset.maxh = H*0.10;
+  mouth.style.height='0px';
+}
+function autoPlaceParts(){ placeOverlays(); }
+window.addEventListener('resize', placeOverlays);
+
+// 눈 주변 피부색 샘플링(깜빡임 눈꺼풀 색으로)
+function sampleSkin(){
+  try{
+    const c = document.createElement('canvas'); c.width=imgNaturalW; c.height=imgNaturalH;
+    const g = c.getContext('2d'); g.drawImage(charImg,0,0);
+    // 두 눈 바로 위쪽(이마) 색을 평균
+    const pts = [[0.40,0.28],[0.60,0.28],[0.50,0.42]];
+    let r=0,gg=0,b=0,n=0;
+    for(const [px,py] of pts){
+      const d = g.getImageData((px*imgNaturalW)|0,(py*imgNaturalH)|0,4,4).data;
+      for(let i=0;i<d.length;i+=4){ r+=d[i];gg+=d[i+1];b+=d[i+2];n++; }
+    }
+    skinColor = `rgb(${(r/n)|0},${(gg/n)|0},${(b/n)|0})`;
+  }catch(e){ /* 교차출처면 기본색 */ }
+}
+
+// ── 눈·입 위치 맞추기 모드 ──
+let setMode = 0; // 0 off, 1 왼눈,2 오른눈,3 입
+$('setParts').addEventListener('click', ()=>{
+  setMode = 1; $('hint').classList.add('show'); $('setParts').classList.add('on');
+});
+charImg.addEventListener('click', e=>{
+  if(!setMode) return;
+  const r = charRect();
+  const x = (e.clientX - r.left)/r.width, y = (e.clientY - r.top)/r.height;
+  if(setMode===1){ parts.eyeL={x,y}; setMode=2; }
+  else if(setMode===2){ parts.eyeR={x,y}; setMode=3; }
+  else if(setMode===3){ parts.mouth={x,y}; setMode=0; $('hint').classList.remove('show'); $('setParts').classList.remove('on'); sampleSkin(); }
+  placeOverlays();
+});
+
+// 다른 그림 올리기
+$('upload').addEventListener('click', ()=> $('file').click());
+$('file').addEventListener('change', e=>{ const f=e.target.files[0]; if(f){ const u=URL.createObjectURL(f); charImg.crossOrigin=null; loadChar(u);} });
+
+// 거울 토글
+let mirror = true;
+$('mirror').addEventListener('click', ()=>{ mirror=!mirror; $('mirror').classList.toggle('on',mirror); $('cam').style.transform = mirror?'scaleX(-1)':'none'; });
+
+// ── 얼굴 인식 ──
+let landmarker=null, running=false, lastT=-1;
+const gain = ()=> +$('gain').value;
+const smooth = { roll:0, yaw:0, pitch:0, jaw:0, blinkL:0, blinkR:0, bounce:0 };
+const lerp = (a,b,t)=> a+(b-a)*t;
+
+$('start').addEventListener('click', startCam);
+async function startCam(){
+  $('start').disabled = true; $('start').textContent = '불러오는 중…';
+  try{
+    const fileset = await FilesetResolver.forVisionTasks("https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.18/wasm");
+    landmarker = await FaceLandmarker.createFromOptions(fileset, {
+      baseOptions:{ modelAssetPath:"https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task", delegate:"GPU" },
+      outputFaceBlendshapes:true, outputFacialTransformationMatrixes:true, runningMode:"VIDEO", numFaces:1
+    });
+    const stream = await navigator.mediaDevices.getUserMedia({ video:{ width:320, height:240, facingMode:'user' }, audio:false });
+    const v = $('cam'); v.srcObject = stream;
+    await v.play();
+    $('camBox').classList.remove('off'); $('msg').classList.add('hidden');
+    $('start').textContent = '✅ 켜짐'; running = true;
+    requestAnimationFrame(loop);
+  }catch(err){
+    console.error(err);
+    $('msg').classList.remove('hidden');
+    $('msg').innerHTML = '😢 카메라를 켜지 못했어요<br><span style="font-size:12.5px">카메라 권한을 허용했는지 확인하거나,<br>카메라가 있는 컴퓨터에서 열어주세요</span><br><span style="font-size:11px;opacity:.7">'+(err.message||err)+'</span>';
+    $('start').disabled=false; $('start').textContent='📷 다시 시도';
+  }
+}
+
+function loop(){
+  if(!running) return;
+  const v = $('cam');
+  if(v.readyState >= 2){
+    const t = performance.now();
+    if(t !== lastT){
+      lastT = t;
+      const res = landmarker.detectForVideo(v, t);
+      applyFace(res);
+    }
+  }
+  render();
+  requestAnimationFrame(loop);
+}
+
+function bs(cat, name){ const f = cat?.find(c=>c.categoryName===name); return f?f.score:0; }
+
+function applyFace(res){
+  const lm = res.faceLandmarks && res.faceLandmarks[0];
+  let tRoll=0,tYaw=0,tPitch=0;
+  if(lm){
+    // 두 눈 바깥 끝 33(오른), 263(왼) — 기울기
+    const a = lm[33], b = lm[263];
+    tRoll = Math.atan2(b.y-a.y, b.x-a.x) * 180/Math.PI;     // 고개 기울기
+    const nose = lm[1], midX = (a.x+b.x)/2, midY=(a.y+b.y)/2;
+    tYaw = (nose.x - midX) * 220;                           // 좌우 돌림
+    tPitch = (nose.y - midY) * 180 - 6;                     // 끄덕임
+  }
+  const cat = res.faceBlendshapes && res.faceBlendshapes[0] && res.faceBlendshapes[0].categories;
+  const jaw = cat ? bs(cat,'jawOpen') : 0;
+  const blL = cat ? Math.max(bs(cat,'eyeBlinkLeft'), 0) : 0;
+  const blR = cat ? Math.max(bs(cat,'eyeBlinkRight'), 0) : 0;
+
+  const k = 0.35;
+  smooth.roll  = lerp(smooth.roll, tRoll, k);
+  smooth.yaw   = lerp(smooth.yaw, tYaw, k);
+  smooth.pitch = lerp(smooth.pitch, tPitch, k);
+  smooth.jaw   = lerp(smooth.jaw, jaw, 0.5);
+  smooth.blinkL= lerp(smooth.blinkL, blL, 0.6);
+  smooth.blinkR= lerp(smooth.blinkR, blR, 0.6);
+}
+
+function render(){
+  const g = gain();
+  const dir = mirror ? -1 : 1;
+  smooth.bounce = Math.sin(performance.now()/900) * 0.5;   // 숨쉬기
+  const roll = smooth.roll * g * dir;
+  const yaw  = smooth.yaw * g * dir;
+  const pitch= smooth.pitch * g;
+  wrap.style.transform =
+    `perspective(900px) translate(${yaw*2.2}px, ${pitch*2.2 + smooth.bounce}px) rotateZ(${roll}deg) rotateY(${yaw*0.9}deg) rotateX(${-pitch*0.5}deg)`;
+
+  // 눈 깜빡임: 감을수록 눈꺼풀 높이가 max로
+  for(const [el,bl] of [[eyeL,smooth.blinkL],[eyeR,smooth.blinkR]]){
+    const mh = +el.dataset.maxh || 10;
+    const h = Math.max(0,(bl-0.35)/0.65) * mh;
+    el.style.height = h+'px';
+  }
+  // 입 벌림
+  const mmax = +mouth.dataset.maxh || 20;
+  mouth.style.height = Math.min(1,smooth.jaw*1.3) * mmax + 'px';
+}
+</script>
+</body>
+</html>
