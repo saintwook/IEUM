@@ -161,7 +161,7 @@ h2.sec small{font-size:12.5px;font-weight:600;color:var(--muted);margin-left:9px
 <div class="top"><div class="in">
   <div class="lg"><svg class="mark" aria-hidden="true"><use href="#ieum-mark"/></svg>SN<small>비즈</small></div>
   <div class="corp">기업 회원 · <b>㈜대성상사</b> · 구매담당 김과장</div>
-  <button class="cartbtn" onclick="toast('장바구니는 시안입니다')">장바구니 <i id="cn">3</i></button>
+  <button class="cartbtn" onclick="toast('담긴 품목 '+cnt+'개 · 주문·결제는 시안입니다')">장바구니 <i id="cn">3</i></button>
 </div></div>
 
 <div class="wrap">
@@ -337,16 +337,16 @@ var CMP=[
 })();
 
 var REP=[
- {m:'2026년 8월',it:'코팅 목장갑 20 · A4 복사용지 12 · 손 세정제 4',pz:398400},
- {m:'2026년 7월',it:'절삭유 6 · 케이블타이 10 · 박스테이프 4',pz:462000},
- {m:'2026년 6월',it:'A4 복사용지 12 · 토너 3 · 쓰레기봉투 5',pz:553500}
+ {m:'2026년 8월',it:'코팅 목장갑 20 · A4 복사용지 12 · 손 세정제 4',pz:398400,cnt:3},
+ {m:'2026년 7월',it:'절삭유 6 · 케이블타이 10 · 박스테이프 4',pz:462000,cnt:3},
+ {m:'2026년 6월',it:'A4 복사용지 12 · 토너 3 · 쓰레기봉투 5',pz:553500,cnt:3}
 ];
 (function(){
   var h='';
   REP.forEach(function(r){
     h+='<div class="again"><span class="m">'+r.m+'</span><span class="it">'+r.it+'</span>'
      + '<span class="pz">'+won(r.pz)+'원</span>'
-     + '<button class="bt" onclick="toast(\'지난달 주문이 장바구니에 담겼습니다\')">그대로 담기</button></div>';
+     + '<button class="bt" onclick="addAgain('+r.cnt+')">그대로 담기</button></div>';
   });
   document.getElementById('rb').innerHTML=h;
 })();
@@ -360,6 +360,7 @@ function sw(id,btn){
 }
 var cnt=3;
 function addc(){cnt++;document.getElementById('cn').textContent=cnt;toast('장바구니에 담았습니다');}
+function addAgain(n){cnt+=n;document.getElementById('cn').textContent=cnt;toast('지난달 주문 '+n+'개 품목을 담았습니다');}
 var tt;
 function toast(m){var t=document.getElementById('ts');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('on')},1800);}
 </script>
